@@ -10,6 +10,12 @@
   display: flex;
 }
 
+#infopage {
+  width: 550px;
+  height: 450px;
+  display: flex;
+}
+
 #switch {
   width: 300px;
   height: 50px;
@@ -40,6 +46,21 @@
   text-decoration: underline;
 }
 
+
+
+#info {
+  background-color: #fdefcb;
+  font-size: 28px;
+  width: 50%;
+  height: 60px;
+  border-radius: 25px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 #submit {
   background-color: #d5ad8a;
   color: #fff;
@@ -58,6 +79,7 @@
   justify-content: space-evenly;
   align-items: center;
 }
+
 
 .columns {
   width: 100%;
@@ -129,4 +151,22 @@ input {
 select {
   width: calc(95% - 2px);
   height: 48px;
+}
+
+input[type="submit"],
+input[type="reset"] {
+  color: #fff;
+  width: 25%;
+  height: 40px;
+  border: none;
+  border-radius: 25px;
+  padding: 0;
+}
+
+input[type="reset"] {
+  background-color: #dbc8b6;
+}
+
+input[type="submit"] {
+  background-color: #d5ad8a;
 }

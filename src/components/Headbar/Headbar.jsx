@@ -1,12 +1,13 @@
-// Headbar.jsx
 import React, { useState } from "react";
 import "./Headbar.css";
 import LoginDialog from "../Dialog/LoginDialog";
 import RegisterDialog from "../Dialog/RegisterDialog";
+import InfoDialog from "../Dialog/InfoDialog";
 
 const Headbar = () => {
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isRegisterOpen, setRegisterOpen] = useState(false);
+  const [isInfoOpen, setInfoOpen] = useState(false);
 
   return (
     <>
@@ -50,7 +51,7 @@ const Headbar = () => {
           </li>
         </ul>
 
-        <a href="#" id="userinfo">
+        <a href="#" id="userinfo" onClick={() => setInfoOpen(true)}>
           <img
             src="src/images/avatar.png"
             alt="avatar"
@@ -69,7 +70,6 @@ const Headbar = () => {
         </a>
       </header>
 
-      {/* 使用 LoginDialog 和 RegisterDialog 組件 */}
       <LoginDialog
         isOpen={isLoginOpen}
         onClose={() => setLoginOpen(false)}
@@ -87,6 +87,8 @@ const Headbar = () => {
           setLoginOpen(true);
         }}
       />
+
+      <InfoDialog isOpen={isInfoOpen} onClose={() => setInfoOpen(false)} />
     </>
   );
 };
