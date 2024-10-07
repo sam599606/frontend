@@ -153,20 +153,35 @@ select {
   height: 48px;
 }
 
-input[type="submit"],
-input[type="reset"] {
+.cancel-button {
+  background-color: #dbc8b6;
   color: #fff;
   width: 25%;
   height: 40px;
   border: none;
   border-radius: 25px;
-  padding: 0;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-input[type="reset"] {
-  background-color: #dbc8b6;
-}
-
-input[type="submit"] {
+.submit-button {
   background-color: #d5ad8a;
+  color: #fff;
+  width: 25%;
+  height: 40px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 調整列中的按鈕排版 */
+.columns:last-of-type {
+  justify-content: space-evenly;
 }

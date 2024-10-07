@@ -72,8 +72,12 @@ const InfoDialog = ({ isOpen, onClose }) => {
           </div>
         </div>
         <div className="columns">
-          <input type="reset" value="取消" />
-          <input type="submit" value="儲存" />
+          <button type="button" onClick={onClose} className="cancel-button">
+            取消
+          </button>
+          <button type="submit" className="submit-button">
+            儲存
+          </button>
         </div>
       </dialog>
     </>
