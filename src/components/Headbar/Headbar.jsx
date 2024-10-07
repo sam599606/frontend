@@ -9,7 +9,7 @@ const Headbar = () => {
   const [isRegisterOpen, setRegisterOpen] = useState(false);
 
   return (
-    <div>
+    <>
       <header>
         <a href="index.html" id="logo">
           <img src="src/images/logo.png" alt="logo" />
@@ -87,10 +87,7 @@ const Headbar = () => {
           setLoginOpen(true);
         }}
       />
-
-      <main></main>
-      <footer>this is footer</footer>
-    </div>
+    </>
   );
 };
 
