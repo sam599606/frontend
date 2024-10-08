@@ -1,0 +1,85 @@
+  .upside {
+    width: 50%;
+    height: 50%;
+  }
+
+  .downside {
+    width: 60%;
+    height: 45%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .salary,
+  .requirement {
+    background-color: #f4eee2;
+    width: calc(45% - 40px);
+    height: calc(100% - 40px);
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .title {
+    font-size: 26px;
+  }
+
+  .content {
+    width: 100%;
+    height: 85%;
+    display: flex;
+
+  }
+
+  .requirement .content {
+    flex-direction: column;
+  }
+
+  .salaryLeft,
+  .salaryRight {
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .salarycolumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .seniority {
+    font-size: 20px;
+    text-align: right;
+  }
+
+  .link {
+    background-color: #ffb144;
+    color: #fff;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    height: 50%;
+  }
+
+  /* 新增設定：讓 skill 和 licence 各佔 content 的 50% 高度 */
+  .skill,
+  .licence {
+    height: 50%;
+    /* 設定各自區塊高度 */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* 確保內部內容正常排列 */
+  }

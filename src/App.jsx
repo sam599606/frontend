@@ -4,21 +4,28 @@ import Footer from "./components/footer/footer";
 import Forcast from "./components/Forcast/Forcast";
 import Headbar from "./components/Headbar/Headbar";
 import Index from "./components/index";
+import Dummie from "./components/Dummie/Dummie";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("index"); // 預設頁面為 Index
+  const [currentPage, setCurrentPage] = useState("index");
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
+  const renderPage = () => {
+    switch (currentPage) {
+      case "index":
+        return <Index />;
+      case "forcast":
+        return <Forcast />;
+      case "dummie":
+        return <Dummie />;
+      default:
+        return <Index />;
+    }
   };
 
   return (
     <>
-      <Headbar onPageChange={handlePageChange} /> {/* 傳遞頁面切換回調 */}
-      <main>
-        {currentPage === "index" && <Index />} {/* 預設顯示 Index */}
-        {currentPage === "forcast" && <Forcast />} {/* 切換到 Forcast 頁面 */}
-      </main>
+      <Headbar setCurrentPage={setCurrentPage} />
+      <main>{renderPage()}</main>
       <Footer />
     </>
   );
