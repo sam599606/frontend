@@ -1,0 +1,164 @@
+.wrap {
+  width: calc(75% - 80px);
+  height: calc(75% + 30px);
+  /* 使用 vh 來確保其高度相對於視口 */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: +30px;
+  /* 這裡改成 relative */
+  margin: 0 auto;
+  /* 使其居中 */
+}
+
+.tags {
+  display: flex;
+  position: absolute;
+  bottom: calc(100% - 10px);
+  left: 0;
+  z-index: 0;
+  align-items: end;
+}
+
+.tag {
+  color: #fdfecb;
+  width: 150px;
+  height: 80px;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 50px 50px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  bottom: 0;
+  transition: all 0.3s;
+  text-shadow: -1px -1px 0 #745329,
+    1px -1px 0 #745329,
+    -1px 1px 0 #745329,
+    1px 1px 0 #745329;
+}
+
+.tag:first-of-type {
+  background-color: #ffe785;
+}
+
+.tag:nth-of-type(2) {
+  background-color: #ffd78d;
+}
+
+.tag:nth-of-type(3) {
+  background-color: #ffba58;
+}
+
+.tag:hover {
+  height: 100px;
+}
+
+.container {
+  background-color: #f4eee2;
+  width: calc(100% - 80px);
+  height: calc(100% - 80px);
+  border-radius: 10px 10px 0 0;
+  padding: 80px 40px 0;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  /* 可能需要這個來隱藏超出內容 */
+}
+
+.search {
+  width: 40%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 20px;
+  right: 40px;
+}
+
+input[type="search"] {
+  width: calc(100% - 30px);
+  height: 100%;
+  border: none;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+.searchbtn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+}
+
+.contents {
+  width: 100%;
+  height: calc(100% - 50px);
+  overflow-y: scroll;
+}
+
+.content {
+  background-color: #fff;
+  border-radius: 10px;
+  font-size: 24px;
+  margin: 20px 0;
+  padding: 5px 10px;
+  padding-right: 75px;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.content:first-of-type {
+  margin-top: 0;
+}
+
+.content:last-of-type {
+  margin-bottom: 0;
+}
+
+.title {
+  color: #745329;
+  line-height: 1.6;
+}
+
+.duration {
+  display: flex;
+  align-items: center;
+}
+
+.duration img {
+  width: 30px;
+  height: 30px;
+}
+
+.duration p {
+  color: #bb7331;
+}
+
+.more {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.pages {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pages a {
+  color: #16435f;
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s;
+}
+
+.pages a:hover {
+  color: #f19d38;
+}
