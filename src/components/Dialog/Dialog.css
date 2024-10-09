@@ -48,6 +48,7 @@
   height: 50px;
   border-radius: 25px;
   border: none;
+  cursor: pointer;
 }
 
 #input {
@@ -69,14 +70,7 @@
   justify-content: space-evenly;
 }
 
-#name,
-#gender,
-#birth,
-#acc,
-#phone,
-#edu,
-#address,
-#pwd {
+.block {
   width: 80%;
   position: relative;
 }

@@ -1,8 +1,34 @@
 import React from "react";
 import "./Dialog.css";
+import axios from "axios";
 
 const LoginDialog = ({ isOpen, onClose, onRegister }) => {
   if (!isOpen) return null; // 如果未打開，則不渲染彈出視窗
+
+  const getQuote = () => {
+    let account = document.getElementById('account').value
+    let password = document.getElementById('password').value
+
+    const memberdata = {
+      account,
+      password,
+    }
+
+    axios({
+      method: 'post',
+      url: 'http://localhost:5262/api/User/Login',
+      data: JSON.stringify(memberdata),
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      }
+    })
+    .then(res => {
+      console.log(res)
+      onClose()
+    }).catch(err => {
+      console.log(err)
+    })
+  }
 
   return (
     <>
@@ -21,16 +47,16 @@ const LoginDialog = ({ isOpen, onClose, onRegister }) => {
           </a>
         </div>
         <div id="input">
-          <div id="acc">
-            <input type="email" placeholder="" required />
+          <div>
+            <input type="email" placeholder="" id="account" required />
             <label>帳號</label>
           </div>
-          <div id="pwd">
-            <input type="password" placeholder="" required />
+          <div>
+            <input type="password" placeholder="" id="password" required />
             <label>密碼</label>
           </div>
         </div>
-        <button id="submit">登入</button>
+        <button id="submit" onClick={getQuote}>登入</button>
       </dialog>
     </>
   );
