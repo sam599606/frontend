@@ -1,56 +1,99 @@
-// Headbar.jsx
 import React, { useState } from "react";
+import { Link } from "react-router-dom"; // 引入 Link 組件
 import "./Headbar.css";
 import LoginDialog from "../Dialog/LoginDialog";
 import RegisterDialog from "../Dialog/RegisterDialog";
+import InfoDialog from "../Dialog/InfoDialog";
+import axios from "axios";
 
 const Headbar = () => {
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isRegisterOpen, setRegisterOpen] = useState(false);
+  const [isInfoOpen, setInfoOpen] = useState(false);
+
+  // const getInfo = () => {
+  //   axios({
+  //     method: 'get',
+  //     url: 'http://localhost:5262/api/User/UserList',
+  //   })
+  //   .then(res => {
+  //     console.log(res)
+  //     let acc = localStorage.getItem('acc')
+  //     for(let i = 0; i <= res.data.result.length; i++){
+  //       if(res.data.result[i].account == acc){
+  //         let account = res.data.result[i].account
+  //         let name = res.data.result[i].name
+  //         let password = res.data.result[i].password
+  //         let phone = res.data.result[i].phone
+  //         let address = res.data.result[i].address
+  //         let edu = res.data.result[i].edu
+  //         let sex = res.data.result[i].sex
+  //         let birth = res.data.result[i].birth
+
+  //         const userInfo = {
+  //           account,
+  //           name,
+  //           password,
+  //           phone,
+  //           address,
+  //           edu,
+  //           sex,
+  //           birth,
+  //         }
+  //         localStorage.setItem('userInfo', userInfo);
+  //         console.log(userInfo)
+  //       }
+  //     }
+  //   }).catch(err => {
+  //     console.log(err)
+  //   })
+  // }
+
 
   return (
     <>
       <header>
-        <a href="index.html" id="logo">
+        <Link to="/" id="logo">
           <img src="src/images/logo.png" alt="logo" />
           <h3>職得期待</h3>
-        </a>
+        </Link>
 
         <ul>
           <li>
-            <a href="forcast.html">產業景氣預測</a>
+            <Link to="/forcast">產業景氣預測</Link>
           </li>
           <li>
-            <a href="dummie.html">職業資訊懶人包</a>
+            <Link to="/dummie">職業資訊懶人包</Link>
             <ul>
               <li>
-                <a href="dummie.html">心得</a>
+                <Link to="/dummie/class">課程</Link>
               </li>
               <li>
-                <a href="dummie.html">薪資</a>
+                <a href="#">補助</a> {/* 還沒定義路徑 */}
               </li>
               <li>
-                <a href="dummie.html">課程</a>
+                <a href="#">證照</a> {/* 還沒定義路徑 */}
               </li>
             </ul>
           </li>
           <li>
-            <a href="test.html">職涯診斷測驗</a>
+            <a href="#">職涯診斷測驗</a> {/* 還沒定義路徑 */}
             <ul>
               <li>
-                <a href="test.html">農業</a>
+                <a href="#">農業</a>
               </li>
               <li>
-                <a href="test.html">工業</a>
+                <a href="#">工業</a>
               </li>
               <li>
-                <a href="test.html">商業</a>
+                <a href="#">商業</a>
               </li>
             </ul>
           </li>
         </ul>
 
-        <a href="#" id="userinfo">
+        {/* 開啟個人資訊彈窗 */}
+        <a href="#" id="userinfo" onClick={() => setInfoOpen(true)}>
           <img
             src="src/images/avatar.png"
             alt="avatar"
@@ -59,6 +102,7 @@ const Headbar = () => {
           />
         </a>
 
+        {/* 開啟登入介面彈窗 */}
         <a
           href="#"
           className="login"
@@ -69,7 +113,7 @@ const Headbar = () => {
         </a>
       </header>
 
-      {/* 使用 LoginDialog 和 RegisterDialog 組件 */}
+      {/* 登入&註冊介面切換 */}
       <LoginDialog
         isOpen={isLoginOpen}
         onClose={() => setLoginOpen(false)}
@@ -78,7 +122,6 @@ const Headbar = () => {
           setRegisterOpen(true);
         }}
       />
-
       <RegisterDialog
         isOpen={isRegisterOpen}
         onClose={() => setRegisterOpen(false)}
@@ -87,6 +130,8 @@ const Headbar = () => {
           setLoginOpen(true);
         }}
       />
+
+      <InfoDialog isOpen={isInfoOpen} onClose={() => setInfoOpen(false)}/>
     </>
   );
 };

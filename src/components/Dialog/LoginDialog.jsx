@@ -24,8 +24,14 @@ const LoginDialog = ({ isOpen, onClose, onRegister }) => {
     })
     .then(res => {
       console.log(res)
+
+      let token = res.data.result
+      console.log(token)
+      localStorage.setItem('token', token);
+      localStorage.setItem('acc', account);
       onClose()
-    }).catch(err => {
+    })
+    .catch(err => {
       console.log(err)
     })
   }
@@ -47,11 +53,11 @@ const LoginDialog = ({ isOpen, onClose, onRegister }) => {
           </a>
         </div>
         <div id="input">
-          <div>
+          <div className="block">
             <input type="email" placeholder="" id="account" required />
             <label>帳號</label>
           </div>
-          <div>
+          <div className="block">
             <input type="password" placeholder="" id="password" required />
             <label>密碼</label>
           </div>

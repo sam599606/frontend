@@ -2,69 +2,60 @@ import React from "react";
 import "./Dialog.css";
 import axios from "axios";
 
-const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
+
+const InfoDialog = ({ isOpen, onClose }) => {
   if (!isOpen) return null; // 如果未打開，則不渲染彈出視窗
 
-  const getQuote = () => {
-    let account = document.getElementById('account').value
-    let name = document.getElementById('name').value
-    let password = document.getElementById('password').value
-    let phone = document.getElementById('phone').value
-    let address = document.getElementById('address').value
-    let edu = document.getElementById('edu').value
-    let sex = document.getElementById('sex').value
-    let birth = document.getElementById('birth').value
-
-    const memberdata = {
-      account,
-      name,
-      password,
-      phone,
-      address,
-      edu,
-      sex,
-      birth,
-    }
-
     axios({
-      method: 'post',
-      url: 'http://localhost:5262/api/User/Register',
-      data: JSON.stringify(memberdata),
-      headers: {
-        "Content-Type": "application/json; charset=utf-8"
-      }
+      method: 'get',
+      url: 'http://localhost:5262/api/User/UserList',
     })
     .then(res => {
       console.log(res)
-      onclose()
+      let acc = localStorage.getItem('acc')
+      for(let i = 0; i <= res.data.result.length; i++){
+        if(res.data.result[i].account == acc){
+          let account = res.data.result[i].account
+          let name = res.data.result[i].name
+          let password = res.data.result[i].password
+          let phone = res.data.result[i].phone
+          let address = res.data.result[i].address
+          let edu = res.data.result[i].edu
+          let sex = res.data.result[i].sex
+          let birth = res.data.result[i].birth
+
+          document.getElementById('name').value = name
+          document.getElementById('account').value = account
+          document.getElementById('password').value = password
+          document.getElementById('phone').value = phone
+          document.getElementById('address').value = address
+          document.getElementById('edu').value = edu
+          document.getElementById('sex').value = sex
+          document.getElementById('birth').value = birth.substr(0, 10)
+        }
+      }
     }).catch(err => {
       console.log(err)
     })
-  }
 
   return (
     <>
       {/* 模態背景層 */}
       <div className="modal-overlay" onClick={onClose} />
 
-      <dialog id="registerpage" open>
+      <dialog id="infopage" open>
         <a href="#" id="close" onClick={onClose}>
           X
         </a>
-        <div id="switch">
-          <a href="#" id="login" onClick={onLogin}>
-            <div>登入</div>
-          </a>
-          <div>註冊</div>
-        </div>
+        <div id="info">個人資料</div>
         <div id="input">
           <div className="columns">
             <div className="block">
-              <input type="text" placeholder="" id="name" required />
+              <input type="text" placeholder="" id="name" required readOnly />
               <label>姓名</label>
             </div>
             <div className="block">
-              <select id="sex" defaultValue={'default'} required>
+              <select defaultValue={'default'} id="sex">
                 <option value="default" disabled>
                   請選擇性別
                 </option>
@@ -77,11 +68,11 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
           </div>
           <div className="columns">
             <div className="block">
-              <input type="date" id="birth" required />
+              <input type="date" placeholder="" id="birth" required readOnly />
               <label>生日</label>
             </div>
             <div className="block">
-              <input type="email" placeholder="" id="account" required />
+              <input type="email" placeholder="" id="account" required readOnly />
               <label>帳號</label>
             </div>
           </div>
@@ -91,7 +82,7 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
               <label>電話</label>
             </div>
             <div className="block">
-              <select id="edu" defaultValue={'default'} required>
+              <select defaultValue={'default'} id="edu">
                 <option value="default" disabled>
                   請選擇教育程度
                 </option>
@@ -114,10 +105,17 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
             </div>
           </div>
         </div>
-        <button id="submit" onClick={getQuote}>註冊</button>
+        <div className="columns">
+          <button type="button" onClick={onClose} className="cancel-button">
+            取消
+          </button>
+          <button type="submit" className="submit-button">
+            儲存
+          </button>
+        </div>
       </dialog>
     </>
   );
 };
 
-export default RegisterDialog;
+export default InfoDialog;

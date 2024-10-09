@@ -34,7 +34,6 @@ header {
     align-items: center;
     position: sticky;
     z-index: 2;
-    margin-bottom: 50px;
 }
 
 header>ul {
