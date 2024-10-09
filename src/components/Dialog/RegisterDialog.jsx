@@ -5,15 +5,21 @@ import axios from "axios";
 const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
   if (!isOpen) return null; // 如果未打開，則不渲染彈出視窗
 
+  const keyDown = (event) => {
+    if (event.key == "Enter") {
+      getQuote();
+    }
+  };
+
   const getQuote = () => {
-    let account = document.getElementById('account').value
-    let name = document.getElementById('name').value
-    let password = document.getElementById('password').value
-    let phone = document.getElementById('phone').value
-    let address = document.getElementById('address').value
-    let edu = document.getElementById('edu').value
-    let sex = document.getElementById('sex').value
-    let birth = document.getElementById('birth').value
+    let account = document.getElementById("account").value;
+    let name = document.getElementById("name").value;
+    let password = document.getElementById("password").value;
+    let phone = document.getElementById("phone").value;
+    let address = document.getElementById("address").value;
+    let edu = document.getElementById("edu").value;
+    let sex = document.getElementById("sex").value;
+    let birth = document.getElementById("birth").value;
 
     const memberdata = {
       account,
@@ -24,23 +30,24 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
       edu,
       sex,
       birth,
-    }
+    };
 
     axios({
-      method: 'post',
-      url: 'http://localhost:5262/api/User/Register',
+      method: "post",
+      url: "http://localhost:5262/api/User/Register",
       data: JSON.stringify(memberdata),
       headers: {
-        "Content-Type": "application/json; charset=utf-8"
-      }
+        "Content-Type": "application/json; charset=utf-8",
+      },
     })
-    .then(res => {
-      console.log(res)
-      onclose()
-    }).catch(err => {
-      console.log(err)
-    })
-  }
+      .then((res) => {
+        console.log(res);
+        onclose();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -60,11 +67,17 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
         <div id="input">
           <div className="columns">
             <div className="block">
-              <input type="text" placeholder="" id="name" required />
+              <input
+                type="text"
+                placeholder=""
+                id="name"
+                onKeyDown={keyDown}
+                required
+              />
               <label>姓名</label>
             </div>
             <div className="block">
-              <select id="sex" defaultValue={'default'} required>
+              <select id="sex" defaultValue={"default"} required>
                 <option value="default" disabled>
                   請選擇性別
                 </option>
@@ -81,17 +94,29 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
               <label>生日</label>
             </div>
             <div className="block">
-              <input type="email" placeholder="" id="account" required />
+              <input
+                type="email"
+                placeholder=""
+                id="account"
+                onKeyDown={keyDown}
+                required
+              />
               <label>帳號</label>
             </div>
           </div>
           <div className="columns">
             <div className="block">
-              <input type="tel" placeholder="" id="phone" required />
+              <input
+                type="tel"
+                placeholder=""
+                id="phone"
+                onKeyDown={keyDown}
+                required
+              />
               <label>電話</label>
             </div>
             <div className="block">
-              <select id="edu" defaultValue={'default'} required>
+              <select id="edu" defaultValue={"default"} required>
                 <option value="default" disabled>
                   請選擇教育程度
                 </option>
@@ -105,16 +130,30 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
           </div>
           <div className="columns">
             <div className="block">
-              <input type="text" placeholder="" id="address" required />
+              <input
+                type="text"
+                placeholder=""
+                id="address"
+                onKeyDown={keyDown}
+                required
+              />
               <label>地址</label>
             </div>
             <div className="block">
-              <input type="password" placeholder="" id="password" required />
+              <input
+                type="password"
+                placeholder=""
+                id="password"
+                onKeyDown={keyDown}
+                required
+              />
               <label>密碼</label>
             </div>
           </div>
         </div>
-        <button id="submit" onClick={getQuote}>註冊</button>
+        <button id="submit" onClick={getQuote}>
+          註冊
+        </button>
       </dialog>
     </>
   );

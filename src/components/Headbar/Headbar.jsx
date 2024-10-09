@@ -11,45 +11,7 @@ const Headbar = () => {
   const [isRegisterOpen, setRegisterOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
 
-  // const getInfo = () => {
-  //   axios({
-  //     method: 'get',
-  //     url: 'http://localhost:5262/api/User/UserList',
-  //   })
-  //   .then(res => {
-  //     console.log(res)
-  //     let acc = localStorage.getItem('acc')
-  //     for(let i = 0; i <= res.data.result.length; i++){
-  //       if(res.data.result[i].account == acc){
-  //         let account = res.data.result[i].account
-  //         let name = res.data.result[i].name
-  //         let password = res.data.result[i].password
-  //         let phone = res.data.result[i].phone
-  //         let address = res.data.result[i].address
-  //         let edu = res.data.result[i].edu
-  //         let sex = res.data.result[i].sex
-  //         let birth = res.data.result[i].birth
-
-  //         const userInfo = {
-  //           account,
-  //           name,
-  //           password,
-  //           phone,
-  //           address,
-  //           edu,
-  //           sex,
-  //           birth,
-  //         }
-  //         localStorage.setItem('userInfo', userInfo);
-  //         console.log(userInfo)
-  //       }
-  //     }
-  //   }).catch(err => {
-  //     console.log(err)
-  //   })
-  // }
-
-
+  //#region return
   return (
     <>
       <header>
@@ -131,7 +93,7 @@ const Headbar = () => {
         }}
       />
 
-      <InfoDialog isOpen={isInfoOpen} onClose={() => setInfoOpen(false)}/>
+      <InfoDialog isOpen={isInfoOpen} onClose={() => setInfoOpen(false)} />
     </>
   );
 };
