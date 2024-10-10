@@ -8,6 +8,8 @@ import Index from "./components/index";
 import Dummie from "./components/Dummie/Dummie";
 import OutOfTheWorld from "./components/OutOfTheWorld/OutOfTheWorld";
 import Dummie_Class from "./components/Dummie/Dummie_Class";
+import TestIntro from "./components/Test/TestIntro";
+import TestTesting from "./components/Test/TestTesting";
 
 function App() {
   return (
@@ -19,8 +21,12 @@ function App() {
           <Route path="/" element={<Index />} /> {/* 定義根路徑 */}
           <Route path="/forcast" element={<Forcast />} /> {/* 預測頁面 */}
           <Route path="/dummie" element={<Dummie />} /> {/* Dummie 頁面 */}
-          <Route path="/dummie/class" element={<Dummie_Class />} />{" "}
-          <Route path="*" element={<OutOfTheWorld />} />{" "}
+          <Route path="/dummie/class" element={<Dummie_Class />} />
+          <Route path="/test" element={<TestIntro />} />
+          {/* 配置測驗首頁的路由 */}
+          <Route path="/test-testing" element={<TestTesting />} />
+          {/* 測驗的進行頁面 */}
+          <Route path="*" element={<OutOfTheWorld />} />
         </Routes>
       </main>
       <Footer />
