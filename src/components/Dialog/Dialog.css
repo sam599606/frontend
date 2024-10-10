@@ -43,7 +43,6 @@
 #registerpage #switch>:last-child {
   background-color: #d5ad8a;
   color: #fff;
-  text-decoration: underline;
 }
 
 
@@ -69,6 +68,7 @@
   height: 50px;
   border-radius: 25px;
   border: none;
+  cursor: pointer;
 }
 
 #input {
@@ -91,14 +91,7 @@
   justify-content: space-evenly;
 }
 
-#name,
-#gender,
-#birth,
-#acc,
-#phone,
-#edu,
-#address,
-#pwd {
+.block {
   width: 80%;
   position: relative;
 }

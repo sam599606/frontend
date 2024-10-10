@@ -1,8 +1,53 @@
 import React from "react";
 import "./Dialog.css";
+import axios from "axios";
 
 const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
   if (!isOpen) return null; // 如果未打開，則不渲染彈出視窗
+
+  const keyDown = (event) => {
+    if (event.key == "Enter") {
+      getQuote();
+    }
+  };
+
+  const getQuote = () => {
+    let account = document.getElementById("account").value;
+    let name = document.getElementById("name").value;
+    let password = document.getElementById("password").value;
+    let phone = document.getElementById("phone").value;
+    let address = document.getElementById("address").value;
+    let edu = document.getElementById("edu").value;
+    let sex = document.getElementById("sex").value;
+    let birth = document.getElementById("birth").value;
+
+    const memberdata = {
+      account,
+      name,
+      password,
+      phone,
+      address,
+      edu,
+      sex,
+      birth,
+    };
+
+    axios({
+      method: "post",
+      url: "http://localhost:5262/api/User/Register",
+      data: JSON.stringify(memberdata),
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        onclose();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -21,62 +66,94 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
         </div>
         <div id="input">
           <div className="columns">
-            <div id="name">
-              <input type="text" placeholder="" required />
+            <div className="block">
+              <input
+                type="text"
+                placeholder=""
+                id="name"
+                onKeyDown={keyDown}
+                required
+              />
               <label>姓名</label>
             </div>
-            <div id="gender">
-              <select required>
-                <option value="default" disabled selected>
+            <div className="block">
+              <select id="sex" defaultValue={"default"} required>
+                <option value="default" disabled>
                   請選擇性別
                 </option>
-                <option value="male">男</option>
-                <option value="female">女</option>
-                <option value="no">不透露</option>
+                <option value="1">男</option>
+                <option value="2">女</option>
+                <option value="3">不透露</option>
               </select>
               <label>性別</label>
             </div>
           </div>
           <div className="columns">
-            <div id="birth">
-              <input type="date" required />
+            <div className="block">
+              <input type="date" id="birth" required />
               <label>生日</label>
             </div>
-            <div id="acc">
-              <input type="email" placeholder="" required />
+            <div className="block">
+              <input
+                type="email"
+                placeholder=""
+                id="account"
+                onKeyDown={keyDown}
+                required
+              />
               <label>帳號</label>
             </div>
           </div>
           <div className="columns">
-            <div id="phone">
-              <input type="tel" placeholder="" required />
+            <div className="block">
+              <input
+                type="tel"
+                placeholder=""
+                id="phone"
+                onKeyDown={keyDown}
+                required
+              />
               <label>電話</label>
             </div>
-            <div id="edu">
-              <select required>
-                <option value="default" disabled selected>
+            <div className="block">
+              <select id="edu" defaultValue={"default"} required>
+                <option value="default" disabled>
                   請選擇教育程度
                 </option>
-                <option value="elementary">國小</option>
-                <option value="junior">國中</option>
-                <option value="senior">高中</option>
-                <option value="university">大學</option>
+                <option value="1">國小</option>
+                <option value="2">國中</option>
+                <option value="3">高中</option>
+                <option value="4">大學</option>
               </select>
               <label>教育程度</label>
             </div>
           </div>
           <div className="columns">
-            <div id="address">
-              <input type="text" placeholder="" required />
+            <div className="block">
+              <input
+                type="text"
+                placeholder=""
+                id="address"
+                onKeyDown={keyDown}
+                required
+              />
               <label>地址</label>
             </div>
-            <div id="pwd">
-              <input type="password" placeholder="" required />
+            <div className="block">
+              <input
+                type="password"
+                placeholder=""
+                id="password"
+                onKeyDown={keyDown}
+                required
+              />
               <label>密碼</label>
             </div>
           </div>
         </div>
-        <button id="submit">註冊</button>
+        <button id="submit" onClick={getQuote}>
+          註冊
+        </button>
       </dialog>
     </>
   );

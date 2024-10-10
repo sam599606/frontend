@@ -4,12 +4,14 @@ import "./Headbar.css";
 import LoginDialog from "../Dialog/LoginDialog";
 import RegisterDialog from "../Dialog/RegisterDialog";
 import InfoDialog from "../Dialog/InfoDialog";
+import axios from "axios";
 
 const Headbar = () => {
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isRegisterOpen, setRegisterOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
 
+  //#region return
   return (
     <>
       <header>
