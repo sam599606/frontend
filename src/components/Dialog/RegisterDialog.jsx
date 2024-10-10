@@ -22,6 +22,9 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
     let sex = document.getElementById("sex").value;
     let birth = document.getElementById("birth").value;
 
+    // 正規表達式檢查是否為有效的 Email 地址
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     const memberdata = {
       account,
       name,
@@ -32,6 +35,37 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
       sex,
       birth,
     };
+
+    // 檢查是否有缺失資料
+    if (
+      !account ||
+      !name ||
+      !password ||
+      !phone ||
+      !address ||
+      !edu ||
+      !sex ||
+      !birth
+    ) {
+      Swal.fire({
+        icon: "warning",
+        title: "資料不完整",
+        text: "請填寫所有欄位再進行註冊！",
+        confirmButtonColor: "#d5ad8a",
+      });
+      return; // 終止函數，不進行下一步操作
+    }
+
+    // // 檢查帳號欄位是否為有效的 Email 地址
+    // if (!emailPattern.test(account)) {
+    //   Swal.fire({
+    //     icon: "warning",
+    //     title: "無效的Email",
+    //     text: "請填寫有效的電子郵件地址！",
+    //     confirmButtonColor: "#d5ad8a",
+    //   });
+    //   return; // 終止函數，不進行下一步操作
+    // }
 
     // 發送註冊請求
     axios({
@@ -71,7 +105,7 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
           Swal.fire({
             icon: "error",
             title: "發生錯誤",
-            text: "請稍後再試或聯繫支援人員。",
+            text: "請確認註冊資料是否完整。",
             confirmButtonColor: "#d5ad8a",
           });
         }

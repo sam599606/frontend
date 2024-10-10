@@ -17,7 +17,7 @@ const TestIntro = () => {
       </div>
       <div className={styles.intro}>
         <h2>答題方式</h2>
-        <p>將選項拖曳至空格內，並依喜好程度，去排順序。</p>
+        <p>將下方選項拖曳至上方空格內，並依喜好程度，去排順序。</p>
       </div>
       {/* 使用 styles.go 來引用模組樣式 */}
       <Link to="/test-testing" className={styles.go}>

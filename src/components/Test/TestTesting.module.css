@@ -24,6 +24,17 @@
   right: 40px;
 }
 
+.previousbtn {
+  padding: 10px 20px;
+  border-radius: 50%;
+  background-color: #ffb144;
+  font-size: 28px;
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  transition: background-color 0.3s ease;
+}
+
 .nextbtn {
   padding: 10px 20px;
   border-radius: 50%;
@@ -35,7 +46,8 @@
   transition: background-color 0.3s ease;
 }
 
-.nextbtn:hover {
+.nextbtn:hover,
+.previousbtn:hover {
   background-color: #ffdb9c;
   cursor: pointer;
 }
@@ -89,6 +101,10 @@
 .opt {
   background-color: #ffb144;
   justify-content: space-evenly;
+}
+
+.opt.selected {
+  background-color: #cccccc;
 }
 
 .ans.filled {
