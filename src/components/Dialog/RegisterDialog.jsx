@@ -1,12 +1,13 @@
 import React from "react";
 import "./Dialog.css";
 import axios from "axios";
+import Swal from "sweetalert2"; // 引入 SweetAlert2
 
 const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
   if (!isOpen) return null; // 如果未打開，則不渲染彈出視窗
 
   const keyDown = (event) => {
-    if (event.key == "Enter") {
+    if (event.key === "Enter") {
       getQuote();
     }
   };
@@ -32,20 +33,48 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
       birth,
     };
 
+    // 發送註冊請求
     axios({
       method: "post",
       url: "http://localhost:5262/api/User/Register",
-      data: JSON.stringify(memberdata),
+      data: memberdata,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
       },
     })
       .then((res) => {
         console.log(res);
-        onclose();
+        Swal.fire({
+          icon: "success",
+          title: "註冊成功",
+          text: "您的帳號已成功註冊！",
+          confirmButtonColor: "#d5ad8a",
+        });
+        onClose(); // 成功後關閉註冊對話框
       })
       .catch((err) => {
         console.log(err);
+        // 檢查是否是帳號重複的錯誤
+        if (
+          err.response &&
+          err.response.data &&
+          err.response.data.errorMessage === "帳號重複"
+        ) {
+          Swal.fire({
+            icon: "error",
+            title: "註冊失敗",
+            text: "此帳號已被註冊，請使用其他帳號！",
+            confirmButtonColor: "#d5ad8a",
+          });
+        } else {
+          // 處理其他錯誤
+          Swal.fire({
+            icon: "error",
+            title: "發生錯誤",
+            text: "請稍後再試或聯繫支援人員。",
+            confirmButtonColor: "#d5ad8a",
+          });
+        }
       });
   };
 
