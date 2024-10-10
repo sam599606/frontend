@@ -37,7 +37,8 @@ const Headbar = () => {
             </ul>
           </li>
           <li>
-            <a href="#">職涯診斷測驗</a> {/* 還沒定義路徑 */}
+            <Link to="/test">職涯診斷測驗</Link>
+            {/* 還沒定義路徑 */}
             <ul>
               <li>
                 <a href="#">農業</a>

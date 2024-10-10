@@ -1,0 +1,30 @@
+import React from "react";
+import { Link } from "react-router-dom"; // 使用 React Router 進行頁面跳轉
+import styles from "./TestIntro.module.css"; // 使用模組樣式
+
+const TestIntro = () => {
+  return (
+    <div className={styles.wrap}>
+      {" "}
+      {/* 使用 styles.wrap 來引用模組樣式 */}
+      <div className={styles.intro}>
+        <h2>測驗說明</h2>
+        <p>
+          測驗一共20題，時間為50分鐘，
+          <br />
+          在規定時間內，將題目完成，在按下送出，即為成功。
+        </p>
+      </div>
+      <div className={styles.intro}>
+        <h2>答題方式</h2>
+        <p>將選項拖曳至空格內，並依喜好程度，去排順序。</p>
+      </div>
+      {/* 使用 styles.go 來引用模組樣式 */}
+      <Link to="/test-testing" className={styles.go}>
+        測驗開始
+      </Link>
+    </div>
+  );
+};
+
+export default TestIntro;
