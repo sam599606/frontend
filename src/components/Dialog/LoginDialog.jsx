@@ -37,6 +37,8 @@ const LoginDialog = ({ isOpen, onClose, onRegister }) => {
         console.log(token);
         localStorage.setItem("token", token);
         localStorage.setItem("acc", account);
+
+        alert('登入成功')
         onClose();
       })
       .catch((err) => {

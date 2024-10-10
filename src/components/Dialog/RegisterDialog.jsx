@@ -5,12 +5,14 @@ import axios from "axios";
 const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
   if (!isOpen) return null; // 如果未打開，則不渲染彈出視窗
 
+  //#region Enter觸發事件
   const keyDown = (event) => {
     if (event.key == "Enter") {
       getQuote();
     }
   };
 
+  //#region 註冊
   const getQuote = () => {
     let account = document.getElementById("account").value;
     let name = document.getElementById("name").value;
@@ -42,13 +44,14 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
     })
       .then((res) => {
         console.log(res);
-        onclose();
+        onLogin();
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  //#region return
   return (
     <>
       {/* 模態背景層 */}
