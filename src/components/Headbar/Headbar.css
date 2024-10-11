@@ -85,6 +85,10 @@ header a {
     display: flex;
 }
 
+#userinfo{
+    margin-right: 10px;
+}
+
 header a:not(#logo):hover {
     text-decoration: underline;
 }
@@ -171,4 +175,8 @@ select+label {
     position: absolute;
     top: 20px;
     right: 20px;
+}
+
+.invisible{
+    display: none;
 }

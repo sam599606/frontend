@@ -85,6 +85,11 @@ const InfoDialog = ({ isOpen, onClose }) => {
       });
   };
 
+  const logout = () => {
+    localStorage.removeItem('token')
+    onclose
+  }
+
   //#region return
   return (
     <>
@@ -196,6 +201,7 @@ const InfoDialog = ({ isOpen, onClose }) => {
           <button type="submit" className="submit-button" onClick={EditInfo}>
             儲存
           </button>
+          <button className="submit-button" onClick={logout}>登出</button>
         </div>
       </dialog>
     </>
