@@ -13,11 +13,15 @@ const Headbar = () => {
 
   let token = localStorage.getItem("token");
   console.log(token);
-  // let userInfo = document.getElementById("userinfo")
-  // let loginBtn = document.getElementById("login")
-  // if(token == null){
-  //   loginBtn = setInvisible(true)
-  // }
+  let userInfo = document.getElementById("userinfo")
+  let loginBtn = document.getElementById("login")
+  function invisibleTF() {
+    if(token == null){
+      // loginBtn = setInvisible(true)
+    }
+  }
+  invisibleTF()
+  
 
   //#region return
   return (
