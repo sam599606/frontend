@@ -87,7 +87,7 @@ const InfoDialog = ({ isOpen, onClose }) => {
 
   const logout = () => {
     localStorage.removeItem('token')
-    onclose
+    document.getElementById('close').click()
   }
 
   //#region return

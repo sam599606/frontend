@@ -11,16 +11,22 @@ const Headbar = () => {
   const [isInfoOpen, setInfoOpen] = useState(false);
   const [isInvisible, setInvisible] = useState(false);
 
-  let token = localStorage.getItem("token");
-  console.log(token);
-  let userInfo = document.getElementById("userinfo")
-  let loginBtn = document.getElementById("login")
+  
+  
   function invisibleTF() {
+    let token = localStorage.getItem("token");
+    console.log(token);
+    let userInfo = document.getElementById("userinfo")
+    let loginBtn = document.getElementById("login")
     if(token == null){
-      // loginBtn = setInvisible(true)
+      loginBtn = setInvisible(true)
+      userInfo = setInvisible(false)
+    }
+    else {
+      loginBtn = setInvisible(false)
+      userInfo = setInvisible(true)
     }
   }
-  invisibleTF()
   
 
   //#region return
@@ -96,7 +102,9 @@ const Headbar = () => {
       {/* 登入&註冊介面切換 */}
       <LoginDialog
         isOpen={isLoginOpen}
-        onClose={() => setLoginOpen(false)}
+        onClose={() => {
+          setLoginOpen(false);
+          invisibleTF()}}
         onRegister={() => {
           setLoginOpen(false);
           setRegisterOpen(true);
@@ -111,7 +119,10 @@ const Headbar = () => {
         }}
       />
 
-      <InfoDialog isOpen={isInfoOpen} onClose={() => setInfoOpen(false)} />
+      <InfoDialog isOpen={isInfoOpen} onClose={() => {
+        setInfoOpen(false)
+        invisibleTF()
+      }} />
     </>
   );
 };
