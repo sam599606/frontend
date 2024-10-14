@@ -6,7 +6,7 @@ import styles from "./TestTesting.module.css";
 let option = [];
 let seletionArr = [];
 let ts_idArr = [];
-let ts_id = []
+let ts_id = [];
 let t_id;
 
 const TestTesting = () => {
@@ -81,14 +81,18 @@ const TestTesting = () => {
     setSelectedAnswers((prev) => [...prev, option]); // 加入已選擇的選項
 
     // 更新 answerLog，記錄第幾題選擇了什麼並放在哪個槽位
-    setAnswerLog((prev) => [
-      ...prev,
-      {
-        questionId: currentQuestion,
-        option,
-        slot: type,
-      },
-    ]);
+    setAnswerLog((prev) => {
+      const updatedLog = [...prev];
+      const questionIndex = currentQuestion - 1; // 當前題目索引
+      if (!updatedLog[questionIndex]) {
+        updatedLog[questionIndex] = {
+          questionId: currentQuestion,
+          answers: {},
+        };
+      }
+      updatedLog[questionIndex].answers[type] = option;
+      return updatedLog;
+    });
   };
 
   const handleRemove = (type) => {
@@ -105,17 +109,21 @@ const TestTesting = () => {
   };
 
   const handlePreviousQuestion = () => {
-    setCurrentQuestion((prev) => prev - 1); // 切換到上一題
+    setCurrentQuestion((prev) => {
+      const newQuestion = prev - 1;
+      restorePreviousAnswer(newQuestion); // 還原上一題的答案
+      return newQuestion;
+    });
   };
 
   const handleNextQuestion = () => {
     if (currentQuestion < questions.length) {
-      // 切換到下一題，並清空上方槽位和已選擇的答案
-      setCurrentQuestion((prev) => prev + 1);
-      setSelectedAnswers([]); // 清空選擇的答案
-      setUsedAnswers({}); // 清空所有槽位
+      setCurrentQuestion((prev) => {
+        const newQuestion = prev + 1;
+        restorePreviousAnswer(newQuestion); // 還原下一題的答案
+        return newQuestion;
+      });
     } else {
-      // 測驗結束，顯示答案並在 console 中輸出
       Swal.fire({
         icon: "success",
         title: "測驗完成",
@@ -123,6 +131,22 @@ const TestTesting = () => {
         confirmButtonColor: "#d5ad8a",
       });
       console.log("使用者作答紀錄:", answerLog); // console.log 出所有的作答紀錄
+    }
+  };
+
+  const restorePreviousAnswer = (questionNumber) => {
+    const questionIndex = questionNumber - 1;
+    const savedAnswer = answerLog[questionIndex];
+
+    if (savedAnswer) {
+      const restoredAnswers = savedAnswer.answers || {};
+      setUsedAnswers(restoredAnswers);
+
+      const restoredSelectedAnswers = Object.values(restoredAnswers); // 把已選擇的答案取出來
+      setSelectedAnswers(restoredSelectedAnswers);
+    } else {
+      setUsedAnswers({}); // 沒有紀錄則清空
+      setSelectedAnswers([]);
     }
   };
 
