@@ -1,0 +1,218 @@
+.result {
+  width: 98%;
+  height: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.result::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* 滾動條的軌道（背景）樣式 */
+.result::-webkit-scrollbar-track {
+  background: #f4eee2;
+  /* 軌道背景顏色 */
+  border-radius: 10px;
+  /* 軌道的圓角 */
+}
+
+/* 滾動條的滑塊（拖動塊）的樣式 */
+.result::-webkit-scrollbar-thumb {
+  background-color: #d5ad8a;
+  /* 滑塊的顏色 */
+  border-radius: 10px;
+  /* 滑塊的圓角 */
+  border: 3px solid #f4eee2;
+  /* 滑塊周圍的邊框 */
+}
+
+.chart {
+  width: 90%;
+  height: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.holland,
+.mbti {
+  width: 45%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.title {
+  background-color: #ffe785;
+  color: #fdf0c6;
+  font-size: 36px;
+  width: 50%;
+  height: 15%;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* position: absolute;
+  left: 25%;
+  top: -7.5%; */
+  z-index: 1;
+  -webkit-text-stroke: 3px #745329;
+}
+
+.content {
+  background-color: #f4eee2;
+  width: 100%;
+  height: 400px;
+  padding: 0;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+  position: relative;
+  bottom: 7.5%;
+
+}
+
+.flipped .front {
+  transform: rotateY(180deg);
+}
+
+.flipped .back {
+  transform: rotateY(0);
+}
+
+.hollandecharts {
+  width: 100%;
+  height: 300px;
+}
+
+
+/* SVG and MBTI type-name styles */
+#type-name {
+  font-size: 24px;
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  transform: translate(-50%);
+}
+
+.front,
+.back {
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.6s;
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+#sort {
+  color: #298451;
+  font-size: 20px;
+  width: 80%;
+  height: 70%;
+}
+
+#sort>* {
+  width: 100%;
+  height: 25%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#sort p {
+  width: 15%;
+  text-align: center;
+}
+
+.bar {
+  width: 70%;
+  height: 40%;
+  border-radius: 30px;
+  position: relative;
+}
+
+.bar :first-of-type {
+  background-color: #ffb144;
+  width: 70%;
+  height: 100%;
+  border-radius: 30px;
+  position: absolute;
+  z-index: 1;
+}
+
+.bar :last-of-type {
+  background-color: #cfa876;
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  position: absolute;
+  z-index: 0;
+}
+
+#icons {
+  margin-top: 30px;
+  width: 80%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-wrap {
+  color: #a99479;
+  width: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon {
+  background-color: #f6cf80;
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon img {
+  width: 50%;
+  aspect-ratio: 1/1;
+}
+
+.flipbtn {
+  width: 100px;
+  margin-top: 10px;
+  background-color: #ffb144;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  top: 40%;
+  left: 40%;
+}
+
+.flipbtn:hover {
+  background-color: #d69233;
+}

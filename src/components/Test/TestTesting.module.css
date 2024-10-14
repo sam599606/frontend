@@ -30,17 +30,21 @@
 }
 
 .previousbtn {
-  padding: 10px 20px;
-  border-radius: 50%;
-  background-color: #ffb144;
-  font-size: 28px;
+
   position: absolute;
   bottom: 40px;
   left: 40px;
-  transition: background-color 0.3s ease;
+
 }
 
-.nextbtn {
+.nextbtn,
+.previousbtn,
+.sendoutbtn {
+  height: 50px;
+  width: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 10px 20px;
   border-radius: 50%;
   background-color: #ffb144;
@@ -52,6 +56,7 @@
 }
 
 .nextbtn:hover,
+.sendoutbtn:hover,
 .previousbtn:hover {
   background-color: #ffdb9c;
   cursor: pointer;
