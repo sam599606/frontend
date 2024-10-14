@@ -9,15 +9,15 @@ const getTest = () => {
     url: `http://localhost:5262/api/Test/TestList`,
   })
     .then((res) => {
+      let questions = res.data.result;
+      let jsondata = JSON.stringify(questions);
+      localStorage.setItem("questions", jsondata);
       console.log(res);
-      let questions = res.data.result
-      let jsondata = JSON.stringify(questions)
-      localStorage.setItem("questions", jsondata)
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-}
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 const TestIntro = () => {
   return (

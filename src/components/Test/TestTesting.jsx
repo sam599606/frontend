@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styles from "./TestTesting.module.css";
 import Swal from "sweetalert2";
 import axios from "axios";
+import styles from "./TestTesting.module.css";
 
 let option = [];
 let seletionArr = [];
+let ts_idArr = [];
+let ts_id = []
 let t_id;
 
 const TestTesting = () => {
   const [currentQuestion, setCurrentQuestion] = useState(1); // 當前題目進度
   const [selectedAnswers, setSelectedAnswers] = useState([]); // 儲存已選擇的選項卡
   const [usedAnswers, setUsedAnswers] = useState({}); // 記錄每個位置上的選項
+  const [answerLog, setAnswerLog] = useState([]); // 新增陣列來記錄每一題的選項與槽位
 
   //#region 抓取題目
   let que = localStorage.getItem("questions");
@@ -36,11 +38,14 @@ const TestTesting = () => {
     })
       .then((res) => {
         seletionArr = [];
+        ts_idArr = [];
         for (let i = 0; i <= res.data.result.length - 1; i++) {
           seletionArr.push(res.data.result[i].seletion);
+          ts_idArr.push(res.data.result[i].ts_id);
         }
         option[i] = seletionArr;
-        if (i == t_idList.length - 1) {
+        ts_id[i] = ts_idArr;
+        if (i === t_idList.length - 1) {
           localStorage.setItem("option", JSON.stringify(option));
         }
       })
@@ -74,36 +79,50 @@ const TestTesting = () => {
       [type]: option,
     }));
     setSelectedAnswers((prev) => [...prev, option]); // 加入已選擇的選項
+
+    // 更新 answerLog，記錄第幾題選擇了什麼並放在哪個槽位
+    setAnswerLog((prev) => [
+      ...prev,
+      {
+        questionId: currentQuestion,
+        option,
+        slot: type,
+      },
+    ]);
   };
 
   const handleRemove = (type) => {
     const removedOption = usedAnswers[type];
     setSelectedAnswers((prev) => prev.filter((opt) => opt !== removedOption)); // 從已選擇的選項中移除
     setUsedAnswers((prev) => ({ ...prev, [type]: null })); // 清空該槽位
+
+    // 移除 answerLog 中該選項的紀錄
+    setAnswerLog((prev) =>
+      prev.filter(
+        (log) => !(log.questionId === currentQuestion && log.slot === type)
+      )
+    );
   };
 
   const handlePreviousQuestion = () => {
     setCurrentQuestion((prev) => prev - 1); // 切換到上一題
-    setSelectedAnswers([]); // 清空選擇的答案
-    setUsedAnswers({}); // 清空選項槽位
   };
 
   const handleNextQuestion = () => {
     if (currentQuestion < questions.length) {
-      setCurrentQuestion((prev) => prev + 1); // 切換到下一題
+      // 切換到下一題，並清空上方槽位和已選擇的答案
+      setCurrentQuestion((prev) => prev + 1);
       setSelectedAnswers([]); // 清空選擇的答案
-      setUsedAnswers({}); // 清空選項槽位
-    } else if (currentQuestion == questions.length) {
-      setCurrentQuestion((prev) => prev + 1); // 切換到下一題
-      setSelectedAnswers([]); // 清空選擇的答案
-      setUsedAnswers({}); // 清空選項槽位
+      setUsedAnswers({}); // 清空所有槽位
     } else {
+      // 測驗結束，顯示答案並在 console 中輸出
       Swal.fire({
         icon: "success",
         title: "測驗完成",
         text: "你已經完成了所有的題目！",
         confirmButtonColor: "#d5ad8a",
       });
+      console.log("使用者作答紀錄:", answerLog); // console.log 出所有的作答紀錄
     }
   };
 
@@ -191,7 +210,7 @@ const TestTesting = () => {
       )}
 
       {/* 顯示送出按鈕 */}
-      {currentQuestion == questions.length && (
+      {currentQuestion === questions.length && (
         <div className={`${styles.sendoutbtn}`} onClick={handleNextQuestion}>
           <span>送出</span>
         </div>
