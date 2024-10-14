@@ -85,18 +85,25 @@ header a {
     display: flex;
 }
 
+#userinfo{
+    margin-right: 10px;
+}
+
 header a:not(#logo):hover {
     text-decoration: underline;
 }
 
 #logo {
+<<<<<<< HEAD
     width: 12%;
     min-width: 170px;
+=======
+    width: 10%;
+>>>>>>> 305e52614644d6820c5f6d8e5fcfde6611725f4d
     height: calc(100% - 20px);
     padding: 10px 20px;
     padding-left: 10px;
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
@@ -173,4 +180,8 @@ select+label {
     position: absolute;
     top: 20px;
     right: 20px;
+}
+
+.invisible{
+    display: none;
 }
