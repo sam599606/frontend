@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./TestTesting.module.css";
 import Swal from "sweetalert2";
 
@@ -187,9 +188,18 @@ const TestTesting = () => {
       )}
 
       {/* 顯示下一題按鈕 */}
-      <div className={`${styles.nextbtn}`} onClick={handleNextQuestion}>
-        <span>下一題</span>
-      </div>
+      {currentQuestion < questions.length && (
+        <div className={`${styles.nextbtn}`} onClick={handleNextQuestion}>
+          <span>下一題</span>
+        </div>
+      )}
+
+      {/* 顯示送出按鈕 */}
+      {currentQuestion == questions.length && (
+        <div className={`${styles.sendoutbtn}`} onClick={handleNextQuestion}>
+          <span>送出</span>
+        </div>
+      )}
     </div>
   );
 };

@@ -39,3 +39,14 @@ footer {
   justify-content: center;
   text-align: center;
 }
+
+.testsign {
+  color: rgb(247, 162, 5);
+  font-size: 24px;
+  border: #ffb144 solid 5px;
+  border-radius: 10px;
+  padding: 5px 10px;
+  position: absolute;
+  top: 100px;
+  right: 40px;
+}

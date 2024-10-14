@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "./Dummie_more_Layout.module.css";
 
 const Dummie_more_Layout = ({ children }) => {
   return (
     <div className={styles.wrap}>
       <div className={styles.tags}>
-        <a href="#" className={styles.tag}>
+        <Link to="/dummie/class" className={styles.tag}>
           課程
-        </a>
+        </Link>
         <a href="#" className={styles.tag}>
           補助
         </a>

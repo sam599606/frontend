@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // 引入 Link 組件
+import { Link } from "react-router-dom";
 import "./Headbar.css";
 import LoginDialog from "../Dialog/LoginDialog";
 import RegisterDialog from "../Dialog/RegisterDialog";
@@ -16,7 +16,7 @@ const Headbar = () => {
     <>
       <header>
         <Link to="/" id="logo">
-          <img src="src/images/logo.png" alt="logo" />
+          <img src="/src/images/logo.png" alt="logo" />
           <h3>職得期待</h3>
         </Link>
 
@@ -31,10 +31,10 @@ const Headbar = () => {
                 <Link to="/dummie/class">課程</Link>
               </li>
               <li>
-                <a href="#">補助</a> {/* 還沒定義路徑 */}
+                <Link to="0">補助</Link>
               </li>
               <li>
-                <a href="#">證照</a> {/* 還沒定義路徑 */}
+                <Link to="0">證照</Link>
               </li>
             </ul>
           </li>
@@ -43,13 +43,10 @@ const Headbar = () => {
             {/* 還沒定義路徑 */}
             <ul>
               <li>
-                <a href="#">農業</a>
+                <Link to="/test">開始測驗</Link>
               </li>
               <li>
-                <a href="#">工業</a>
-              </li>
-              <li>
-                <a href="#">商業</a>
+                <Link to="/test-history">測驗紀錄</Link>
               </li>
             </ul>
           </li>
@@ -58,7 +55,7 @@ const Headbar = () => {
         {/* 開啟個人資訊彈窗 */}
         <a href="#" id="userinfo" onClick={() => setInfoOpen(true)}>
           <img
-            src="src/images/avatar.png"
+            src="/src/images/avatar.png"
             alt="avatar"
             width="40"
             height="40"
