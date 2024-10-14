@@ -15,7 +15,6 @@ const Headbar = () => {
   
   function invisibleTF() {
     let token = localStorage.getItem("token");
-    console.log(token);
     let userInfo = document.getElementById("userinfo")
     let loginBtn = document.getElementById("login")
     if(token == null){

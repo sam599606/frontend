@@ -1,6 +1,7 @@
 import React from "react";
 import "./Dialog.css";
 import axios from "axios";
+import Swal from "sweetalert2"; // 引入 SweetAlert2
 
 const LoginDialog = ({ isOpen, onClose, onRegister }) => {
   if (!isOpen) return null; // 如果未打開，則不渲染彈出視窗
@@ -34,15 +35,43 @@ const LoginDialog = ({ isOpen, onClose, onRegister }) => {
         console.log(res);
 
         let token = res.data.result;
-        console.log(token);
         localStorage.setItem("token", token);
         localStorage.setItem("acc", account);
 
-        alert('登入成功')
+        Swal.fire({
+          icon: "success",
+          title: "登入成功",
+          text: "您的帳號已成功登入！",
+          confirmButtonColor: "#d5ad8a",
+        });
         onClose();
       })
       .catch((err) => {
         console.log(err);
+        if(err.response.data.errorMessage == "密碼錯誤"){
+          Swal.fire({
+            icon: "error",
+            title: "登入失敗",
+            text: "密碼輸入錯誤！",
+            confirmButtonColor: "#d5ad8a",
+          });
+        }
+        if(err.response.data.errorMessage == "無此帳號"){
+          Swal.fire({
+            icon: "error",
+            title: "登入失敗",
+            text: "查無此帳號！",
+            confirmButtonColor: "#d5ad8a",
+          });
+        }
+        if(err.response.data.errorMessage == "信箱尚未驗證請先去驗證"){
+          Swal.fire({
+            icon: "error",
+            title: "登入失敗",
+            text: "信箱尚未驗證請先去驗證！",
+            confirmButtonColor: "#d5ad8a",
+          });
+        }
       });
   };
 
@@ -83,6 +112,9 @@ const LoginDialog = ({ isOpen, onClose, onRegister }) => {
               required
             />
             <label>密碼</label>
+          </div>
+          <div className="forgotBlock">
+            <button id="forgot">忘記密碼</button>
           </div>
         </div>
         <button id="submit" onClick={getQuote}>

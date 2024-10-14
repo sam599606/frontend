@@ -94,10 +94,11 @@ header a:not(#logo):hover {
 }
 
 #logo {
-    width: 10%;
+    width: 12%;
     height: calc(100% - 20px);
     padding: 10px 20px;
     padding-left: 10px;
+    margin-left: 10px;
     display: flex;
     align-items: center;
 }
@@ -106,6 +107,7 @@ header a:not(#logo):hover {
     color: #fff;
     text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
     padding-bottom: 5px;
+    margin-left: 10px;
 }
 
 #logo img {

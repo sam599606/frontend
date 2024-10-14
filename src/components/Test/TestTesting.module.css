@@ -9,6 +9,11 @@
   position: relative;
 }
 
+.wrap h1{
+  width: 80%;
+  margin-top: -50px;
+}
+
 .likerow,
 .dislikerow {
   width: 100%;
@@ -53,8 +58,9 @@
 }
 
 .targetContainer {
-  width: 30%;
+  width: 50%;
   height: 30%;
+  margin-top: -120px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -62,8 +68,9 @@
 }
 
 .sourceContainer {
-  width: 40%;
+  width: 50%;
   height: 30%;
+  margin-top: -140px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -71,9 +78,10 @@
 
 .ans,
 .opt {
-  width: 130px;
-  height: 65px;
-  border-radius: 50px;
+  width: 160px;
+  height: 80px;
+  margin: 10px 0;
+  border-radius: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -101,6 +109,7 @@
 .opt {
   background-color: #ffb144;
   justify-content: space-evenly;
+  text-align: center;
 }
 
 .opt.selected {
@@ -110,6 +119,7 @@
 .ans.filled {
   background-color: #ffb144;
   background-image: none;
+  text-align: center;
 }
 
 .dislike.filled {

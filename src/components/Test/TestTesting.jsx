@@ -1,73 +1,66 @@
 import React, { useState } from "react";
 import styles from "./TestTesting.module.css";
 import Swal from "sweetalert2";
+import axios from "axios";
 
-// 模擬題目及選項的數據（可以用於測試）
-const questions = [
-  {
-    id: 1,
-    question: "你喜歡哪些食物？",
-    options: ["蘋果", "香蕉", "橙子", "牛排", "壽司", "蛋糕", "披薩", "沙拉"],
-  },
-  {
-    id: 2,
-    question: "你不喜歡哪些活動？",
-    options: ["游泳", "跑步", "登山", "讀書", "唱歌", "跳舞", "滑雪", "畫畫"],
-  },
-  {
-    id: 3,
-    question: "哪些是你常做的休閒活動？",
-    options: ["看電影", "運動", "購物", "打電動", "看書", "健身", "烹飪"],
-  },
-  {
-    id: 4,
-    question: "你最常使用哪些社交媒體平台？",
-    options: [
-      "Facebook",
-      "Instagram",
-      "Twitter",
-      "YouTube",
-      "TikTok",
-      "Snapchat",
-    ],
-  },
-  {
-    id: 5,
-    question: "你偏好哪些音樂類型？",
-    options: ["流行", "搖滾", "古典", "電子", "爵士", "嘻哈"],
-  },
-  {
-    id: 6,
-    question: "你會選擇哪種交通工具？",
-    options: ["汽車", "自行車", "巴士", "火車", "飛機", "步行"],
-  },
-  {
-    id: 7,
-    question: "你喜歡哪些類型的電影？",
-    options: ["喜劇", "恐怖", "動作", "科幻", "愛情", "紀錄片"],
-  },
-  {
-    id: 8,
-    question: "哪些是你常喝的飲料？",
-    options: ["咖啡", "茶", "牛奶", "果汁", "汽水", "水"],
-  },
-  {
-    id: 9,
-    question: "你喜歡的旅遊方式是什麼？",
-    options: ["自助旅行", "團體旅遊", "豪華旅行", "背包旅行", "露營", "登山"],
-  },
-  {
-    id: 10,
-    question: "你喜歡哪些寵物？",
-    options: ["狗", "貓", "兔子", "魚", "鳥", "倉鼠"],
-  },
-];
+let option = []
+let seletionArr = []
+let t_id
 
 const TestTesting = () => {
   const [currentQuestion, setCurrentQuestion] = useState(1); // 當前題目進度
   const [selectedAnswers, setSelectedAnswers] = useState([]); // 儲存已選擇的選項卡
   const [usedAnswers, setUsedAnswers] = useState({}); // 記錄每個位置上的選項
 
+  //#region 抓取題目
+  let que = localStorage.getItem("questions")
+  let parse = JSON.parse(que)
+  let t_idList = []
+  let questionList = []
+  for(let i = 0; i <= parse.length - 1; i++){
+    t_idList.push(parse[i].t_id)
+    questionList.push(parse[i].question)
+  }
+  
+  for(let i = 0; i <= t_idList.length - 1; i++) {
+    t_id = t_idList[i]
+    let object = {t_id}
+    axios({
+      method: "post",
+      url: "http://localhost:5262/api/Test/GetTestSeletion",
+      data: JSON.stringify(object),
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+    })
+    .then((res) => {
+        seletionArr = []
+        for(let i = 0; i <= res.data.result.length - 1; i++){
+          seletionArr.push(res.data.result[i].seletion)
+        }
+        option[i] = seletionArr
+        if(i==t_idList.length-1){
+          localStorage.setItem('option',JSON.stringify(option))
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  let test =JSON.parse(localStorage.getItem('option')) 
+
+  const questions = []
+  for(let i = 0; i <= test.length - 1; i++){
+    questions.push({
+      id: t_idList[i],
+      question: questionList[i],
+      options: test[i],
+    })
+  }
+
+  console.log(questions);
+
+//#region 做題
   const handleDragStart = (e, option) => {
     e.dataTransfer.setData("text", option); // 將選項卡的資料放入拖曳事件
   };
@@ -101,7 +94,13 @@ const TestTesting = () => {
       setCurrentQuestion((prev) => prev + 1); // 切換到下一題
       setSelectedAnswers([]); // 清空選擇的答案
       setUsedAnswers({}); // 清空選項槽位
-    } else {
+    } 
+    else if (currentQuestion == questions.length){
+      setCurrentQuestion((prev) => prev + 1); // 切換到下一題
+      setSelectedAnswers([]); // 清空選擇的答案
+      setUsedAnswers({}); // 清空選項槽位
+    }
+    else {
       Swal.fire({
         icon: "success",
         title: "測驗完成",
@@ -111,6 +110,9 @@ const TestTesting = () => {
     }
   };
 
+
+
+  //#region return
   return (
     <div className={styles.wrap}>
       <h1>{questions[currentQuestion - 1].question}</h1>

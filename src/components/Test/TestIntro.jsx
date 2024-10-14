@@ -1,6 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom"; // 使用 React Router 進行頁面跳轉
 import styles from "./TestIntro.module.css"; // 使用模組樣式
+import axios from "axios";
+
+const getTest = () => {
+  axios({
+    method: "get",
+    url: `http://localhost:5262/api/Test/TestList`,
+  })
+    .then((res) => {
+      console.log(res);
+      let questions = res.data.result
+      let jsondata = JSON.stringify(questions)
+      localStorage.setItem("questions", jsondata)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+}
 
 const TestIntro = () => {
   return (
@@ -23,6 +40,7 @@ const TestIntro = () => {
       <Link to="/test-testing" className={styles.go}>
         測驗開始
       </Link>
+      <button onClick={getTest}>123</button>
     </div>
   );
 };

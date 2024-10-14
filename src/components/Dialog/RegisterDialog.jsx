@@ -84,7 +84,7 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
         Swal.fire({
           icon: "success",
           title: "註冊成功",
-          text: "您的帳號已成功註冊！",
+          text: "請前往信箱收取驗證信！",
           confirmButtonColor: "#d5ad8a",
         });
         onClose(); // 成功後關閉註冊對話框

@@ -1,6 +1,8 @@
 import React from "react";
 import "./Dialog.css";
 import axios from "axios";
+import Swal from "sweetalert2"; // 引入 SweetAlert2
+import { Link } from "react-router-dom";
 
 const InfoDialog = ({ isOpen, onClose }) => {
   if (!isOpen) return null; // 如果未打開，則不渲染彈出視窗
@@ -85,9 +87,17 @@ const InfoDialog = ({ isOpen, onClose }) => {
       });
   };
 
+  //#region 登出
   const logout = () => {
     localStorage.removeItem('token')
+    Swal.fire({
+      icon: "success",
+      title: "登出成功",
+      text: "您的帳號已登出！",
+      confirmButtonColor: "#d5ad8a",
+    });
     document.getElementById('close').click()
+    
   }
 
   //#region return
@@ -201,7 +211,9 @@ const InfoDialog = ({ isOpen, onClose }) => {
           <button type="submit" className="submit-button" onClick={EditInfo}>
             儲存
           </button>
-          <button className="submit-button" onClick={logout}>登出</button>
+          <Link to="/" id="logout" onClick={logout}> 
+          登出
+          </Link>
         </div>
       </dialog>
     </>
