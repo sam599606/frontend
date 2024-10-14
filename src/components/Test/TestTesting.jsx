@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 import styles from "./TestTesting.module.css";
+import { useNavigate } from "react-router-dom";
 
 let option = [];
 let seletionArr = [];
@@ -14,16 +15,20 @@ const TestTesting = () => {
   const [selectedAnswers, setSelectedAnswers] = useState([]); // 儲存已選擇的選項卡
   const [usedAnswers, setUsedAnswers] = useState({}); // 記錄每個位置上的選項
   const [answerLog, setAnswerLog] = useState([]); // 新增陣列來記錄每一題的選項與槽位
+  const navigate = useNavigate();
 
   //#region 抓取題目
   let que = localStorage.getItem("questions");
   let parse = JSON.parse(que);
+  // console.log("parse:", parse);
   let t_idList = [];
   let questionList = [];
   for (let i = 0; i <= parse.length - 1; i++) {
     t_idList.push(parse[i].t_id);
     questionList.push(parse[i].question);
   }
+  // console.log("questionList:", questionList);
+  // console.log("questionList:", questionList);
 
   for (let i = 0; i <= t_idList.length - 1; i++) {
     t_id = t_idList[i];
@@ -116,7 +121,22 @@ const TestTesting = () => {
     });
   };
 
+  // 檢查是否已經填滿了 6 張選項卡
+  const isFilled = Object.values(usedAnswers).filter(Boolean).length === 6;
+
   const handleNextQuestion = () => {
+    // 檢查是否已填滿6張卡片
+    if (!isFilled) {
+      Swal.fire({
+        icon: "warning",
+        title: "請完成本題",
+        text: "你需要將6張選項卡全部放置到槽位中才可進入下一題！",
+        confirmButtonColor: "#d5ad8a",
+      });
+      return;
+    }
+
+    // 如果已經填滿了6張卡片，進入下一題
     if (currentQuestion < questions.length) {
       setCurrentQuestion((prev) => {
         const newQuestion = prev + 1;
@@ -129,6 +149,9 @@ const TestTesting = () => {
         title: "測驗完成",
         text: "你已經完成了所有的題目！",
         confirmButtonColor: "#d5ad8a",
+      }).then(() => {
+        // 當用戶點擊確認時跳轉到結果頁面
+        navigate("/test-result");
       });
       console.log("使用者作答紀錄:", answerLog); // console.log 出所有的作答紀錄
     }
@@ -153,7 +176,7 @@ const TestTesting = () => {
   //#region return
   return (
     <div className={styles.wrap}>
-      <h1>{questions[currentQuestion - 1].question}</h1>
+      <p>{questions[currentQuestion - 1].question}</p>
 
       {/* 題目進度 */}
       <div className={styles.counter}>
@@ -180,7 +203,6 @@ const TestTesting = () => {
             </div>
           ))}
         </div>
-
         <div className={`${styles.dislikerow}`}>
           {[0, 1, 2].map((idx) => (
             <div
@@ -228,14 +250,22 @@ const TestTesting = () => {
 
       {/* 顯示下一題按鈕 */}
       {currentQuestion < questions.length && (
-        <div className={`${styles.nextbtn}`} onClick={handleNextQuestion}>
+        <div
+          className={`${styles.nextbtn} ${!isFilled ? styles.disabled : ""}`}
+          onClick={handleNextQuestion}
+          // style={{ pointerEvents: isFilled ? "auto" : "none" }} // 禁止點擊
+        >
           <span>下一題</span>
         </div>
       )}
 
       {/* 顯示送出按鈕 */}
       {currentQuestion === questions.length && (
-        <div className={`${styles.sendoutbtn}`} onClick={handleNextQuestion}>
+        <div
+          className={`${styles.sendoutbtn} ${!isFilled ? styles.disabled : ""}`}
+          onClick={handleNextQuestion}
+          // style={{ pointerEvents: isFilled ? "auto" : "none" }} // 禁止點擊
+        >
           <span>送出</span>
         </div>
       )}
