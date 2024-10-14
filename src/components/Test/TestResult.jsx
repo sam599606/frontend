@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ReactECharts from "echarts-for-react";
+// import ReactECharts from "echarts-for-react";
 import styles from "./TestResult.module.css";
 
 const TestResult = () => {

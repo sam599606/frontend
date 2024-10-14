@@ -4,9 +4,9 @@ import styles from "./TestTesting.module.css";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-let option = []
-let seletionArr = []
-let t_id
+let option = [];
+let seletionArr = [];
+let t_id;
 
 const TestTesting = () => {
   const [currentQuestion, setCurrentQuestion] = useState(1); // 當前題目進度
@@ -14,18 +14,18 @@ const TestTesting = () => {
   const [usedAnswers, setUsedAnswers] = useState({}); // 記錄每個位置上的選項
 
   //#region 抓取題目
-  let que = localStorage.getItem("questions")
-  let parse = JSON.parse(que)
-  let t_idList = []
-  let questionList = []
-  for(let i = 0; i <= parse.length - 1; i++){
-    t_idList.push(parse[i].t_id)
-    questionList.push(parse[i].question)
+  let que = localStorage.getItem("questions");
+  let parse = JSON.parse(que);
+  let t_idList = [];
+  let questionList = [];
+  for (let i = 0; i <= parse.length - 1; i++) {
+    t_idList.push(parse[i].t_id);
+    questionList.push(parse[i].question);
   }
-  
-  for(let i = 0; i <= t_idList.length - 1; i++) {
-    t_id = t_idList[i]
-    let object = {t_id}
+
+  for (let i = 0; i <= t_idList.length - 1; i++) {
+    t_id = t_idList[i];
+    let object = { t_id };
     axios({
       method: "post",
       url: "http://localhost:5262/api/Test/GetTestSeletion",
@@ -34,34 +34,32 @@ const TestTesting = () => {
         "Content-Type": "application/json; charset=utf-8",
       },
     })
-    .then((res) => {
-        seletionArr = []
-        for(let i = 0; i <= res.data.result.length - 1; i++){
-          seletionArr.push(res.data.result[i].seletion)
+      .then((res) => {
+        seletionArr = [];
+        for (let i = 0; i <= res.data.result.length - 1; i++) {
+          seletionArr.push(res.data.result[i].seletion);
         }
-        option[i] = seletionArr
-        if(i==t_idList.length-1){
-          localStorage.setItem('option',JSON.stringify(option))
+        option[i] = seletionArr;
+        if (i == t_idList.length - 1) {
+          localStorage.setItem("option", JSON.stringify(option));
         }
       })
       .catch((err) => {
         console.log(err);
       });
   }
-  let test =JSON.parse(localStorage.getItem('option')) 
+  let test = JSON.parse(localStorage.getItem("option"));
 
-  const questions = []
-  for(let i = 0; i <= test.length - 1; i++){
+  const questions = [];
+  for (let i = 0; i <= test.length - 1; i++) {
     questions.push({
       id: t_idList[i],
       question: questionList[i],
       options: test[i],
-    })
+    });
   }
 
-  console.log(questions);
-
-//#region 做題
+  //#region 做題
   const handleDragStart = (e, option) => {
     e.dataTransfer.setData("text", option); // 將選項卡的資料放入拖曳事件
   };
@@ -95,13 +93,11 @@ const TestTesting = () => {
       setCurrentQuestion((prev) => prev + 1); // 切換到下一題
       setSelectedAnswers([]); // 清空選擇的答案
       setUsedAnswers({}); // 清空選項槽位
-    } 
-    else if (currentQuestion == questions.length){
+    } else if (currentQuestion == questions.length) {
       setCurrentQuestion((prev) => prev + 1); // 切換到下一題
       setSelectedAnswers([]); // 清空選擇的答案
       setUsedAnswers({}); // 清空選項槽位
-    }
-    else {
+    } else {
       Swal.fire({
         icon: "success",
         title: "測驗完成",
@@ -110,8 +106,6 @@ const TestTesting = () => {
       });
     }
   };
-
-
 
   //#region return
   return (

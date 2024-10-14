@@ -56,10 +56,6 @@ header li {
 
 header li:hover {
     background-color: #f6cf80;
-
-    >a {
-        text-decoration: underline;
-    }
 }
 
 header li ul {
@@ -87,10 +83,6 @@ header a {
 
 #userinfo {
     margin-right: 10px;
-}
-
-header a:not(#logo):hover {
-    text-decoration: underline;
 }
 
 #logo {

@@ -92,6 +92,10 @@
   justify-content: center;
 }
 
+.opt{
+  cursor: move;
+}
+
 .ans {
   background-image: url('../../images/thumb3.png');
   background-repeat: no-repeat;

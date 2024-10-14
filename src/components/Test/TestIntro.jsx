@@ -37,10 +37,9 @@ const TestIntro = () => {
         <p>將下方選項拖曳至上方空格內，並依喜好程度，去排順序。</p>
       </div>
       {/* 使用 styles.go 來引用模組樣式 */}
-      <Link to="/test-testing" className={styles.go}>
+      <Link to="/test-testing" className={styles.go} onClick={getTest}>
         測驗開始
       </Link>
-      <button onClick={getTest}>123</button>
     </div>
   );
 };
