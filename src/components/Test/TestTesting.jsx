@@ -10,6 +10,7 @@ let ts_idArr = [];
 let ts_id = [];
 let t_id;
 
+
 const TestTesting = () => {
   const [currentQuestion, setCurrentQuestion] = useState(1); // 當前題目進度
   const [selectedAnswers, setSelectedAnswers] = useState([]); // 儲存已選擇的選項卡
@@ -20,15 +21,12 @@ const TestTesting = () => {
   //#region 抓取題目
   let que = localStorage.getItem("questions");
   let parse = JSON.parse(que);
-  // console.log("parse:", parse);
   let t_idList = [];
   let questionList = [];
   for (let i = 0; i <= parse.length - 1; i++) {
     t_idList.push(parse[i].t_id);
     questionList.push(parse[i].question);
   }
-  // console.log("questionList:", questionList);
-  // console.log("questionList:", questionList);
 
   for (let i = 0; i <= t_idList.length - 1; i++) {
     t_id = t_idList[i];
@@ -52,22 +50,25 @@ const TestTesting = () => {
         ts_id[i] = ts_idArr;
         if (i === t_idList.length - 1) {
           localStorage.setItem("option", JSON.stringify(option));
-        }
+          localStorage.setItem("ts_id",JSON.stringify(ts_id))
+        }        
       })
       .catch((err) => {
         console.log(err);
       });
   }
   let test = JSON.parse(localStorage.getItem("option"));
+  let ts_id = JSON.parse(localStorage.getItem("ts_id"));
 
   const questions = [];
-  for (let i = 0; i <= test.length - 1; i++) {
+  for (let i = 0; i <= questionList.length - 1; i++) {
     questions.push({
       id: t_idList[i],
       question: questionList[i],
       options: test[i],
     });
   }
+
 
   //#region 做題
   const handleDragStart = (e, option) => {
@@ -85,6 +86,8 @@ const TestTesting = () => {
     }));
     setSelectedAnswers((prev) => [...prev, option]); // 加入已選擇的選項
 
+
+//#region 問題
     // 更新 answerLog，記錄第幾題選擇了什麼並放在哪個槽位
     setAnswerLog((prev) => {
       const updatedLog = [...prev];
@@ -126,15 +129,15 @@ const TestTesting = () => {
 
   const handleNextQuestion = () => {
     // 檢查是否已填滿6張卡片
-    if (!isFilled) {
-      Swal.fire({
-        icon: "warning",
-        title: "請完成本題",
-        text: "你需要將6張選項卡全部放置到槽位中才可進入下一題！",
-        confirmButtonColor: "#d5ad8a",
-      });
-      return;
-    }
+    // if (!isFilled) {
+    //   Swal.fire({
+    //     icon: "warning",
+    //     title: "請完成本題",
+    //     text: "你需要將6張選項卡全部放置到槽位中才可進入下一題！",
+    //     confirmButtonColor: "#d5ad8a",
+    //   });
+    //   return;
+    // }
 
     // 如果已經填滿了6張卡片，進入下一題
     if (currentQuestion < questions.length) {
@@ -151,9 +154,70 @@ const TestTesting = () => {
         confirmButtonColor: "#d5ad8a",
       }).then(() => {
         // 當用戶點擊確認時跳轉到結果頁面
-        navigate("/test-result");
+        // navigate("/test-result");
       });
-      console.log("使用者作答紀錄:", answerLog); // console.log 出所有的作答紀錄
+      console.log("使用者作答紀錄:", answerLog);
+      
+      let ua_goodList1 = []
+      let ua_goodList2 = []
+      let ua_goodList3 = []
+      let ua_badList1 = []
+      let ua_badList2 = []
+      let ua_badList3 = []
+
+      for(let i = 0; i <= answerLog.length - 1; i++){
+        for(let k = 0; k <= test.length - 1; k++){
+          for(let n = 0; n <= test[k].length - 1; n++){
+            if(answerLog[i].answers.like0 == test[k][n]){
+              ua_goodList1[i] = ts_id[k][n]
+            }
+            else if(answerLog[i].answers.like1 == test[k][n]){
+              ua_goodList2[i] = ts_id[k][n]
+            }
+            else if(answerLog[i].answers.like2 == test[k][n]){
+              ua_goodList3[i] = ts_id[k][n]
+            }
+            else if(answerLog[i].answers.dislike0 == test[k][n]){
+              ua_badList1[i] = ts_id[k][n]
+            }
+            else if(answerLog[i].answers.dislike1 == test[k][n]){
+              ua_badList2[i] = ts_id[k][n]
+            }
+            else if(answerLog[i].answers.dislike2 == test[k][n]){
+              ua_badList3[i] = ts_id[k][n]
+            }
+          }
+        }
+      }
+
+      ua_goodList1 = ua_goodList1.join()
+      ua_goodList2 = ua_goodList2.join()
+      ua_goodList3 = ua_goodList3.join()
+      ua_badList1 = ua_badList1.join()
+      ua_badList2 = ua_badList2.join()
+      ua_badList3 = ua_badList3.join()
+      
+      let abc = {
+        ua_goodList1,
+        ua_goodList2,
+        ua_goodList3,
+        ua_badList1,
+        ua_badList2,
+        ua_badList3
+      }
+      console.log(JSON.stringify(abc))
+      
+      axios({
+        method: "post",
+        url: `http://localhost:5262/api/UserAnswer/CreateAnswer`,
+        data: abc,
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -172,6 +236,7 @@ const TestTesting = () => {
       setSelectedAnswers([]);
     }
   };
+  
 
   //#region return
   return (

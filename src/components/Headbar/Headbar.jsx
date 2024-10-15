@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Headbar.css";
 import LoginDialog from "../Dialog/LoginDialog";
@@ -10,13 +10,12 @@ const Headbar = () => {
   const [isRegisterOpen, setRegisterOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
   const [isInvisible, setInvisible] = useState(false);
-
   
+  let token = localStorage.getItem("token");
+  let userInfo = document.getElementById("userinfo")
+  let loginBtn = document.getElementById("login")
   
   function invisibleTF() {
-    let token = localStorage.getItem("token");
-    let userInfo = document.getElementById("userinfo")
-    let loginBtn = document.getElementById("login")
     if(token == null){
       loginBtn = setInvisible(true)
       userInfo = setInvisible(false)
@@ -26,7 +25,9 @@ const Headbar = () => {
       userInfo = setInvisible(true)
     }
   }
-  
+  useEffect(() => {
+    invisibleTF()
+  })
 
   //#region return
   return (
