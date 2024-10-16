@@ -71,29 +71,24 @@ const Headbar = () => {
         </ul>
 
         {/* 開啟個人資訊彈窗 */}
-        <a
-          href="#"
-          id="userinfo"
-          onClick={() => setInfoOpen(true)}
-          className={`${isInvisible ? '' : 'invisible'}`}
-        >
           <img
             src="/src/images/avatar.png"
             alt="avatar"
             width="40"
             height="40"
+            id="userinfo"
+            onClick={() => setInfoOpen(true)}
+            className={`${isInvisible ? '' : 'invisible'}`}
           />
-        </a>
 
         {/* 開啟登入介面彈窗 */}
-        <a
-          href="#"
+        <button
           className={`login ${isInvisible ? 'invisible' : ''}`}
           id="login"
           onClick={() => setLoginOpen(true)}
         >
           登入
-        </a>
+        </button>
       </header>
 
       {/* 登入&註冊介面切換 */}

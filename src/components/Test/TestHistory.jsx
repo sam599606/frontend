@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./TestHistory.module.css";
+import axios from "axios";
 
 const TestHistory = () => {
+
+  
   const testData = [
     { date: `2024/9/13`, time: `05:17`, result: "MBTI" },
     { date: `2024/9/25`, time: `02:12`, result: "MBTI" },
@@ -15,8 +18,6 @@ const TestHistory = () => {
     { date: `2024/9/25`, time: `11:12`, result: "MBTI" },
     { date: `2024/9/14`, time: `15:37`, result: "MBTI" },
   ];
-
-  console.log(testData);
 
   return (
     <div className={styles.wrap}>

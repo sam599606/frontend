@@ -81,10 +81,17 @@ const InfoDialog = ({ isOpen, onClose }) => {
     })
       .then((res) => {
         console.log(res);
+        Swal.fire({
+          icon: "success",
+          title: "儲存成功",
+          text: "您的會員資料已修改！",
+          confirmButtonColor: "#d5ad8a",
+        });
       })
       .catch((err) => {
         console.log(err);
       });
+      document.getElementById('close').click()
   };
 
   //#region 登出
@@ -97,7 +104,6 @@ const InfoDialog = ({ isOpen, onClose }) => {
       confirmButtonColor: "#d5ad8a",
     });
     document.getElementById('close').click()
-    
   }
 
   //#region return
@@ -107,9 +113,9 @@ const InfoDialog = ({ isOpen, onClose }) => {
       <div className="modal-overlay" onClick={onClose} />
 
       <dialog id="infopage" open>
-        <a href="#" id="close" onClick={onClose}>
+        <button id="close" onClick={onClose}>
           X
-        </a>
+        </button>
         <div id="info">個人資料</div>
         <div id="input">
           <div className="columns">

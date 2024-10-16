@@ -20,7 +20,7 @@ const TestResult = () => {
     data: [70, 80, 50, 90, 60, 75], // 測試數據
   };
 
-  // HOLLAND雷達圖
+  //#region HOLLAND雷達圖
   const getRadarOption = () => {
     return {
       backgroundColor: "#f4eee2",
@@ -68,6 +68,7 @@ const TestResult = () => {
     };
   };
 
+  //#region return
   return (
     <div className={styles.result}>
       <div className={styles.chart}>

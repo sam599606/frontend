@@ -10,10 +10,22 @@
   display: flex;
 }
 
+#register,
+#login{
+  border: none;
+  cursor: pointer;
+}
+
 #infopage {
   width: 550px;
   height: 450px;
   display: flex;
+}
+
+#close{
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 #switch {
@@ -22,7 +34,7 @@
   display: flex;
 }
 
-#switch>* {
+#switch > * {
   background-color: #fdf1cb;
   font-size: 28px;
   width: 50%;
@@ -31,7 +43,7 @@
   align-items: center;
 }
 
-#switch>:first-child {
+#switch >:first-child {
   border-radius: 20px 0 0 20px;
 }
 
@@ -44,8 +56,6 @@
   background-color: #d5ad8a;
   color: #fff;
 }
-
-
 
 #info {
   background-color: #fdefcb;
