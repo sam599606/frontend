@@ -9,6 +9,7 @@ let seletionArr = [];
 let ts_idArr = [];
 let ts_id = [];
 let t_id;
+let token = localStorage.getItem('token')
 
 
 const TestTesting = () => {
@@ -129,15 +130,15 @@ const TestTesting = () => {
 
   const handleNextQuestion = () => {
     // 檢查是否已填滿6張卡片
-    // if (!isFilled) {
-    //   Swal.fire({
-    //     icon: "warning",
-    //     title: "請完成本題",
-    //     text: "你需要將6張選項卡全部放置到槽位中才可進入下一題！",
-    //     confirmButtonColor: "#d5ad8a",
-    //   });
-    //   return;
-    // }
+    if (!isFilled) {
+      Swal.fire({
+        icon: "warning",
+        title: "請完成本題",
+        text: "你需要將6張選項卡全部放置到槽位中才可進入下一題！",
+        confirmButtonColor: "#d5ad8a",
+      });
+      return;
+    }
 
     // 如果已經填滿了6張卡片，進入下一題
     if (currentQuestion < questions.length) {
@@ -154,7 +155,7 @@ const TestTesting = () => {
         confirmButtonColor: "#d5ad8a",
       }).then(() => {
         // 當用戶點擊確認時跳轉到結果頁面
-        // navigate("/test-result");
+        navigate("/test-result");
       });
       console.log("使用者作答紀錄:", answerLog);
       
@@ -211,6 +212,10 @@ const TestTesting = () => {
         method: "post",
         url: `http://localhost:5262/api/UserAnswer/CreateAnswer`,
         data: abc,
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "Authorization" : token
+        },
       })
         .then((res) => {
           console.log(res);
