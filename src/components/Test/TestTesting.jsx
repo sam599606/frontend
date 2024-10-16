@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 import styles from "./TestTesting.module.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 let option = [];
 let seletionArr = [];
@@ -16,6 +16,7 @@ const TestTesting = () => {
   const [usedAnswers, setUsedAnswers] = useState({}); // 記錄每個位置上的選項
   const [answerLog, setAnswerLog] = useState([]); // 新增陣列來記錄每一題的選項與槽位
   const navigate = useNavigate();
+  const location = useLocation();
 
   //#region 抓取題目
   let que = localStorage.getItem("questions");
@@ -68,10 +69,10 @@ const TestTesting = () => {
       ts_id: ts_id[i], // 對應的 ts_id
     });
   }
-  console.log("ts_id:", option[0]);
-  console.log("ts_id[0]:", ts_id[0]);
-  console.log("test[0]:", test[0]);
-  console.log("questions:", questions);
+  // console.log("ts_id:", option[0]);
+  // console.log("ts_id[0]:", ts_id[0]);
+  // console.log("test[0]:", test[0]);
+  // console.log("questions:", questions);
 
   //#region 做題
   const handleDragStart = (e, option) => {
@@ -131,15 +132,15 @@ const TestTesting = () => {
 
   const handleNextQuestion = () => {
     // 檢查是否已填滿6張卡片
-    if (!isFilled) {
-      Swal.fire({
-        icon: "warning",
-        title: "請完成本題",
-        text: "你需要將6張選項卡全部放置到槽位中才可進入下一題！",
-        confirmButtonColor: "#d5ad8a",
-      });
-      return;
-    }
+    // if (!isFilled) {
+    //   Swal.fire({
+    //     icon: "warning",
+    //     title: "請完成本題",
+    //     text: "你需要將6張選項卡全部放置到槽位中才可進入下一題！",
+    //     confirmButtonColor: "#d5ad8a",
+    //   });
+    //   return;
+    // }
 
     // 如果已經填滿了6張卡片，進入下一題
     if (currentQuestion < questions.length) {
@@ -157,7 +158,7 @@ const TestTesting = () => {
       }).then(() => {
         navigate("/test-result"); // 當用戶點擊確認時跳轉到結果頁面
       });
-      console.log("使用者作答紀錄:", answerLog); // console.log 出所有的作答紀錄
+      console.log("使用者作答紀錄:", answerLog); // log 出所有的作答紀錄
     }
   };
 
@@ -180,7 +181,9 @@ const TestTesting = () => {
   //#region return
   return (
     <div className={styles.wrap}>
-      <p>{questions[currentQuestion - 1].question}</p>
+      <div className={styles.question_text}>
+        {questions[currentQuestion - 1].question}
+      </div>
 
       {/* 題目進度 */}
       <div className={styles.counter}>
@@ -237,7 +240,7 @@ const TestTesting = () => {
             id={`drag_source_multiple_${index}`}
             onDragStart={(e) => handleDragStart(e, option)}
           >
-            {option}
+            <p>{option}</p>
           </div>
         ))}
       </div>

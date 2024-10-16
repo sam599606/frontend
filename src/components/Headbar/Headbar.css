@@ -175,3 +175,37 @@ select+label {
 .invisible {
     display: none;
 }
+
+.disabled-link {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 禁用下拉效果 */
+.test-page-disabled li:hover ul {
+    display: none;
+    /* 當條件成立時，阻止下拉菜單顯示 */
+}
+
+/* 確保禁用 hover 效果時背景不變 */
+.test-page-disabled li:hover {
+    background-color: inherit;
+    /* 阻止背景變化 */
+}
+
+/* 原有的 hover 效果 */
+header li ul {
+    background-color: #d5ad8a;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 100%;
+    left: 0;
+}
+
+header ul>li:hover ul {
+    display: flex;
+}

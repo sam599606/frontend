@@ -18,6 +18,17 @@ const LoginDialog = ({ isOpen, onClose, onRegister }) => {
     let account = document.getElementById("account").value;
     let password = document.getElementById("password").value;
 
+    // 檢查帳號或密碼是否為空
+    if (!account || !password) {
+      Swal.fire({
+        icon: "warning",
+        title: "欄位不能為空",
+        text: "請輸入帳號和密碼",
+        confirmButtonColor: "#d5ad8a",
+      });
+      return; // 如果欄位為空則不繼續往下執行
+    }
+
     const memberdata = {
       account,
       password,
@@ -34,41 +45,60 @@ const LoginDialog = ({ isOpen, onClose, onRegister }) => {
       .then((res) => {
         console.log(res);
 
+        // 檢查API回傳資料是否有結果，若無結果視為查無帳號
+        if (!res.data.result) {
+          Swal.fire({
+            icon: "error",
+            title: "查無帳號",
+            text: "請確認您輸入的帳號是否正確",
+            confirmButtonColor: "#d5ad8a",
+          });
+          return;
+        }
+
         let token = res.data.result;
+        console.log(token);
         localStorage.setItem("token", token);
         localStorage.setItem("acc", account);
 
+        // 登入成功，跳出彈窗告知
         Swal.fire({
           icon: "success",
           title: "登入成功",
-          text: "您的帳號已成功登入！",
+          text: "您已成功登入！",
           confirmButtonColor: "#d5ad8a",
         });
+
+        // 模擬關閉動作
         onClose();
       })
       .catch((err) => {
         console.log(err);
-        if(err.response.data.errorMessage == "密碼錯誤"){
+
+        // 理查無帳號的錯誤情況
+        if (
+          err.response &&
+          err.response.data &&
+          err.response.data.errorMessage === "查無帳號"
+        ) {
           Swal.fire({
             icon: "error",
-            title: "登入失敗",
-            text: "密碼輸入錯誤！",
+            title: "查無帳號",
+            text: "請確認您輸入的帳號是否正確",
             confirmButtonColor: "#d5ad8a",
           });
         }
-        if(err.response.data.errorMessage == "無此帳號"){
+
+        // 處理未進行email驗證的錯誤情況
+        if (
+          err.response &&
+          err.response.data &&
+          err.response.data.errorMessage === "信箱尚未驗證請先去驗證"
+        ) {
           Swal.fire({
             icon: "error",
             title: "登入失敗",
-            text: "查無此帳號！",
-            confirmButtonColor: "#d5ad8a",
-          });
-        }
-        if(err.response.data.errorMessage == "信箱尚未驗證請先去驗證"){
-          Swal.fire({
-            icon: "error",
-            title: "登入失敗",
-            text: "信箱尚未驗證請先去驗證！",
+            text: "信箱尚未驗證，請先去驗證您的信箱",
             confirmButtonColor: "#d5ad8a",
           });
         }

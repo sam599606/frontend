@@ -89,16 +89,29 @@ const InfoDialog = ({ isOpen, onClose }) => {
 
   //#region 登出
   const logout = () => {
-    localStorage.removeItem('token')
     Swal.fire({
-      icon: "success",
-      title: "登出成功",
-      text: "您的帳號已登出！",
-      confirmButtonColor: "#d5ad8a",
+      title: "確定要登出嗎？",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "是的，登出",
+      cancelButtonText: "取消",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // 清除token並關閉視窗
+        localStorage.removeItem("token");
+        Swal.fire({
+          title: "已成功登出",
+          icon: "success",
+          confirmButtonText: "確定",
+          confirmButtonColor: "#3085d6",
+        }).then(() => {
+          document.getElementById("close").click();
+        });
+      }
     });
-    document.getElementById('close').click()
-    
-  }
+  };
 
   //#region return
   return (
@@ -211,8 +224,8 @@ const InfoDialog = ({ isOpen, onClose }) => {
           <button type="submit" className="submit-button" onClick={EditInfo}>
             儲存
           </button>
-          <Link to="/" id="logout" onClick={logout}> 
-          登出
+          <Link to="/" id="logout" onClick={logout}>
+            登出
           </Link>
         </div>
       </dialog>

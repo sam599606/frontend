@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./Headbar.css";
 import LoginDialog from "../Dialog/LoginDialog";
 import RegisterDialog from "../Dialog/RegisterDialog";
@@ -11,10 +11,13 @@ const Headbar = () => {
   const [isInfoOpen, setInfoOpen] = useState(false);
   const [isInvisible, setInvisible] = useState(false);
 
+  const location = useLocation(); // 使用 useLocation 來獲取當前路徑
+  const isTestTestingPage = location.pathname === "/test-testing"; // 判斷是否在 /test-testing 頁面
+  let token = localStorage.getItem("token");
+  let userInfo = document.getElementById("userinfo");
+  let loginBtn = document.getElementById("login");
+
   function invisibleTF() {
-    let token = localStorage.getItem("token");
-    let userInfo = document.getElementById("userinfo");
-    let loginBtn = document.getElementById("login");
     if (token == null) {
       loginBtn = setInvisible(true);
       userInfo = setInvisible(false);
@@ -24,44 +27,78 @@ const Headbar = () => {
     }
   }
 
-  //#region return
+  useEffect(() => {
+    invisibleTF();
+  });
+
   return (
     <>
       <header>
-        <Link to="/" id="logo">
+        <Link
+          to="/"
+          id="logo"
+          className={isTestTestingPage ? "disabled-link" : ""}
+        >
           <img src="/src/images/logo.png" alt="logo" />
           <h3>職得期待</h3>
         </Link>
 
-        <ul>
+        <ul className={isTestTestingPage ? "test-page-disabled" : ""}>
           <li>
-            <Link to="/forcast">產業景氣預測</Link>
+            <Link
+              to="/forcast"
+              className={isTestTestingPage ? "disabled-link" : ""}
+              onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
+            >
+              產業景氣預測
+            </Link>
           </li>
           <li>
-            <Link to="/dummie">職業資訊懶人包</Link>
+            <Link
+              to="/dummie"
+              className={isTestTestingPage ? "disabled-link" : ""}
+              onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
+            >
+              職業資訊懶人包
+            </Link>
             <ul>
               <li>
-                <Link to="/dummie/class">課程</Link>
+                <Link
+                  to="/dummie/class"
+                  className={isTestTestingPage ? "disabled-link" : ""}
+                  onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
+                >
+                  課程
+                </Link>
               </li>
               <li>
-                <Link to="0">補助</Link>
+                <Link
+                  to="0"
+                  className={isTestTestingPage ? "disabled-link" : ""}
+                  onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
+                >
+                  補助
+                </Link>
               </li>
               <li>
-                <Link to="0">證照</Link>
+                <Link
+                  to="0"
+                  className={isTestTestingPage ? "disabled-link" : ""}
+                  onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
+                >
+                  證照
+                </Link>
               </li>
             </ul>
           </li>
           <li>
-            <Link to="/test">職涯診斷測驗</Link>
-            {/* 還沒定義路徑 */}
-            <ul>
-              <li>
-                <Link to="/test">開始測驗</Link>
-              </li>
-              <li>
-                <Link to="/test-history">測驗紀錄</Link>
-              </li>
-            </ul>
+            <Link
+              to="/test"
+              className={isTestTestingPage ? "disabled-link" : ""}
+              onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
+            >
+              職涯診斷測驗
+            </Link>
           </li>
         </ul>
 
@@ -69,8 +106,13 @@ const Headbar = () => {
         <a
           href="#"
           id="userinfo"
-          onClick={() => setInfoOpen(true)}
-          className={`${isInvisible ? "" : "invisible"}`}
+          onClick={(e) => {
+            if (!isTestTestingPage) setInfoOpen(true);
+            else e.preventDefault(); // 禁用點擊
+          }}
+          className={`${isInvisible ? "" : "invisible"} ${
+            isTestTestingPage ? "disabled-link" : ""
+          }`}
         >
           <img
             src="/src/images/avatar.png"
@@ -83,9 +125,14 @@ const Headbar = () => {
         {/* 開啟登入介面彈窗 */}
         <a
           href="#"
-          className={`login ${isInvisible ? "invisible" : ""}`}
+          className={`login ${isInvisible ? "invisible" : ""} ${
+            isTestTestingPage ? "disabled-link" : ""
+          }`}
           id="login"
-          onClick={() => setLoginOpen(true)}
+          onClick={(e) => {
+            if (!isTestTestingPage) setLoginOpen(true);
+            else e.preventDefault(); // 禁用點擊
+          }}
         >
           登入
         </a>
