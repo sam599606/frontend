@@ -27,8 +27,6 @@ const TestTesting = () => {
     t_idList.push(parse[i].t_id);
     questionList.push(parse[i].question);
   }
-  // console.log("questionList:", questionList);
-  // console.log("questionList:", questionList);
 
   for (let i = 0; i <= t_idList.length - 1; i++) {
     t_id = t_idList[i];
@@ -58,16 +56,22 @@ const TestTesting = () => {
         console.log(err);
       });
   }
+
   let test = JSON.parse(localStorage.getItem("option"));
 
   const questions = [];
-  for (let i = 0; i <= test.length - 1; i++) {
+  for (let i = 0; i < test.length; i++) {
     questions.push({
-      id: t_idList[i],
-      question: questionList[i],
-      options: test[i],
+      id: t_idList[i], // 問題的 ID
+      question: questionList[i], // 問題的內容
+      options: test[i], // 對應選項
+      ts_id: ts_id[i], // 對應的 ts_id
     });
   }
+  console.log("ts_id:", option[0]);
+  console.log("ts_id[0]:", ts_id[0]);
+  console.log("test[0]:", test[0]);
+  console.log("questions:", questions);
 
   //#region 做題
   const handleDragStart = (e, option) => {
@@ -83,6 +87,7 @@ const TestTesting = () => {
       ...prev,
       [type]: option,
     }));
+
     setSelectedAnswers((prev) => [...prev, option]); // 加入已選擇的選項
 
     // 更新 answerLog，記錄第幾題選擇了什麼並放在哪個槽位
@@ -150,8 +155,7 @@ const TestTesting = () => {
         text: "你已經完成了所有的題目！",
         confirmButtonColor: "#d5ad8a",
       }).then(() => {
-        // 當用戶點擊確認時跳轉到結果頁面
-        navigate("/test-result");
+        navigate("/test-result"); // 當用戶點擊確認時跳轉到結果頁面
       });
       console.log("使用者作答紀錄:", answerLog); // console.log 出所有的作答紀錄
     }

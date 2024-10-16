@@ -11,22 +11,18 @@ const Headbar = () => {
   const [isInfoOpen, setInfoOpen] = useState(false);
   const [isInvisible, setInvisible] = useState(false);
 
-  
-  
   function invisibleTF() {
     let token = localStorage.getItem("token");
-    let userInfo = document.getElementById("userinfo")
-    let loginBtn = document.getElementById("login")
-    if(token == null){
-      loginBtn = setInvisible(true)
-      userInfo = setInvisible(false)
-    }
-    else {
-      loginBtn = setInvisible(false)
-      userInfo = setInvisible(true)
+    let userInfo = document.getElementById("userinfo");
+    let loginBtn = document.getElementById("login");
+    if (token == null) {
+      loginBtn = setInvisible(true);
+      userInfo = setInvisible(false);
+    } else {
+      loginBtn = setInvisible(false);
+      userInfo = setInvisible(true);
     }
   }
-  
 
   //#region return
   return (
@@ -74,7 +70,7 @@ const Headbar = () => {
           href="#"
           id="userinfo"
           onClick={() => setInfoOpen(true)}
-          className={`${isInvisible ? '' : 'invisible'}`}
+          className={`${isInvisible ? "" : "invisible"}`}
         >
           <img
             src="/src/images/avatar.png"
@@ -87,7 +83,7 @@ const Headbar = () => {
         {/* 開啟登入介面彈窗 */}
         <a
           href="#"
-          className={`login ${isInvisible ? 'invisible' : ''}`}
+          className={`login ${isInvisible ? "invisible" : ""}`}
           id="login"
           onClick={() => setLoginOpen(true)}
         >
@@ -100,7 +96,8 @@ const Headbar = () => {
         isOpen={isLoginOpen}
         onClose={() => {
           setLoginOpen(false);
-          invisibleTF()}}
+          invisibleTF();
+        }}
         onRegister={() => {
           setLoginOpen(false);
           setRegisterOpen(true);
@@ -115,10 +112,13 @@ const Headbar = () => {
         }}
       />
 
-      <InfoDialog isOpen={isInfoOpen} onClose={() => {
-        setInfoOpen(false)
-        invisibleTF()
-      }} />
+      <InfoDialog
+        isOpen={isInfoOpen}
+        onClose={() => {
+          setInfoOpen(false);
+          invisibleTF();
+        }}
+      />
     </>
   );
 };
