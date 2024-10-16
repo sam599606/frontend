@@ -9,12 +9,12 @@ const Dummie_more_Layout = ({ children }) => {
         <Link to="/dummie/class" className={styles.tag}>
           課程
         </Link>
-        <a href="#" className={styles.tag}>
+        <Link to="../0" className={styles.tag}>
           補助
-        </a>
-        <a href="#" className={styles.tag}>
+        </Link>
+        <Link to="../0" className={styles.tag}>
           證照
-        </a>
+        </Link>
       </div>
       <div className={styles.container}>
         <div className={styles.search}>
