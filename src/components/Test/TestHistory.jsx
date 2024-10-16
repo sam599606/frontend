@@ -5,19 +5,44 @@ import axios from "axios";
 
 const TestHistory = () => {
 
-  
-  const testData = [
-    { date: `2024/9/13`, time: `05:17`, result: "MBTI" },
-    { date: `2024/9/25`, time: `02:12`, result: "MBTI" },
-    { date: `2024/9/13`, time: `05:07`, result: "MBTI" },
-    { date: `2024/9/25`, time: `05:24`, result: "MBTI" },
-    { date: `2024/9/25`, time: `06:08`, result: "MBTI" },
-    { date: `2024/9/9`, time: `08:11`, result: "MBTI" },
-    { date: `2024/9/14`, time: `05:00`, result: "MBTI" },
-    { date: `2024/9/1`, time: `12:17`, result: "MBTI" },
-    { date: `2024/9/25`, time: `11:12`, result: "MBTI" },
-    { date: `2024/9/14`, time: `15:37`, result: "MBTI" },
-  ];
+  let token = localStorage.getItem('token')
+  axios({
+    method: "get",
+    url: "http://localhost:5262/api/UserAnswer/AnswerResultList",
+    headers: {
+      'Authorization': 'Bearer ' + token
+    },
+  })
+    .then((res) => {
+      console.log(res);
+      let date = []
+      let time = []
+      let result = []
+      for(let i = 0; i <= res.data.result.length - 1; i++){
+        date[i] = res.data.result[i].testTime.substr(0,10)
+        time[i] = res.data.result[i].testTime.substr(11,18)
+        result[i] = res.data.result[i].mbtI_Result
+      }
+      localStorage.setItem('date', date)
+      localStorage.setItem('time', time)
+      localStorage.setItem('result', result)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+    let a = localStorage.getItem('date')
+    let b = localStorage.getItem('time')
+    let c = localStorage.getItem('result')
+    let testData = []
+
+    for(let i = 0; i <= a.split(',').length - 1; i++){
+      let date = a.split(',')[i]
+      let time = b.split(',')[i]
+      let result = c.split(',')[i]
+      testData[i] = {date, time, result}
+    }
+    console.log(testData)
 
   return (
     <div className={styles.wrap}>

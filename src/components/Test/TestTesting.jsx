@@ -37,6 +37,7 @@ const TestTesting = () => {
       data: JSON.stringify(object),
       headers: {
         "Content-Type": "application/json; charset=utf-8",
+        'Authorization': 'Bearer ' + token
       },
     })
       .then((res) => {
@@ -168,7 +169,7 @@ const TestTesting = () => {
         confirmButtonColor: "#d5ad8a",
       }).then(() => {
         // 當用戶點擊確認時跳轉到結果頁面
-        navigate("/test-result");
+        // navigate("/test-result");
       });
       console.log("使用者作答紀錄:", answerLog);
 
@@ -219,11 +220,11 @@ const TestTesting = () => {
 
       axios({
         method: "post",
-        url: `http://localhost:5262/api/UserAnswer/CreateAnswer`,
+        url: `http://localhost:5262/api/UserAnswer/CreateAnswerAndCount`,
         data: answerList,
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: token,
+          'Authorization': 'Bearer ' + token
         },
       })
         .then((res) => {

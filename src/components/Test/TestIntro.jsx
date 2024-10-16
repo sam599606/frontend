@@ -4,9 +4,14 @@ import styles from "./TestIntro.module.css"; // 使用模組樣式
 import axios from "axios";
 
 const getTest = () => {
+
+  let token = localStorage.getItem('token')
   axios({
     method: "get",
     url: `http://localhost:5262/api/Test/TestList`,
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
   })
     .then((res) => {
       let questions = res.data.result;

@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 const InfoDialog = ({ isOpen, onClose }) => {
   if (!isOpen) return null; // 如果未打開，則不渲染彈出視窗
 
+  let token = localStorage.getItem('token')
   //#region 抓會員資料
   axios({
     method: "get",
@@ -69,7 +70,25 @@ const InfoDialog = ({ isOpen, onClose }) => {
       sex,
       birth,
     };
-    console.log(memberdata);
+
+    if (
+      !account ||
+      !name ||
+      !password ||
+      !phone ||
+      !address ||
+      !edu ||
+      !sex ||
+      !birth
+    ) {
+      Swal.fire({
+        icon: "warning",
+        title: "資料不完整",
+        text: "請填寫所有欄位再儲存！",
+        confirmButtonColor: "#d5ad8a",
+      });
+      return; // 終止函數，不進行下一步操作
+    }
 
     axios({
       method: "put",
@@ -77,6 +96,7 @@ const InfoDialog = ({ isOpen, onClose }) => {
       data: JSON.stringify(memberdata),
       headers: {
         "Content-Type": "application/json; charset=utf-8",
+        'Authorization': 'Bearer ' + token
       },
     })
       .then((res) => {
