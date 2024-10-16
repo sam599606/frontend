@@ -48,9 +48,9 @@ const Index = () => {
     <>
       <div id="carousel">
         {/* 左側箭頭 */}
-        <a href="#" id="previous" onClick={goToPrevious}>
+        <div id="previous" onClick={goToPrevious}>
           &lt;
-        </a>
+        </div>
 
         {/* 輪播圖片 */}
         <div id="images">
@@ -60,9 +60,9 @@ const Index = () => {
         </div>
 
         {/* 右側箭頭 */}
-        <a href="#" id="next" onClick={goToNext}>
+        <div id="next" onClick={goToNext}>
           &gt;
-        </a>
+        </div>
       </div>
 
       {/* 底部圖示部分 */}

@@ -113,14 +113,14 @@ const LoginDialog = ({ isOpen, onClose, onRegister }) => {
 
       {/* 登入對話框 */}
       <dialog id="loginpage" open>
-        <a href="#" id="close" onClick={onClose}>
+        <button href="#" id="close" onClick={onClose}>
           X
-        </a>
+        </button>
         <div id="switch">
           <div>登入</div>
-          <a href="#" id="register" onClick={onRegister}>
+          <button id="register" onClick={onRegister}>
             <div>註冊</div>
-          </a>
+          </button>
         </div>
         <div id="input">
           <div className="block">

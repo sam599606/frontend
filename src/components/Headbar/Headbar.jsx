@@ -103,6 +103,7 @@ const Headbar = () => {
         </ul>
 
         {/* 開啟個人資訊彈窗 */}
+<<<<<<< HEAD
         <a
           href="#"
           id="userinfo"
@@ -114,20 +115,29 @@ const Headbar = () => {
             isTestTestingPage ? "disabled-link" : ""
           }`}
         >
+=======
+>>>>>>> f40d83102b780ecf478a8df3ec5d03a5077ec6fe
           <img
             src="/src/images/avatar.png"
             alt="avatar"
             width="40"
             height="40"
+            id="userinfo"
+            onClick={() => setInfoOpen(true)}
+            className={`${isInvisible ? '' : 'invisible'}`}
           />
-        </a>
 
         {/* 開啟登入介面彈窗 */}
+<<<<<<< HEAD
         <a
           href="#"
           className={`login ${isInvisible ? "invisible" : ""} ${
             isTestTestingPage ? "disabled-link" : ""
           }`}
+=======
+        <button
+          className={`login ${isInvisible ? 'invisible' : ''}`}
+>>>>>>> f40d83102b780ecf478a8df3ec5d03a5077ec6fe
           id="login"
           onClick={(e) => {
             if (!isTestTestingPage) setLoginOpen(true);
@@ -135,7 +145,7 @@ const Headbar = () => {
           }}
         >
           登入
-        </a>
+        </button>
       </header>
 
       {/* 登入&註冊介面切換 */}

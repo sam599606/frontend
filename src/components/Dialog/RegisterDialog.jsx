@@ -122,13 +122,13 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
       <div className="modal-overlay" onClick={onClose} />
 
       <dialog id="registerpage" open>
-        <a href="#" id="close" onClick={onClose}>
+        <button href="#" id="close" onClick={onClose}>
           X
-        </a>
+        </button>
         <div id="switch">
-          <a href="#" id="login" onClick={onLogin}>
+          <button id="login" onClick={onLogin}>
             <div>登入</div>
-          </a>
+          </button>
           <div>註冊</div>
         </div>
         <div id="input">
