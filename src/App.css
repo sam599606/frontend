@@ -41,9 +41,10 @@ footer {
 }
 
 .testsign {
-  color: rgb(247, 162, 5);
+  z-index: 0;
+  color: rgba(247, 162, 5, 0.5);
   font-size: 24px;
-  border: #ffb144 solid 5px;
+  border: rgba(247, 162, 5, 0.5) solid 5px;
   border-radius: 10px;
   padding: 5px 10px;
   position: absolute;

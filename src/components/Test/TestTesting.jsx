@@ -207,7 +207,7 @@ const TestTesting = () => {
       ua_badList1 = ua_badList1.join();
       ua_badList2 = ua_badList2.join();
       ua_badList3 = ua_badList3.join();
-      
+
       let answerList = {
         ua_goodList1,
         ua_goodList2,
@@ -229,12 +229,10 @@ const TestTesting = () => {
       })
         .then((res) => {
           console.log(res);
-          
         })
         .catch((err) => {
           console.log(err);
         });
-        
     }
   };
 
