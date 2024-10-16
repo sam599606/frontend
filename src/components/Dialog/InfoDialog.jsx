@@ -15,7 +15,7 @@ const InfoDialog = ({ isOpen, onClose }) => {
     .then((res) => {
       console.log(res);
       let acc = localStorage.getItem("acc");
-      for (let i = 0; i <= res.data.result.length; i++) {
+      for (let i = 0; i <= res.data.result.length - 1; i++) {
         if (res.data.result[i].account == acc) {
           let account = res.data.result[i].account;
           let name = res.data.result[i].name;
