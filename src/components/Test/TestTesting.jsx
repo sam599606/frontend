@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 import styles from "./TestTesting.module.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 let option = [];
 let seletionArr = [];
@@ -17,12 +17,10 @@ const TestTesting = () => {
   const [usedAnswers, setUsedAnswers] = useState({}); // 記錄每個位置上的選項
   const [answerLog, setAnswerLog] = useState([]); // 新增陣列來記錄每一題的選項與槽位
   const navigate = useNavigate();
-  const location = useLocation();
 
   //#region 抓取題目
   let que = localStorage.getItem("questions");
   let parse = JSON.parse(que);
-  // console.log("parse:", parse);
   let t_idList = [];
   let questionList = [];
   for (let i = 0; i <= parse.length - 1; i++) {
@@ -59,22 +57,17 @@ const TestTesting = () => {
         console.log(err);
       });
   }
-
   let test = JSON.parse(localStorage.getItem("option"));
+  let ts_id = JSON.parse(localStorage.getItem("ts_id"));
 
   const questions = [];
-  for (let i = 0; i < test.length; i++) {
+  for (let i = 0; i <= questionList.length - 1; i++) {
     questions.push({
-      id: t_idList[i], // 問題的 ID
-      question: questionList[i], // 問題的內容
-      options: test[i], // 對應選項
-      ts_id: ts_id[i], // 對應的 ts_id
+      id: t_idList[i],
+      question: questionList[i],
+      options: test[i],
     });
   }
-  // console.log("ts_id:", option[0]);
-  // console.log("ts_id[0]:", ts_id[0]);
-  // console.log("test[0]:", test[0]);
-  // console.log("questions:", questions);
 
   //#region 做題
   const handleDragStart = (e, option) => {
@@ -90,7 +83,6 @@ const TestTesting = () => {
       ...prev,
       [type]: option,
     }));
-
     setSelectedAnswers((prev) => [...prev, option]); // 加入已選擇的選項
 
     //#region 問題
@@ -151,15 +143,15 @@ const TestTesting = () => {
 
   const handleNextQuestion = () => {
     // 檢查是否已填滿6張卡片
-    // if (!isFilled) {
-    //   Swal.fire({
-    //     icon: "warning",
-    //     title: "請完成本題",
-    //     text: "你需要將6張選項卡全部放置到槽位中才可進入下一題！",
-    //     confirmButtonColor: "#d5ad8a",
-    //   });
-    //   return;
-    // }
+    if (!isFilled) {
+      Swal.fire({
+        icon: "warning",
+        title: "請完成本題",
+        text: "你需要將6張選項卡全部放置到槽位中才可進入下一題！",
+        confirmButtonColor: "#d5ad8a",
+      });
+      return;
+    }
 
     // 如果已經填滿了6張卡片，進入下一題
     if (currentQuestion < questions.length) {
@@ -175,7 +167,8 @@ const TestTesting = () => {
         text: "你已經完成了所有的題目！",
         confirmButtonColor: "#d5ad8a",
       }).then(() => {
-        navigate("/test-result"); // 當用戶點擊確認時跳轉到結果頁面
+        // 當用戶點擊確認時跳轉到結果頁面
+        navigate("/test-result");
       });
       console.log("使用者作答紀錄:", answerLog);
 
@@ -245,9 +238,7 @@ const TestTesting = () => {
   //#region return
   return (
     <div className={styles.wrap}>
-      <div className={styles.question_text}>
-        {questions[currentQuestion - 1].question}
-      </div>
+      <p>{questions[currentQuestion - 1].question}</p>
 
       {/* 題目進度 */}
       <div className={styles.counter}>
@@ -304,7 +295,7 @@ const TestTesting = () => {
             id={`drag_source_multiple_${index}`}
             onDragStart={(e) => handleDragStart(e, option)}
           >
-            <p>{option}</p>
+            {option}
           </div>
         ))}
       </div>

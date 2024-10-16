@@ -92,52 +92,33 @@ const Headbar = () => {
             </ul>
           </li>
           <li>
-            <Link
-              to="/test"
-              className={isTestTestingPage ? "disabled-link" : ""}
-              onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
-            >
-              職涯診斷測驗
-            </Link>
+            <Link to="/test">職涯診斷測驗</Link>
+            {/* 還沒定義路徑 */}
+            <ul>
+              <li>
+                <Link to="/test">開始測驗</Link>
+              </li>
+              <li>
+                <Link to="/test-history">測驗紀錄</Link>
+              </li>
+            </ul>
           </li>
         </ul>
 
         {/* 開啟個人資訊彈窗 */}
-<<<<<<< HEAD
-        <a
-          href="#"
+        <img
+          src="/src/images/avatar.png"
+          alt="avatar"
+          width="40"
+          height="40"
           id="userinfo"
-          onClick={(e) => {
-            if (!isTestTestingPage) setInfoOpen(true);
-            else e.preventDefault(); // 禁用點擊
-          }}
-          className={`${isInvisible ? "" : "invisible"} ${
-            isTestTestingPage ? "disabled-link" : ""
-          }`}
-        >
-=======
->>>>>>> f40d83102b780ecf478a8df3ec5d03a5077ec6fe
-          <img
-            src="/src/images/avatar.png"
-            alt="avatar"
-            width="40"
-            height="40"
-            id="userinfo"
-            onClick={() => setInfoOpen(true)}
-            className={`${isInvisible ? '' : 'invisible'}`}
-          />
+          onClick={() => setInfoOpen(true)}
+          className={`${isInvisible ? "" : "invisible"}`}
+        />
 
         {/* 開啟登入介面彈窗 */}
-<<<<<<< HEAD
-        <a
-          href="#"
-          className={`login ${isInvisible ? "invisible" : ""} ${
-            isTestTestingPage ? "disabled-link" : ""
-          }`}
-=======
         <button
-          className={`login ${isInvisible ? 'invisible' : ''}`}
->>>>>>> f40d83102b780ecf478a8df3ec5d03a5077ec6fe
+          className={`login ${isInvisible ? "invisible" : ""}`}
           id="login"
           onClick={(e) => {
             if (!isTestTestingPage) setLoginOpen(true);

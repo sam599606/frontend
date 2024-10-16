@@ -91,7 +91,7 @@ const InfoDialog = ({ isOpen, onClose }) => {
       .catch((err) => {
         console.log(err);
       });
-      document.getElementById('close').click()
+    document.getElementById("close").click();
   };
 
   //#region 登出
@@ -118,12 +118,8 @@ const InfoDialog = ({ isOpen, onClose }) => {
         });
       }
     });
-<<<<<<< HEAD
+    document.getElementById("close").click();
   };
-=======
-    document.getElementById('close').click()
-  }
->>>>>>> f40d83102b780ecf478a8df3ec5d03a5077ec6fe
 
   //#region return
   return (
