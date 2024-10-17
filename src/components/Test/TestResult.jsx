@@ -7,18 +7,20 @@ const TestResult = () => {
   const [isHollandFlipped, setIsHollandFlipped] = useState(false);
   const [isMbtiFlipped, setIsMbtiFlipped] = useState(false);
 
-  let data = localStorage.getItem('ua_data')
-  let ua_data = JSON.parse(data)
+  let data = localStorage.getItem("ua_data");
+  let ua_data = JSON.parse(data);
+
+  console.log("ua_data:", ua_data);
 
   //#region HOLLAND雷達圖
   const radarData = {
     indicator: [
-      { name: "實用型 Realistic", max: 100 },
-      { name: "研究型 Investigative", max: 100 },
-      { name: "藝術型 Artistic", max: 100 },
-      { name: "社會型 Social", max: 100 },
-      { name: "企業型 Enterprising", max: 100 },
-      { name: "資料型 Conventional", max: 100 },
+      { name: "實用型 Realistic", max: 15 },
+      { name: "研究型 Investigative", max: 15 },
+      { name: "藝術型 Artistic", max: 15 },
+      { name: "社會型 Social", max: 15 },
+      { name: "企業型 Enterprising", max: 15 },
+      { name: "資料型 Conventional", max: 15 },
     ],
     data: [
       ua_data.count_HOL_R,
@@ -77,7 +79,100 @@ const TestResult = () => {
     };
   };
 
-  //#region return
+  // MBTI 左右對稱橫條圖配置
+  const getMbtiBarOption = () => {
+    const data = [
+      {
+        name: "E 外向 vs I 內向",
+        value: ua_data.count_MBTI_E - ua_data.count_MBTI_I,
+      },
+      {
+        name: "N 直覺 vs S 實感",
+        value: ua_data.count_MBTI_N - ua_data.count_MBTI_S,
+      },
+      {
+        name: "F 情感 vs T 理性",
+        value: ua_data.count_MBTI_F - ua_data.count_MBTI_T,
+      },
+      {
+        name: "P 知覺 vs J 判斷",
+        value: ua_data.count_MBTI_P - ua_data.count_MBTI_J,
+      },
+    ];
+
+    // 將數據順序反轉
+    const reversedData = data.reverse();
+
+    return {
+      backgroundColor: "#f4eee2",
+      grid: {
+        left: "15%",
+        right: "15%",
+        bottom: "10%",
+        top: "10%",
+        containLabel: true,
+      },
+      xAxis: {
+        max: 20, // 假設正負範圍為 -20 到 20
+        min: -20,
+        splitLine: { show: false },
+        axisLabel: { show: false },
+        axisTick: { show: false },
+        axisLine: { show: false },
+      },
+      yAxis: {
+        type: "category",
+        data: reversedData.map((item) => item.name), // 反轉後的標題
+        axisTick: { show: false },
+        axisLine: { show: false },
+        axisLabel: {
+          fontSize: 18,
+          color: "#745329",
+        },
+      },
+      series: [
+        {
+          type: "bar",
+          barWidth: "60%",
+          data: reversedData.map((item) => item.value), // 反轉後的數據
+          itemStyle: {
+            color: function (params) {
+              return params.value > 0 ? "#ffb144" : "#cfa876"; // 正值和負值不同顏色
+            },
+          },
+          label: {
+            show: true,
+            position: "insideRight", // 將值顯示在進度條內部
+            formatter: "{c}",
+            color: "#fff",
+            fontSize: 16,
+          },
+          z: 10, // 確保進度條在最上層
+        },
+        {
+          type: "bar",
+          barWidth: "60%",
+          data: new Array(reversedData.length).fill(20), // 背景條
+          itemStyle: {
+            color: "#e0dfd5", // 背景色
+          },
+          barGap: "-100%", // 重疊
+          z: 5, // 背景層
+        },
+        {
+          type: "bar",
+          barWidth: "60%",
+          data: new Array(reversedData.length).fill(-20), // 負方向背景條
+          itemStyle: {
+            color: "#e0dfd5", // 背景色
+          },
+          barGap: "-100%", // 重疊
+          z: 5, // 背景層
+        },
+      ],
+    };
+  };
+
   return (
     <div className={styles.result}>
       <div className={styles.chart}>
@@ -117,28 +212,10 @@ const TestResult = () => {
           <div className={styles.content}>
             <div id={styles["type-name"]}>{ua_data.mbtI_Result}</div>
             <div className={styles.front}>
-              <div id={styles.sort}>
-                {["I 內向", "S 實感", "T 理性", "J 系統"].map(
-                  (trait, index) => (
-                    <div key={index}>
-                      <p>{trait}</p>
-                      <div className={styles.bar}>
-                        <div></div>
-                        <div></div>
-                      </div>
-                      <p>
-                        {trait[0] === "I"
-                          ? "E 外向"
-                          : trait[0] === "S"
-                          ? "N 直覺"
-                          : trait[0] === "T"
-                          ? "F 感性"
-                          : "P 彈性"}
-                      </p>
-                    </div>
-                  )
-                )}
-              </div>
+              <ReactECharts
+                option={getMbtiBarOption()} // 使用條形圖的配置
+                className={styles.mbtiBarChart} // 新增樣式類別來控制圖表大小
+              />
             </div>
             <div className={styles.back}>
               <div id={styles.intro}>

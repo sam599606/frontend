@@ -218,3 +218,15 @@
 .flipbtn:hover {
   background-color: #d69233;
 }
+
+.jobname {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mbtiBarChart {
+  width: 100%;
+  height: 300px;
+  /* 根據需要調整 */
+}
