@@ -18,12 +18,14 @@ const TestTesting = () => {
   const [answerLog, setAnswerLog] = useState([]); // 新增陣列來記錄每一題的選項與槽位
   const navigate = useNavigate();
 
+
   //#region 抓取題目
   let que = localStorage.getItem("questions");
   let parse = JSON.parse(que);
-  console.log(parse)
   let t_idList = [];
   let questionList = [];
+  let test = []
+  let ts_id = []
   for (let i = 0; i <= parse.length - 1; i++) {
     t_idList.push(parse[i].t_id);
     questionList.push(parse[i].question);
@@ -55,15 +57,14 @@ const TestTesting = () => {
           localStorage.setItem("ts_id", JSON.stringify(ts_ida));
         }
       })
-      .then(() => {
-        
-      })
       .catch((err) => {
         console.log(err);
       });
   }
-  let test = JSON.parse(localStorage.getItem("option"));
-  let ts_id = JSON.parse(localStorage.getItem("ts_id"));
+  test = JSON.parse(localStorage.getItem("option"));
+  ts_id = JSON.parse(localStorage.getItem("ts_id"));
+  console.log(test)
+  console.log(ts_id)
 
   const questions = [];
   for (let i = 0; i <= questionList.length - 1; i++) {
@@ -229,12 +230,27 @@ const TestTesting = () => {
         },
       })
         .then((res) => {
-          console.log(res);
-          localStorage.setItem('ua_data', JSON.stringify(res.data.result))
-        })
-        .then(() => {
-          // 當用戶點擊確認時跳轉到結果頁面
-          navigate("/test-result");
+          let ua_id = res.data.result
+          let jsondata = JSON.stringify(ua_id)
+          axios({
+            method: "post",
+            url: "http://localhost:5262/api/UserAnswer/GetAnswerResult",
+            data: jsondata,
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+          })
+          .then((res) => {
+            console.log(res);
+            localStorage.setItem('ua_data', JSON.stringify(res.data.result))
+          })
+          .then(() => {
+            navigate("/test-result");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         })
         .catch((err) => {
           console.log(err);
