@@ -10,7 +10,7 @@ const TestResult = () => {
   let data = localStorage.getItem('ua_data')
   let ua_data = JSON.parse(data)
 
-  // 測試數據，用於雷達圖
+  //#region HOLLAND雷達圖
   const radarData = {
     indicator: [
       { name: "實用型 Realistic", max: 100 },
@@ -30,7 +30,6 @@ const TestResult = () => {
     ], // 測試數據
   };
 
-  //#region HOLLAND雷達圖
   const getRadarOption = () => {
     return {
       backgroundColor: "#f4eee2",
@@ -116,7 +115,7 @@ const TestResult = () => {
         >
           <div className={styles.title}>MBTI</div>
           <div className={styles.content}>
-            <div id={styles["type-name"]}>ISTP</div>
+            <div id={styles["type-name"]}>{ua_data.mbtI_Result}</div>
             <div className={styles.front}>
               <div id={styles.sort}>
                 {["I 內向", "S 實感", "T 理性", "J 系統"].map(

@@ -27,6 +27,8 @@ const TestTesting = () => {
     t_idList.push(parse[i].t_id);
     questionList.push(parse[i].question);
   }
+  let test = []
+  let ts_id = []
 
   for (let i = 0; i <= t_idList.length - 1; i++) {
     t_id = t_idList[i];
@@ -47,19 +49,15 @@ const TestTesting = () => {
           seletionArr.push(res.data.result[i].seletion);
           ts_idArr.push(res.data.result[i].ts_id);
         }
-        option[i] = seletionArr;
-        ts_ida[i] = ts_idArr;
-        if (i === t_idList.length - 1) {
-          localStorage.setItem("option", JSON.stringify(option));
-          localStorage.setItem("ts_id", JSON.stringify(ts_ida));
-        }
+        test[i] = seletionArr;
+        ts_id[i] = ts_idArr;
       })
       .catch((err) => {
         console.log(err);
       });
   }
-  let test = JSON.parse(localStorage.getItem("option"));
-  let ts_id = JSON.parse(localStorage.getItem("ts_id"));
+  console.log(test)
+  console.log(ts_id)
 
   const questions = [];
   for (let i = 0; i <= questionList.length - 1; i++) {
@@ -69,6 +67,7 @@ const TestTesting = () => {
       options: test[i],
     });
   }
+  console.log(questions)
 
   //#region 做題
   const handleDragStart = (e, option) => {
@@ -167,10 +166,7 @@ const TestTesting = () => {
         title: "測驗完成",
         text: "你已經完成了所有的題目！",
         confirmButtonColor: "#d5ad8a",
-      }).then(() => {
-        // 當用戶點擊確認時跳轉到結果頁面
-        // navigate("/test-result");
-      });
+      })
       console.log("使用者作答紀錄:", answerLog);
 
       //#region 送出答案
@@ -229,7 +225,11 @@ const TestTesting = () => {
       })
         .then((res) => {
           console.log(res);
-          // localStorage.setItem()
+          localStorage.setItem('ua_data', JSON.stringify(res.data.result))
+        })
+        .then(() => {
+          // 當用戶點擊確認時跳轉到結果頁面
+          navigate("/test-result");
         })
         .catch((err) => {
           console.log(err);
