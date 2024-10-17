@@ -44,7 +44,7 @@ const Headbar = () => {
           <h3>職得期待</h3>
         </Link>
 
-        <ul>
+        <ul className={isTestTestingPage ? "test-page-disabled" : ""}>
           <li>
             <Link
               to="/forcast"
@@ -100,26 +100,6 @@ const Headbar = () => {
             >
               職涯診斷測驗
             </Link>
-            <ul>
-              <li>
-                <Link
-                  to="/test"
-                  className={isTestTestingPage ? "disabled-link" : ""}
-                  onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
-                >
-                  開始測驗
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/test-history"
-                  className={isTestTestingPage ? "disabled-link" : ""}
-                  onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
-                >
-                  測驗紀錄
-                </Link>
-              </li>
-            </ul>
           </li>
         </ul>
 
