@@ -64,7 +64,6 @@ const Index = () => {
           &gt;
         </div>
       </div>
-
       {/* 底部圖示部分 */}
       <div id="icons">
         <div className="icon">

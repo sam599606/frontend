@@ -7,6 +7,9 @@ const TestResult = () => {
   const [isHollandFlipped, setIsHollandFlipped] = useState(false);
   const [isMbtiFlipped, setIsMbtiFlipped] = useState(false);
 
+  let data = localStorage.getItem('ua_data')
+  let ua_data = JSON.parse(data)
+
   // 測試數據，用於雷達圖
   const radarData = {
     indicator: [
@@ -17,7 +20,14 @@ const TestResult = () => {
       { name: "企業型 Enterprising", max: 100 },
       { name: "資料型 Conventional", max: 100 },
     ],
-    data: [70, 80, 50, 90, 60, 75], // 測試數據
+    data: [
+      ua_data.count_HOL_R,
+      ua_data.count_HOL_I,
+      ua_data.count_HOL_A,
+      ua_data.count_HOL_S,
+      ua_data.count_HOL_E,
+      ua_data.count_HOL_C,
+    ], // 測試數據
   };
 
   //#region HOLLAND雷達圖

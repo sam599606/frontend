@@ -229,6 +229,7 @@ const TestTesting = () => {
       })
         .then((res) => {
           console.log(res);
+          // localStorage.setItem()
         })
         .catch((err) => {
           console.log(err);

@@ -127,7 +127,7 @@ const InfoDialog = ({ isOpen, onClose }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         // 清除token並關閉視窗
-        localStorage.removeItem("token");
+        localStorage.clear();
         Swal.fire({
           title: "已成功登出",
           icon: "success",
