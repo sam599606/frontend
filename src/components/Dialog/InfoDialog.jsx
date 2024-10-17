@@ -128,17 +128,15 @@ const InfoDialog = ({ isOpen, onClose }) => {
       if (result.isConfirmed) {
         // 清除token並關閉視窗
         localStorage.removeItem("token");
+        document.getElementById("close").click();
         Swal.fire({
           title: "已成功登出",
           icon: "success",
           confirmButtonText: "確定",
           confirmButtonColor: "#3085d6",
-        }).then(() => {
-          document.getElementById("close").click();
         });
       }
     });
-    document.getElementById("close").click();
   };
 
   //#region return

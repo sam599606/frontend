@@ -4,8 +4,9 @@ import styles from "./TestHistory.module.css";
 import axios from "axios";
 
 const TestHistory = () => {
-
   let token = localStorage.getItem('token')
+
+  //#region 抓取測驗紀錄
   axios({
     method: "get",
     url: "http://localhost:5262/api/UserAnswer/AnswerResultList",
@@ -14,15 +15,21 @@ const TestHistory = () => {
     },
   })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
+      let ua_id = []
+      let account = []
       let date = []
       let time = []
       let result = []
       for(let i = 0; i <= res.data.result.length - 1; i++){
+        ua_id[i] = res.data.result[i].ua_id
+        account[i] = res.data.result[i].account
         date[i] = res.data.result[i].testTime.substr(0,10)
         time[i] = res.data.result[i].testTime.substr(11,18)
         result[i] = res.data.result[i].mbtI_Result
       }
+      localStorage.setItem('ua_id', ua_id)
+      localStorage.setItem('test_account', account)
       localStorage.setItem('date', date)
       localStorage.setItem('time', time)
       localStorage.setItem('result', result)
@@ -31,18 +38,33 @@ const TestHistory = () => {
       console.log(err);
     });
 
-    let a = localStorage.getItem('date')
-    let b = localStorage.getItem('time')
-    let c = localStorage.getItem('result')
+    let a = localStorage.getItem('ua_id')
+    let b = localStorage.getItem('test_account')
+    let c = localStorage.getItem('date')
+    let d = localStorage.getItem('time')
+    let e = localStorage.getItem('result')
     let testData = []
 
     for(let i = 0; i <= a.split(',').length - 1; i++){
-      let date = a.split(',')[i]
-      let time = b.split(',')[i]
-      let result = c.split(',')[i]
-      testData[i] = {date, time, result}
+      let ua_id = a.split(',')[i]
+      let test_account = b.split(',')[i]
+      let date = c.split(',')[i]
+      let time = d.split(',')[i]
+      let result = e.split(',')[i]
+      testData[i] = {ua_id, test_account, date, time, result}
     }
-    console.log(testData)
+    let account = localStorage.getItem('acc')
+
+    for(let i = testData.length - 1; i >= 0; i--){
+      console.log(testData[i].test_account)
+      console.log(testData[i].test_account != account)
+      if(testData[i].test_account != account){
+        console.log('splice' + i)
+        testData.splice(i, 1);
+      }
+    }
+    // console.log(testData)
+    
 
   return (
     <div className={styles.wrap}>
@@ -62,7 +84,7 @@ const TestHistory = () => {
                 <td className={styles.result}>{data.result}</td>
                 <td className={styles.btns}>
                   <Link to="/test-result">
-                    <button className={styles.info}>查看</button>
+                    <button className={styles.info} id={data.ua_id}>查看</button>
                   </Link>
                 </td>
               </tr>
