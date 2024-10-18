@@ -4,11 +4,6 @@ import axios from "axios";
 import styles from "./TestTesting.module.css";
 import { useNavigate } from "react-router-dom";
 
-let option = [];
-let seletionArr = [];
-let ts_idArr = [];
-let ts_ida = [];
-let t_id;
 let token = localStorage.getItem("token");
 
 const TestTesting = () => {
@@ -20,59 +15,20 @@ const TestTesting = () => {
 
 
   //#region 抓取題目
-  let que = localStorage.getItem("questions");
-  let parse = JSON.parse(que);
-  let t_idList = [];
-  let questionList = [];
-  let test = []
-  let ts_id = []
-  for (let i = 0; i <= parse.length - 1; i++) {
-    t_idList.push(parse[i].t_id);
-    questionList.push(parse[i].question);
-  }
-
-  for (let i = 0; i <= t_idList.length - 1; i++) {
-    t_id = t_idList[i];
-    let object = { t_id };
-    axios({
-      method: "post",
-      url: "http://localhost:5262/api/Test/GetTestSeletion",
-      data: JSON.stringify(object),
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        'Authorization': 'Bearer ' + token
-      },
-    })
-      .then((res) => {
-        seletionArr = [];
-        ts_idArr = [];
-        for (let i = 0; i <= res.data.result.length - 1; i++) {
-          seletionArr.push(res.data.result[i].seletion);
-          ts_idArr.push(res.data.result[i].ts_id);
-        }
-        option[i] = seletionArr;
-        ts_ida[i] = ts_idArr;
-        if (i === t_idList.length - 1) {
-          localStorage.setItem("option", JSON.stringify(option));
-          localStorage.setItem("ts_id", JSON.stringify(ts_ida));
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-  test = JSON.parse(localStorage.getItem("option"));
-  ts_id = JSON.parse(localStorage.getItem("ts_id"));
+  let test = JSON.parse(localStorage.getItem('test'))
+  let ts_id = JSON.parse(localStorage.getItem('ts_id'))
+  let questionList = JSON.parse(localStorage.getItem('questionList'))
   console.log(test)
   console.log(ts_id)
+  console.log(questionList)
 
   const questions = [];
   for (let i = 0; i <= questionList.length - 1; i++) {
-    questions.push({
-      id: t_idList[i],
+    questions[i] = {
+      id: ts_id[i],
       question: questionList[i],
       options: test[i],
-    });
+    };
   }
 
   //#region 做題
