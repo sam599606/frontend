@@ -1,14 +1,18 @@
+.background {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  overflow: hidden;
+}
+
 .wrap {
   width: 100%;
   height: 100%;
-  margin-top: 20px;
-  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-around; */
   align-items: center;
-  border-radius: 10px;
-  position: relative;
 }
 
 .wrap p {

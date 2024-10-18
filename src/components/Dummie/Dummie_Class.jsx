@@ -1,6 +1,18 @@
 import React, { useState } from "react";
 import styles from "./Dummie_more_Layout.module.css";
 import Dummie_more_Layout from "./Dummie_more_Layout";
+import axios from "axios";
+
+axios({
+  method: "get",
+  url: "http://localhost:5262/api/Job/LessonList",
+})
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 const Dummie_Class = () => {
   return (
@@ -40,6 +52,7 @@ const Dummie_Class = () => {
 };
 
 const Content = ({ title, duration, intro }) => {
+
   return (
     <div className={styles.content}>
       <div className={styles.title}>{title}</div>

@@ -10,17 +10,25 @@ const TestResult = () => {
   let data = localStorage.getItem("ua_data");
   let ua_data = JSON.parse(data);
 
+  let HOL_total =
+    ua_data.count_HOL_R +
+    ua_data.count_HOL_I +
+    ua_data.count_HOL_A +
+    ua_data.count_HOL_S +
+    ua_data.count_HOL_E +
+    ua_data.count_HOL_C;
+
   console.log("ua_data:", ua_data);
 
   //#region HOLLAND雷達圖
   const radarData = {
     indicator: [
-      { name: "實用型 Realistic", max: 15 },
-      { name: "研究型 Investigative", max: 15 },
-      { name: "藝術型 Artistic", max: 15 },
-      { name: "社會型 Social", max: 15 },
-      { name: "企業型 Enterprising", max: 15 },
-      { name: "資料型 Conventional", max: 15 },
+      { name: "實用型 Realistic", max: 30 },
+      { name: "研究型 Investigative", max: 30 },
+      { name: "藝術型 Artistic", max: 30 },
+      { name: "社會型 Social", max: 30 },
+      { name: "企業型 Enterprising", max: 30 },
+      { name: "資料型 Conventional", max: 30 },
     ],
     data: [
       ua_data.count_HOL_R,
@@ -79,7 +87,6 @@ const TestResult = () => {
     };
   };
 
-  // MBTI 左右對稱橫條圖配置
   const getMbtiBarOption = () => {
     const data = [
       {
@@ -108,11 +115,13 @@ const TestResult = () => {
       },
     ];
 
+    // console.log("data:", data);
+
     return {
       backgroundColor: "#f4eee2",
       grid: {
-        left: "15%",
-        right: "15%",
+        left: "5%",
+        right: "5%",
         bottom: "10%",
         top: "10%",
         containLabel: true,
@@ -127,7 +136,7 @@ const TestResult = () => {
       },
       yAxis: {
         type: "category",
-        data: data.map((item) => item.leftLabel), // 設定y軸為標籤名稱
+        data: data.map((item) => `${item.leftLabel} vs ${item.rightLabel}`), // 設定y軸為左右標籤
         axisTick: { show: false },
         axisLine: { show: false },
         axisLabel: {
@@ -142,13 +151,13 @@ const TestResult = () => {
               align: "left",
               fontSize: 16,
               color: "#745329",
-              padding: [0, 10, 0, 0], // 左側內邊距
+              padding: [0, 0, 0, 0], // 左側內邊距
             },
             right: {
               align: "right",
               fontSize: 16,
               color: "#745329",
-              padding: [0, 0, 0, 10], // 右側內邊距
+              padding: [0, 0, 0, 0], // 右側內邊距
             },
           },
         },
@@ -163,7 +172,7 @@ const TestResult = () => {
             {
               type: "bar",
               stack: `stack${index}`, // 為每個圖條設置單獨的stack，確保它們彼此不干擾
-              barWidth: "50%",
+              barWidth: "100%",
               data: [leftPercentage], // 左側比例
               itemStyle: {
                 color: item.leftValue > item.rightValue ? "#ffb144" : "#e0dfd5", // 如果左側分數高，則左側填色，否則背景色
@@ -180,7 +189,7 @@ const TestResult = () => {
             {
               type: "bar",
               stack: `stack${index}`, // 為每個圖條設置單獨的stack，確保它們彼此不干擾
-              barWidth: "50%",
+              barWidth: "100%",
               data: [rightPercentage], // 右側比例
               itemStyle: {
                 color: item.rightValue > item.leftValue ? "#ffb144" : "#e0dfd5", // 如果右側分數高，則右側填色，否則背景色

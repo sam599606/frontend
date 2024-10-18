@@ -2,7 +2,16 @@ import React from "react";
 import { useNavigate } from "react-router-dom"; // 使用 React Router 進行頁面跳轉
 import styles from "./TestIntro.module.css"; // 使用模組樣式
 import axios from "axios";
-import Swal from "sweetalert2"; // 引入 sweetalert2
+
+let t_idList = [];
+let questionList = [];
+let bgColorList = [];
+let bgImgList = [];
+let test = [];
+let ts_id = [];
+let seletionArr = [];
+let ts_idArr = [];
+let t_id;
 
 const TestIntro = () => {
   const navigate = useNavigate();
@@ -30,10 +39,63 @@ const TestIntro = () => {
     })
       .then((res) => {
         let questions = res.data.result;
-        let jsondata = JSON.stringify(questions);
-        localStorage.setItem("questions", jsondata);
-        //console.log(res);
-        navigate("/test-testing");
+        for (let i = 0; i <= questions.length - 1; i++) {
+          t_idList[i] = questions[i].t_id;
+          bgColorList[i] = questions[i].bgColor;
+          bgImgList[i] = questions[i].bgImg;
+          questionList[i] = questions[i].question;
+        }
+      })
+      .then(() => {
+        for (let i = 0; i <= t_idList.length - 1; i++) {
+          t_id = t_idList[i];
+          let object = { t_id };
+          axios({
+            method: "post",
+            url: "http://localhost:5262/api/Test/GetTestSeletion",
+            data: JSON.stringify(object),
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              Authorization: "Bearer " + token,
+            },
+          })
+            .then((res) => {
+              seletionArr = [];
+              ts_idArr = [];
+              for (let i = 0; i <= res.data.result.length - 1; i++) {
+                seletionArr[i] = res.data.result[i].seletion;
+                ts_idArr[i] = res.data.result[i].ts_id;
+              }
+              test[i] = seletionArr;
+              ts_id[i] = ts_idArr;
+            })
+            .then(() => {
+              setTimeout(() => {
+                if (i === t_idList.length - 1) {
+                  localStorage.setItem("test", JSON.stringify(test));
+                  localStorage.setItem("ts_id", JSON.stringify(ts_id));
+                  localStorage.setItem(
+                    "questionList",
+                    JSON.stringify(questionList)
+                  );
+                  localStorage.setItem(
+                    "bgColorList",
+                    JSON.stringify(bgColorList)
+                  );
+                  localStorage.setItem("bgImgList", JSON.stringify(bgImgList));
+                }
+              }, 10);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      })
+      .then(() => {
+        setTimeout(() => {
+          navigate("/test-testing");
+        }, 200);
+        console.log();
       })
       .catch((err) => {
         console.log(err);
