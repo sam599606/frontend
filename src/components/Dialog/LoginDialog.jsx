@@ -43,7 +43,7 @@ const LoginDialog = ({ isOpen, onClose, onRegister }) => {
       },
     })
       .then((res) => {
-        console.log(res);
+        console.log("login_response:", res);
 
         // 檢查API回傳資料是否有結果，若無結果視為查無帳號
         if (!res.data.result) {
@@ -57,7 +57,7 @@ const LoginDialog = ({ isOpen, onClose, onRegister }) => {
         }
 
         let token = res.data.result;
-        console.log(token);
+        // console.log(token);
         localStorage.setItem("token", token);
         localStorage.setItem("acc", account);
 

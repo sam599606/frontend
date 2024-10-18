@@ -15,8 +15,20 @@ let t_id;
 
 const TestIntro = () => {
   const navigate = useNavigate();
+
   const getTest = () => {
     let token = localStorage.getItem("token");
+
+    if (!token) {
+      Swal.fire({
+        title: "請先登入",
+        text: "您需要先登入才能進行測驗。",
+        icon: "warning",
+        confirmButtonText: "確定",
+        confirmButtonColor: "#d5ad8a",
+      });
+      return;
+    }
 
     axios({
       method: "get",
@@ -26,12 +38,11 @@ const TestIntro = () => {
       },
     })
       .then((res) => {
-        console.log(res);
         let questions = res.data.result;
         for (let i = 0; i <= questions.length - 1; i++) {
           t_idList[i] = questions[i].t_id;
-          bgColorList[i] = questions[i].bgColor
-          bgImgList[i] = questions[i].bgImg
+          bgColorList[i] = questions[i].bgColor;
+          bgImgList[i] = questions[i].bgImg;
           questionList[i] = questions[i].question;
         }
       })
@@ -61,6 +72,7 @@ const TestIntro = () => {
             .then(() => {
               setTimeout(() => {
                 if (i === t_idList.length - 1) {
+<<<<<<< HEAD
                 localStorage.setItem("test", JSON.stringify(test));
                 localStorage.setItem("ts_id", JSON.stringify(ts_id));
                 localStorage.setItem("questionList",JSON.stringify(questionList));
@@ -69,6 +81,21 @@ const TestIntro = () => {
               }
               }, 100);
               
+=======
+                  localStorage.setItem("test", JSON.stringify(test));
+                  localStorage.setItem("ts_id", JSON.stringify(ts_id));
+                  localStorage.setItem(
+                    "questionList",
+                    JSON.stringify(questionList)
+                  );
+                  localStorage.setItem(
+                    "bgColorList",
+                    JSON.stringify(bgColorList)
+                  );
+                  localStorage.setItem("bgImgList", JSON.stringify(bgImgList));
+                }
+              }, 10);
+>>>>>>> 0b0644a01ca04f883fd9da81fe487e1b79404e6a
             })
             .catch((err) => {
               console.log(err);
@@ -78,8 +105,13 @@ const TestIntro = () => {
       .then(() => {
         setTimeout(() => {
           navigate("/test-testing");
+<<<<<<< HEAD
         }, 500);
         console.log()
+=======
+        }, 200);
+        console.log();
+>>>>>>> 0b0644a01ca04f883fd9da81fe487e1b79404e6a
       })
       .catch((err) => {
         console.log(err);
@@ -88,7 +120,6 @@ const TestIntro = () => {
 
   return (
     <div className={styles.wrap}>
-      {" "}
       {/* 使用 styles.wrap 來引用模組樣式 */}
       <div className={styles.intro}>
         <h2>測驗說明</h2>

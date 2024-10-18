@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 import styles from "./TestTesting.module.css";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
+let option = [];
+let seletionArr = [];
+let ts_idArr = [];
+let ts_ida = [];
+let t_id;
 let token = localStorage.getItem("token");
 let Bg = styled.div;
 let Qp = styled.p;
@@ -34,6 +39,8 @@ const TestTesting = () => {
       options: test[i],
     };
   }
+
+  console.log("questions:", questions);
 
   //#region 做題
   const handleDragStart = (e, option) => {
@@ -222,6 +229,7 @@ const TestTesting = () => {
     }
   };
 
+<<<<<<< HEAD
   if (questions[currentQuestion - 1].bgColor == 1) {
     Bg = styled.div`
       height: 100vh;
@@ -398,6 +406,10 @@ const TestTesting = () => {
     }, 10);
   }
   
+=======
+  const bg1 = {};
+
+>>>>>>> 0b0644a01ca04f883fd9da81fe487e1b79404e6a
   //#region return
   return (
     <Bg>
