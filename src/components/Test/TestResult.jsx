@@ -83,25 +83,30 @@ const TestResult = () => {
   const getMbtiBarOption = () => {
     const data = [
       {
-        name: "E 外向 vs I 內向",
-        value: ua_data.count_MBTI_E - ua_data.count_MBTI_I,
+        leftLabel: "E 外向",
+        rightLabel: "I 內向",
+        leftValue: ua_data.count_MBTI_E,
+        rightValue: ua_data.count_MBTI_I,
       },
       {
-        name: "N 直覺 vs S 實感",
-        value: ua_data.count_MBTI_N - ua_data.count_MBTI_S,
+        leftLabel: "N 直覺",
+        rightLabel: "S 實感",
+        leftValue: ua_data.count_MBTI_N,
+        rightValue: ua_data.count_MBTI_S,
       },
       {
-        name: "F 情感 vs T 理性",
-        value: ua_data.count_MBTI_F - ua_data.count_MBTI_T,
+        leftLabel: "F 情感",
+        rightLabel: "T 理性",
+        leftValue: ua_data.count_MBTI_F,
+        rightValue: ua_data.count_MBTI_T,
       },
       {
-        name: "P 知覺 vs J 判斷",
-        value: ua_data.count_MBTI_P - ua_data.count_MBTI_J,
+        leftLabel: "P 知覺",
+        rightLabel: "J 判斷",
+        leftValue: ua_data.count_MBTI_P,
+        rightValue: ua_data.count_MBTI_J,
       },
     ];
-
-    // 將數據順序反轉
-    const reversedData = data.reverse();
 
     return {
       backgroundColor: "#f4eee2",
@@ -113,8 +118,8 @@ const TestResult = () => {
         containLabel: true,
       },
       xAxis: {
-        max: 20, // 假設正負範圍為 -20 到 20
-        min: -20,
+        max: 1, // 100% 範圍 (0-1)
+        min: 0,
         splitLine: { show: false },
         axisLabel: { show: false },
         axisTick: { show: false },
@@ -122,54 +127,76 @@ const TestResult = () => {
       },
       yAxis: {
         type: "category",
-        data: reversedData.map((item) => item.name), // 反轉後的標題
+        data: data.map((item) => item.leftLabel), // 設定y軸為標籤名稱
         axisTick: { show: false },
         axisLine: { show: false },
         axisLabel: {
-          fontSize: 18,
+          fontSize: 16,
           color: "#745329",
-        },
-      },
-      series: [
-        {
-          type: "bar",
-          barWidth: "60%",
-          data: reversedData.map((item) => item.value), // 反轉後的數據
-          itemStyle: {
-            color: function (params) {
-              return params.value > 0 ? "#ffb144" : "#cfa876"; // 正值和負值不同顏色
+          formatter: function (value, index) {
+            const item = data[index];
+            return `{left|${item.leftLabel}} {right|${item.rightLabel}}`;
+          },
+          rich: {
+            left: {
+              align: "left",
+              fontSize: 16,
+              color: "#745329",
+              padding: [0, 10, 0, 0], // 左側內邊距
+            },
+            right: {
+              align: "right",
+              fontSize: 16,
+              color: "#745329",
+              padding: [0, 0, 0, 10], // 右側內邊距
             },
           },
-          label: {
-            show: true,
-            position: "insideRight", // 將值顯示在進度條內部
-            formatter: "{c}",
-            color: "#fff",
-            fontSize: 16,
-          },
-          z: 10, // 確保進度條在最上層
         },
-        {
-          type: "bar",
-          barWidth: "60%",
-          data: new Array(reversedData.length).fill(20), // 背景條
-          itemStyle: {
-            color: "#e0dfd5", // 背景色
-          },
-          barGap: "-100%", // 重疊
-          z: 5, // 背景層
-        },
-        {
-          type: "bar",
-          barWidth: "60%",
-          data: new Array(reversedData.length).fill(-20), // 負方向背景條
-          itemStyle: {
-            color: "#e0dfd5", // 背景色
-          },
-          barGap: "-100%", // 重疊
-          z: 5, // 背景層
-        },
-      ],
+      },
+      series: data
+        .map((item, index) => {
+          const total = item.leftValue + item.rightValue;
+          const leftPercentage = item.leftValue / total; // 計算左側百分比
+          const rightPercentage = item.rightValue / total; // 計算右側百分比
+
+          return [
+            {
+              type: "bar",
+              stack: `stack${index}`, // 為每個圖條設置單獨的stack，確保它們彼此不干擾
+              barWidth: "50%",
+              data: [leftPercentage], // 左側比例
+              itemStyle: {
+                color: item.leftValue > item.rightValue ? "#ffb144" : "#e0dfd5", // 如果左側分數高，則左側填色，否則背景色
+              },
+              label: {
+                show: true,
+                position: "insideLeft",
+                formatter: `${item.leftValue}`,
+                color: "#fff",
+                fontSize: 14,
+              },
+              z: 10,
+            },
+            {
+              type: "bar",
+              stack: `stack${index}`, // 為每個圖條設置單獨的stack，確保它們彼此不干擾
+              barWidth: "50%",
+              data: [rightPercentage], // 右側比例
+              itemStyle: {
+                color: item.rightValue > item.leftValue ? "#ffb144" : "#e0dfd5", // 如果右側分數高，則右側填色，否則背景色
+              },
+              label: {
+                show: true,
+                position: "insideRight",
+                formatter: `${item.rightValue}`,
+                color: "#fff",
+                fontSize: 14,
+              },
+              z: 10,
+            },
+          ];
+        })
+        .flat(), // 合併左右橫條
     };
   };
 

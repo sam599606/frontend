@@ -7,14 +7,14 @@ import { Link } from "react-router-dom";
 const InfoDialog = ({ isOpen, onClose }) => {
   if (!isOpen) return null; // 如果未打開，則不渲染彈出視窗
 
-  let token = localStorage.getItem('token')
+  let token = localStorage.getItem("token");
   //#region 抓會員資料
   axios({
     method: "get",
     url: "http://localhost:5262/api/User/UserList",
   })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       let acc = localStorage.getItem("acc");
       for (let i = 0; i <= res.data.result.length - 1; i++) {
         if (res.data.result[i].account == acc) {
@@ -96,7 +96,7 @@ const InfoDialog = ({ isOpen, onClose }) => {
       data: JSON.stringify(memberdata),
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        'Authorization': 'Bearer ' + token
+        Authorization: "Bearer " + token,
       },
     })
       .then((res) => {

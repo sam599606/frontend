@@ -2,35 +2,46 @@ import React from "react";
 import { useNavigate } from "react-router-dom"; // 使用 React Router 進行頁面跳轉
 import styles from "./TestIntro.module.css"; // 使用模組樣式
 import axios from "axios";
+import Swal from "sweetalert2"; // 引入 sweetalert2
 
 const TestIntro = () => {
   const navigate = useNavigate();
+
   const getTest = () => {
-    let token = localStorage.getItem('token')
+    let token = localStorage.getItem("token");
+
+    if (!token) {
+      Swal.fire({
+        title: "請先登入",
+        text: "您需要先登入才能進行測驗。",
+        icon: "warning",
+        confirmButtonText: "確定",
+        confirmButtonColor: "#d5ad8a",
+      });
+      return;
+    }
+
     axios({
       method: "get",
       url: `http://localhost:5262/api/Test/TestList`,
       headers: {
-        'Authorization': 'Bearer ' + token
-      }
+        Authorization: "Bearer " + token,
+      },
     })
       .then((res) => {
         let questions = res.data.result;
         let jsondata = JSON.stringify(questions);
         localStorage.setItem("questions", jsondata);
-        console.log(res);
-      })
-      .then(() => {
+        //console.log(res);
         navigate("/test-testing");
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  
+
   return (
     <div className={styles.wrap}>
-      {" "}
       {/* 使用 styles.wrap 來引用模組樣式 */}
       <div className={styles.intro}>
         <h2>測驗說明</h2>

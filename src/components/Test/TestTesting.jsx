@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 import styles from "./TestTesting.module.css";
@@ -18,14 +18,12 @@ const TestTesting = () => {
   const [answerLog, setAnswerLog] = useState([]); // 新增陣列來記錄每一題的選項與槽位
   const navigate = useNavigate();
 
-
   //#region 抓取題目
   let que = localStorage.getItem("questions");
   let parse = JSON.parse(que);
   let t_idList = [];
   let questionList = [];
-  let test = []
-  let ts_id = []
+
   for (let i = 0; i <= parse.length - 1; i++) {
     t_idList.push(parse[i].t_id);
     questionList.push(parse[i].question);
@@ -40,7 +38,7 @@ const TestTesting = () => {
       data: JSON.stringify(object),
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        'Authorization': 'Bearer ' + token
+        Authorization: "Bearer " + token,
       },
     })
       .then((res) => {
@@ -61,19 +59,21 @@ const TestTesting = () => {
         console.log(err);
       });
   }
-  test = JSON.parse(localStorage.getItem("option"));
-  ts_id = JSON.parse(localStorage.getItem("ts_id"));
-  console.log(test)
-  console.log(ts_id)
+  let test = JSON.parse(localStorage.getItem("option"));
+  let ts_id = JSON.parse(localStorage.getItem("ts_id"));
 
   const questions = [];
-  for (let i = 0; i <= questionList.length - 1; i++) {
-    questions.push({
-      id: t_idList[i],
-      question: questionList[i],
-      options: test[i],
-    });
+  if (test.length === ts_id.length) {
+    for (let i = 0; i <= questionList.length - 1; i++) {
+      questions.push({
+        id: t_idList[i],
+        question: questionList[i],
+        options: test[i],
+      });
+    }
   }
+
+  console.log("questions:", questions);
 
   //#region 做題
   const handleDragStart = (e, option) => {
@@ -172,7 +172,7 @@ const TestTesting = () => {
         title: "測驗完成",
         text: "你已經完成了所有的題目！",
         confirmButtonColor: "#d5ad8a",
-      })
+      });
       console.log("使用者作答紀錄:", answerLog);
 
       //#region 送出答案
@@ -226,12 +226,12 @@ const TestTesting = () => {
         data: answerList,
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          'Authorization': 'Bearer ' + token
+          Authorization: "Bearer " + token,
         },
       })
         .then((res) => {
-          let ua_id = res.data.result
-          let jsondata = JSON.stringify(ua_id)
+          let ua_id = res.data.result;
+          let jsondata = JSON.stringify(ua_id);
           axios({
             method: "post",
             url: "http://localhost:5262/api/UserAnswer/GetAnswerResult",
@@ -241,16 +241,16 @@ const TestTesting = () => {
               Authorization: "Bearer " + token,
             },
           })
-          .then((res) => {
-            console.log(res);
-            localStorage.setItem('ua_data', JSON.stringify(res.data.result))
-          })
-          .then(() => {
-            navigate("/test-result");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+            .then((res) => {
+              console.log(res);
+              localStorage.setItem("ua_data", JSON.stringify(res.data.result));
+            })
+            .then(() => {
+              navigate("/test-result");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((err) => {
           console.log(err);
