@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
-import { useLocation } from "react-router-dom";
 
 const Index = () => {
   const [currentIndex, setCurrentIndex] = useState(0); // 控制當前圖片索引
-  const location = useLocation();
   const images = [
     "src/images/meeting.png",
     "src/images/successful.png",

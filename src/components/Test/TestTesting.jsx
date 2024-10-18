@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import styles from "./TestTesting.module.css";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 let token = localStorage.getItem("token");
 
@@ -13,19 +14,19 @@ const TestTesting = () => {
   const [answerLog, setAnswerLog] = useState([]); // 新增陣列來記錄每一題的選項與槽位
   const navigate = useNavigate();
 
-
   //#region 抓取題目
-  let test = JSON.parse(localStorage.getItem('test'))
-  let ts_id = JSON.parse(localStorage.getItem('ts_id'))
-  let questionList = JSON.parse(localStorage.getItem('questionList'))
-  console.log(test)
-  console.log(ts_id)
-  console.log(questionList)
+  let test = JSON.parse(localStorage.getItem("test"));
+  let ts_id = JSON.parse(localStorage.getItem("ts_id"));
+  let questionList = JSON.parse(localStorage.getItem("questionList"));
+  let bgColorList = JSON.parse(localStorage.getItem("bgColorList"));
+  let bgImgList = JSON.parse(localStorage.getItem("bgImgList"));
 
   const questions = [];
   for (let i = 0; i <= questionList.length - 1; i++) {
     questions[i] = {
       id: ts_id[i],
+      bgImg: bgImgList[i],
+      bgColor: bgColorList[i],
       question: questionList[i],
       options: test[i],
     };
@@ -47,7 +48,6 @@ const TestTesting = () => {
     }));
     setSelectedAnswers((prev) => [...prev, option]); // 加入已選擇的選項
 
-    //#region 問題
     // 更新 answerLog，記錄第幾題選擇了什麼並放在哪個槽位
     setAnswerLog((prev) => {
       const updatedLog = [...prev];
@@ -128,7 +128,7 @@ const TestTesting = () => {
         title: "測驗完成",
         text: "你已經完成了所有的題目！",
         confirmButtonColor: "#d5ad8a",
-      })
+      });
       console.log("使用者作答紀錄:", answerLog);
 
       //#region 送出答案
@@ -182,12 +182,12 @@ const TestTesting = () => {
         data: answerList,
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          'Authorization': 'Bearer ' + token
+          Authorization: "Bearer " + token,
         },
       })
         .then((res) => {
-          let ua_id = res.data.result
-          let jsondata = JSON.stringify(ua_id)
+          let ua_id = res.data.result;
+          let jsondata = JSON.stringify(ua_id);
           axios({
             method: "post",
             url: "http://localhost:5262/api/UserAnswer/GetAnswerResult",
@@ -197,16 +197,21 @@ const TestTesting = () => {
               Authorization: "Bearer " + token,
             },
           })
-          .then((res) => {
-            console.log(res);
-            localStorage.setItem('ua_data', JSON.stringify(res.data.result))
-          })
-          .then(() => {
-            navigate("/test-result");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+            .then((res) => {
+              console.log(res);
+              localStorage.setItem("ua_data", JSON.stringify(res.data.result));
+            })
+            .then(() => {
+              localStorage.removeItem("test");
+              localStorage.removeItem("ts_id");
+              localStorage.removeItem("questionList");
+              localStorage.removeItem("bgColorList");
+              localStorage.removeItem("bgImgList");
+              navigate("/test-result");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((err) => {
           console.log(err);
@@ -214,102 +219,108 @@ const TestTesting = () => {
     }
   };
 
+  const bg1 = {}
+
   //#region return
   return (
-    <div className={styles.wrap}>
-      <p>{questions[currentQuestion - 1].question}</p>
+    <div className={styles.background}>
+      <div className={styles.wrap}>
+        <p>{questions[currentQuestion - 1].question}</p>
 
-      {/* 題目進度 */}
-      <div className={styles.counter}>
-        <span>
-          {currentQuestion}/{questions.length}
-        </span>
-      </div>
-
-      {/* 放選項的槽位 */}
-      <div className={styles.targetContainer} id="answers">
-        <div className={`${styles.likerow}`}>
-          {[0, 1, 2].map((idx) => (
-            <div
-              key={idx}
-              className={`${styles.ans} ${styles.like} ${
-                usedAnswers[`like${idx}`] ? styles.filled : ""
-              }`}
-              data-role="drag_drop_container"
-              onDrop={(e) => handleDrop(e, `like${idx}`)}
-              onDragOver={(e) => e.preventDefault()}
-              onClick={() => handleRemove(`like${idx}`)}
-            >
-              {usedAnswers[`like${idx}`]}
-            </div>
-          ))}
+        {/* 題目進度 */}
+        <div className={styles.counter}>
+          <span>
+            {currentQuestion}/{questions.length}
+          </span>
         </div>
-        <div className={`${styles.dislikerow}`}>
-          {[0, 1, 2].map((idx) => (
-            <div
-              key={idx}
-              className={`${styles.ans} ${styles.dislike} ${
-                usedAnswers[`dislike${idx}`] ? styles.filled : ""
-              }`}
-              data-role="drag_drop_container"
-              onDrop={(e) => handleDrop(e, `dislike${idx}`)}
-              onDragOver={(e) => e.preventDefault()}
-              onClick={() => handleRemove(`dislike${idx}`)}
-            >
-              {usedAnswers[`dislike${idx}`]}
-            </div>
-          ))}
-        </div>
-      </div>
 
-      {/* 選項:可拖曳 */}
-      <div className={styles.sourceContainer} id="options">
-        {questions[currentQuestion - 1].options.map((option, index) => (
-          <div
-            key={index}
-            className={`${styles.opt} ${
-              selectedAnswers.includes(option) ? styles.selected : ""
-            }`}
-            draggable="true"
-            id={`drag_source_multiple_${index}`}
-            onDragStart={(e) => handleDragStart(e, option)}
-          >
-            {option}
+        {/* 放選項的槽位 */}
+        <div className={styles.targetContainer} id="answers">
+          <div className={`${styles.likerow}`}>
+            {[0, 1, 2].map((idx) => (
+              <div
+                key={idx}
+                className={`${styles.ans} ${styles.like} ${
+                  usedAnswers[`like${idx}`] ? styles.filled : ""
+                }`}
+                data-role="drag_drop_container"
+                onDrop={(e) => handleDrop(e, `like${idx}`)}
+                onDragOver={(e) => e.preventDefault()}
+                onClick={() => handleRemove(`like${idx}`)}
+              >
+                {usedAnswers[`like${idx}`]}
+              </div>
+            ))}
           </div>
-        ))}
+          <div className={`${styles.dislikerow}`}>
+            {[0, 1, 2].map((idx) => (
+              <div
+                key={idx}
+                className={`${styles.ans} ${styles.dislike} ${
+                  usedAnswers[`dislike${idx}`] ? styles.filled : ""
+                }`}
+                data-role="drag_drop_container"
+                onDrop={(e) => handleDrop(e, `dislike${idx}`)}
+                onDragOver={(e) => e.preventDefault()}
+                onClick={() => handleRemove(`dislike${idx}`)}
+              >
+                {usedAnswers[`dislike${idx}`]}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 選項:可拖曳 */}
+        <div className={styles.sourceContainer} id="options">
+          {questions[currentQuestion - 1].options.map((option, index) => (
+            <div
+              key={index}
+              className={`${styles.opt} ${
+                selectedAnswers.includes(option) ? styles.selected : ""
+              }`}
+              draggable="true"
+              id={`drag_source_multiple_${index}`}
+              onDragStart={(e) => handleDragStart(e, option)}
+            >
+              {option}
+            </div>
+          ))}
+        </div>
+
+        {/* 顯示上一題按鈕，當 currentQuestion > 1 時顯示按鈕 */}
+        {currentQuestion > 1 && (
+          <div
+            className={`${styles.previousbtn}`}
+            onClick={handlePreviousQuestion}
+          >
+            <span>上一題</span>
+          </div>
+        )}
+
+        {/* 顯示下一題按鈕 */}
+        {currentQuestion < questions.length && (
+          <div
+            className={`${styles.nextbtn} ${!isFilled ? styles.disabled : ""}`}
+            onClick={handleNextQuestion}
+            // style={{ pointerEvents: isFilled ? "auto" : "none" }} // 禁止點擊
+          >
+            <span>下一題</span>
+          </div>
+        )}
+
+        {/* 顯示送出按鈕 */}
+        {currentQuestion === questions.length && (
+          <div
+            className={`${styles.sendoutbtn} ${
+              !isFilled ? styles.disabled : ""
+            }`}
+            onClick={handleNextQuestion}
+            // style={{ pointerEvents: isFilled ? "auto" : "none" }} // 禁止點擊
+          >
+            <span>送出</span>
+          </div>
+        )}
       </div>
-
-      {/* 顯示上一題按鈕，當 currentQuestion > 1 時顯示按鈕 */}
-      {currentQuestion > 1 && (
-        <div
-          className={`${styles.previousbtn}`}
-          onClick={handlePreviousQuestion}
-        >
-          <span>上一題</span>
-        </div>
-      )}
-
-      {/* 顯示下一題按鈕 */}
-      {currentQuestion < questions.length && (
-        <div
-          className={`${styles.nextbtn} ${!isFilled ? styles.disabled : ""}`}
-          onClick={handleNextQuestion}
-          // style={{ pointerEvents: isFilled ? "auto" : "none" }} // 禁止點擊
-        >
-          <span>下一題</span>
-        </div>
-      )}
-
-      {/* 顯示送出按鈕 */}
-      {currentQuestion === questions.length && (
-        <div
-          className={`${styles.sendoutbtn} ${!isFilled ? styles.disabled : ""}`}
-          onClick={handleNextQuestion}
-          // style={{ pointerEvents: isFilled ? "auto" : "none" }} // 禁止點擊
-        >
-          <span>送出</span>
-        </div>
-      )}
     </div>
   );
 };

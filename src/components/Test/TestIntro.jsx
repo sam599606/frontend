@@ -5,6 +5,8 @@ import axios from "axios";
 
 let t_idList = [];
 let questionList = [];
+let bgColorList = [];
+let bgImgList = [];
 let test = [];
 let ts_id = [];
 let seletionArr = [];
@@ -28,6 +30,8 @@ const TestIntro = () => {
         let questions = res.data.result;
         for (let i = 0; i <= questions.length - 1; i++) {
           t_idList[i] = questions[i].t_id;
+          bgColorList[i] = questions[i].bgColor
+          bgImgList[i] = questions[i].bgImg
           questionList[i] = questions[i].question;
         }
       })
@@ -59,10 +63,9 @@ const TestIntro = () => {
                 if (i === t_idList.length - 1) {
                 localStorage.setItem("test", JSON.stringify(test));
                 localStorage.setItem("ts_id", JSON.stringify(ts_id));
-                localStorage.setItem(
-                  "questionList",
-                  JSON.stringify(questionList)
-                );
+                localStorage.setItem("questionList",JSON.stringify(questionList));
+                localStorage.setItem("bgColorList",JSON.stringify(bgColorList));
+                localStorage.setItem("bgImgList",JSON.stringify(bgImgList));
               }
               }, 10);
               
@@ -76,6 +79,7 @@ const TestIntro = () => {
         setTimeout(() => {
           navigate("/test-testing");
         }, 200);
+        console.log()
       })
       .catch((err) => {
         console.log(err);
