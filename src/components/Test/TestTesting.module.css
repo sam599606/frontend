@@ -1,23 +1,10 @@
-.background {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  overflow: hidden;
-}
-
 .wrap {
   width: 100%;
   height: 100%;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.wrap p {
-  width: 75%;
-  font-size: 30px;
 }
 
 .question_text {
@@ -30,7 +17,7 @@
 .counter {
   font-size: 28px;
   position: absolute;
-  top: 0px;
+  top: 10%;
   left: 40px;
 }
 
@@ -80,6 +67,7 @@
 .targetContainer {
   width: 75%;
   height: 30%;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -123,7 +111,6 @@
 }
 
 .opt {
-  background-color: #ffb144;
   justify-content: space-evenly;
   text-align: center;
   /* border: 5px #ff9500 solid; */
@@ -157,6 +144,7 @@
   transform: rotate(180deg);
 }
 
+/* 下方選起來後被隱藏 */
 .opt.selected {
   background-color: transparent;
   /* 背景設為透明 */
@@ -168,6 +156,7 @@
   /* 禁止點擊，避免選擇後再操作 */
 }
 
+/* 上面的選項卡 */
 .ans.filled {
   background-color: #ffb144;
   background-image: none;
@@ -185,4 +174,47 @@
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+}
+
+.abc{
+  font-size: 65px;
+}
+
+/* 選項卡顏色 bgColor */
+.card1{
+  background-color: pink;
+}
+.card2{
+  background-color: blue;
+}
+.card3{
+  background-color: red;
+}
+.card4{
+  background-color: green;
+}
+.card5{
+  background-color: yellow;
+}
+.card6{
+  background-color: white;
+}
+
+.filled1{
+  background-color: pink;
+}
+.filled2{
+  background-color: blue;
+}
+.filled3{
+  background-color: red;
+}
+.filled4{
+  background-color: green;
+}
+.filled5{
+  background-color: yellow;
+}
+.filled6{
+  background-color: white;
 }

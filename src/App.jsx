@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  useLocation,
 } from "react-router-dom"; // 引入 Router 組件
 import "./App.css";
 import Footer from "./components/footer/footer";

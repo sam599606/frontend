@@ -67,7 +67,7 @@ const TestIntro = () => {
                 localStorage.setItem("bgColorList",JSON.stringify(bgColorList));
                 localStorage.setItem("bgImgList",JSON.stringify(bgImgList));
               }
-              }, 10);
+              }, 100);
               
             })
             .catch((err) => {
@@ -78,7 +78,7 @@ const TestIntro = () => {
       .then(() => {
         setTimeout(() => {
           navigate("/test-testing");
-        }, 200);
+        }, 500);
         console.log()
       })
       .catch((err) => {

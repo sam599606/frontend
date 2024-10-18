@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 let token = localStorage.getItem("token");
+let Bg = styled.div;
+let Qp = styled.p;
+let Cp = styled.span;
 
 const TestTesting = () => {
   const [currentQuestion, setCurrentQuestion] = useState(1); // 當前題目進度
@@ -105,15 +108,15 @@ const TestTesting = () => {
 
   const handleNextQuestion = () => {
     // 檢查是否已填滿6張卡片
-    if (!isFilled) {
-      Swal.fire({
-        icon: "warning",
-        title: "請完成本題",
-        text: "你需要將6張選項卡全部放置到槽位中才可進入下一題！",
-        confirmButtonColor: "#d5ad8a",
-      });
-      return;
-    }
+    // if (!isFilled) {
+    //   Swal.fire({
+    //     icon: "warning",
+    //     title: "請完成本題",
+    //     text: "你需要將6張選項卡全部放置到槽位中才可進入下一題！",
+    //     confirmButtonColor: "#d5ad8a",
+    //   });
+    //   return;
+    // }
 
     // 如果已經填滿了6張卡片，進入下一題
     if (currentQuestion < questions.length) {
@@ -219,19 +222,193 @@ const TestTesting = () => {
     }
   };
 
-  const bg1 = {}
-
+  if (questions[currentQuestion - 1].bgColor == 1) {
+    Bg = styled.div`
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      overflow: hidden;
+      background-color: #f6cf80;
+    `;
+    Qp = styled.p`
+      width: 75%;
+      font-size: 30px;
+      color: #745329;
+    `;
+    Cp = styled.span`
+      color: #745329;
+    `;
+    setTimeout(() => {
+      for(let i = 0; i <= test[i].length - 1; i++){
+        let ts = document.getElementById(`drag_source_multiple_${i}`)
+        ts.classList.add(styles.card1)
+      }
+      for(let i = 0; i <= 6 - 1; i++){
+        let ts = document.getElementById(`drag_drop_container${i}`)
+        ts.classList.add(styles.filled1)
+      }
+    }, 10);
+  } else if (questions[currentQuestion - 1].bgColor == 2) {
+    Bg = styled.div`
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      overflow: hidden;
+      background-color: #ffe785;
+    `;
+    Qp = styled.p`
+      width: 75%;
+      font-size: 30px;
+      color: #745329;
+    `;
+    Cp = styled.span`
+      color: #745329;
+    `;
+    setTimeout(() => {
+      for(let i = 0; i <= test[i].length - 1; i++){
+        let ts = document.getElementById(`drag_source_multiple_${i}`)
+        ts.classList.add(styles.card2)
+      }
+      for(let i = 0; i <= 6 - 1; i++){
+        let ts = document.getElementById(`drag_drop_container${i}`)
+        ts.classList.add(styles.filled2)
+      }
+    }, 10);
+  } else if (questions[currentQuestion - 1].bgColor == 3) {
+    Bg = styled.div`
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      overflow: hidden;
+      background-color: #fdf1cb;
+    `;
+    Qp = styled.p`
+      width: 75%;
+      font-size: 30px;
+      color: #745329;
+    `;
+    Cp = styled.span`
+      color: #745329;
+    `;
+    setTimeout(() => {
+      for(let i = 0; i <= test[i].length - 1; i++){
+        let ts = document.getElementById(`drag_source_multiple_${i}`)
+        ts.classList.add(styles.card3)
+      }
+      for(let i = 0; i <= 6 - 1; i++){
+        let ts = document.getElementById(`drag_drop_container${i}`)
+        ts.classList.add(styles.filled3)
+      }
+    }, 10);
+  } else if (questions[currentQuestion - 1].bgColor == 4) {
+    Bg = styled.div`
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      overflow: hidden;
+      background-color: #745329;
+    `;
+    Qp = styled.p`
+      width: 75%;
+      font-size: 30px;
+      color: #f1e2b8;
+    `;
+    Cp = styled.span`
+      color: #f1e2b8;
+    `;
+    setTimeout(() => {
+      for(let i = 0; i <= test[i].length - 1; i++){
+        let ts = document.getElementById(`drag_source_multiple_${i}`)
+        ts.classList.add(styles.card4)
+      }
+      for(let i = 0; i <= 6 - 1; i++){
+        let ts = document.getElementById(`drag_drop_container${i}`)
+        ts.classList.add(styles.filled4)
+      }
+    }, 10);
+  } else if (questions[currentQuestion - 1].bgColor == 5) {
+    Bg = styled.div`
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      overflow: hidden;
+      background-color: #d5ad8a;
+    `;
+    Qp = styled.p`
+      width: 75%;
+      font-size: 30px;
+      color: #745329;
+    `;
+    Cp = styled.span`
+      color: #745329;
+    `;
+    setTimeout(() => {
+      for(let i = 0; i <= test[i].length - 1; i++){
+        let ts = document.getElementById(`drag_source_multiple_${i}`)
+        ts.classList.add(styles.card5)
+      }
+      for(let i = 0; i <= 6 - 1; i++){
+        let ts = document.getElementById(`drag_drop_container${i}`)
+        ts.classList.add(styles.filled5)
+      }
+    }, 10);
+  } else if (questions[currentQuestion - 1].bgColor == 6) {
+    Bg = styled.div`
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      overflow: hidden;
+      background-color: #dbc8b6;
+    `;
+    Qp = styled.p`
+      width: 75%;
+      font-size: 30px;
+      color: #745329;
+    `;
+    Cp = styled.span`
+      color: #745329;
+    `;
+    setTimeout(() => {
+      for(let i = 0; i <= test[i].length - 1; i++){
+        let ts = document.getElementById(`drag_source_multiple_${i}`)
+        ts.classList.add(styles.card6)
+      }
+      for(let i = 0; i <= 6 - 1; i++){
+        let ts = document.getElementById(`drag_drop_container${i}`)
+        ts.classList.add(styles.filled6)
+      }
+    }, 10);
+  }
+  
   //#region return
   return (
-    <div className={styles.background}>
+    <Bg>
       <div className={styles.wrap}>
-        <p>{questions[currentQuestion - 1].question}</p>
+        <Qp>{questions[currentQuestion - 1].question}</Qp>
 
         {/* 題目進度 */}
         <div className={styles.counter}>
-          <span>
+          <Cp>
             {currentQuestion}/{questions.length}
-          </span>
+          </Cp>
         </div>
 
         {/* 放選項的槽位 */}
@@ -243,6 +420,7 @@ const TestTesting = () => {
                 className={`${styles.ans} ${styles.like} ${
                   usedAnswers[`like${idx}`] ? styles.filled : ""
                 }`}
+                id={`drag_drop_container${idx}`}
                 data-role="drag_drop_container"
                 onDrop={(e) => handleDrop(e, `like${idx}`)}
                 onDragOver={(e) => e.preventDefault()}
@@ -259,6 +437,7 @@ const TestTesting = () => {
                 className={`${styles.ans} ${styles.dislike} ${
                   usedAnswers[`dislike${idx}`] ? styles.filled : ""
                 }`}
+                id={`drag_drop_container${idx + 3}`}
                 data-role="drag_drop_container"
                 onDrop={(e) => handleDrop(e, `dislike${idx}`)}
                 onDragOver={(e) => e.preventDefault()}
@@ -321,7 +500,7 @@ const TestTesting = () => {
           </div>
         )}
       </div>
-    </div>
+    </Bg>
   );
 };
 
