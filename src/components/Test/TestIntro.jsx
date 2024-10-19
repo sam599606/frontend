@@ -72,16 +72,6 @@ const TestIntro = () => {
             .then(() => {
               setTimeout(() => {
                 if (i === t_idList.length - 1) {
-<<<<<<< HEAD
-                localStorage.setItem("test", JSON.stringify(test));
-                localStorage.setItem("ts_id", JSON.stringify(ts_id));
-                localStorage.setItem("questionList",JSON.stringify(questionList));
-                localStorage.setItem("bgColorList",JSON.stringify(bgColorList));
-                localStorage.setItem("bgImgList",JSON.stringify(bgImgList));
-              }
-              }, 100);
-              
-=======
                   localStorage.setItem("test", JSON.stringify(test));
                   localStorage.setItem("ts_id", JSON.stringify(ts_id));
                   localStorage.setItem(
@@ -95,7 +85,6 @@ const TestIntro = () => {
                   localStorage.setItem("bgImgList", JSON.stringify(bgImgList));
                 }
               }, 10);
->>>>>>> 0b0644a01ca04f883fd9da81fe487e1b79404e6a
             })
             .catch((err) => {
               console.log(err);
@@ -105,13 +94,8 @@ const TestIntro = () => {
       .then(() => {
         setTimeout(() => {
           navigate("/test-testing");
-<<<<<<< HEAD
-        }, 500);
-        console.log()
-=======
         }, 200);
         console.log();
->>>>>>> 0b0644a01ca04f883fd9da81fe487e1b79404e6a
       })
       .catch((err) => {
         console.log(err);

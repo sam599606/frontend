@@ -182,3 +182,69 @@ input[type="search"] {
 .pages a:hover {
   color: #f19d38;
 }
+
+/* 分頁區塊容器 */
+.pages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  /* 分頁按鈕之間的間距 */
+
+}
+
+/* 分頁按鈕 */
+.pages button {
+  border: none;
+  /* 隱藏邊框 */
+  background-color: transparent;
+  /* 背景色透明 */
+  font-size: 18px;
+  /* 增大字體 */
+  cursor: pointer;
+  /* 滑鼠懸停效果 */
+  padding: 5px 10px;
+  /* 增加內邊距，讓按鈕點擊區域稍大 */
+  transition: transform 0.2s ease;
+  /* 增加點擊動畫效果 */
+}
+
+/* 當前頁碼的樣式 */
+.pages button.activePage {
+  font-weight: bold;
+  /* 當前頁碼加粗 */
+  color: #007bff;
+  /* 當前頁碼的顏色 */
+}
+
+/* 頁碼懸停時效果 */
+.pages button:hover {
+  transform: scale(1.1);
+  /* 懸停時放大 */
+  color: #0056b3;
+  /* 懸停時的字體顏色變化 */
+}
+
+/* 分頁箭頭圖片樣式 */
+.pages img {
+  width: 20px;
+  /* 圖片的寬度 */
+  height: 20px;
+  /* 圖片的高度 */
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  /* 增加動畫效果 */
+}
+
+/* 禁用箭頭按鈕 */
+.pages button:disabled img {
+  opacity: 0.5;
+  /* 禁用狀態時圖片透明度 */
+  cursor: not-allowed;
+  /* 改變游標為禁用狀態 */
+}
+
+/* 禁用時的按鈕樣式 */
+.pages button:disabled {
+  pointer-events: none;
+}
