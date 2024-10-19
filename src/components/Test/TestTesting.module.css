@@ -158,7 +158,7 @@
 
 /* 上面的選項卡 */
 .ans.filled {
-  background-color: #ffb144;
+  /* background-color: #ffb144; */
   background-image: none;
   text-align: center;
   box-shadow: inset 0;
