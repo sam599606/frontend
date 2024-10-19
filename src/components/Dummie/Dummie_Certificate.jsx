@@ -109,7 +109,7 @@ const Dummie_Certificate = () => {
 const Content = ({ title, duration, intro }) => {
   return (
     <div className={styles.content}>
-      <div>Dummie_Certificate</div>
+      <div>Dummie_Certificate測試用資料</div>
       <div className={styles.title}>{title}</div>
       <div className={styles.duration}>
         <img src="../src/images/clock.png" alt="時鐘" />

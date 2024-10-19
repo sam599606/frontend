@@ -109,7 +109,7 @@ const Dummie_Subsidy = () => {
 const Content = ({ title, duration, intro }) => {
   return (
     <div className={styles.content}>
-      <div>Dummie_Subsidy測試用</div>
+      <div>Dummie_Subsidy測試用資料</div>
       <div className={styles.title}>{title}</div>
       <div className={styles.duration}>
         <img src="../src/images/clock.png" alt="時鐘" />

@@ -89,7 +89,7 @@ const Dummie_more_Layout = ({
           {/* "第1頁" 連結 (如果沒有顯示第1頁) */}
           {getPageNumbers()[0] > 1 && (
             <>
-              <button onClick={() => handlePageClick(1)}>第1頁</button>
+              <button onClick={() => handlePageClick(1)}>1</button>
               <span>...</span> {/* 省略號 */}
             </>
           )}
@@ -110,7 +110,7 @@ const Dummie_more_Layout = ({
             <>
               <span>...</span> {/* 省略號 */}
               <button onClick={() => handlePageClick(totalPages)}>
-                第{totalPages}頁
+                {totalPages}
               </button>
             </>
           )}

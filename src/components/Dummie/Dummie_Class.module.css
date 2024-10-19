@@ -1,44 +1,112 @@
+/* 課程外框樣式 */
 .content {
   background-color: #fff;
   border-radius: 15px;
-  font-size: 24px;
+  font-size: 18px;
+  /* 調整字體大小為18px，保持內容易讀 */
   margin: 20px 0;
-  padding: 5px 10px;
-  padding-right: 75px;
+  padding: 20px;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   position: relative;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  /* 添加陰影以突出每個課程框 */
 }
 
-.content:first-of-type {
-  margin-top: 0;
-}
-
-.content:last-of-type {
-  margin-bottom: 0;
-}
-
+/* 課程標題樣式 */
 .title {
   color: #745329;
-  line-height: 1.6;
+  font-size: 24px;
+  /* 調整字體大小 */
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-.duration {
+/* 課程時間樣式 */
+.time {
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
 }
 
-.duration img {
-  width: 30px;
-  height: 30px;
+.time img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  /* 時間圖標與文字之間的間距 */
 }
 
-.duration p {
+.time p {
   color: #bb7331;
+  font-size: 16px;
 }
 
+/* "前往"按鈕樣式 */
 .more {
   position: absolute;
-  top: 5px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
+  background-color: #007bff;
+  /* 藍色按鈕 */
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.more:hover {
+  background-color: #0056b3;
+  /* 按鈕懸停時的顏色 */
+}
+
+/* 課程簡介樣式 */
+.intro {
+  margin-top: 15px;
+  color: #333;
+  line-height: 1.6;
+  font-size: 16px;
+  /* 調整字體大小 */
+  white-space: pre-wrap;
+  /* 保留文字中的換行符號 */
+}
+
+/* 地址樣式 */
+.address {
+  margin-top: 15px;
+  font-size: 16px;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* 分頁區域樣式 */
+.pages {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 10px;
+  /* 每個分頁按鈕之間的間距 */
+}
+
+.pages button {
+  background-color: transparent;
+  border: none;
+  color: #007bff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.pages button:hover {
+  text-decoration: underline;
+}
+
+.pages button:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.activePage {
+  font-weight: bold;
+  color: #0056b3;
+  text-decoration: underline;
 }
