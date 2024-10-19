@@ -5,10 +5,10 @@ import axios from "axios";
 
 axios({
   method: "get",
-  url: "http://localhost:5262/api/Job/LessonList",
+  url: "http://localhost:5262/api/Job/CertificateList",
 })
   .then((res) => {
-    console.log("LessonList:", res);
+    console.log("CertificateList:", res);
   })
   .catch((err) => {
     console.log(err);

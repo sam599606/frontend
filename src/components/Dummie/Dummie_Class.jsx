@@ -1,6 +1,18 @@
 import React, { useState } from "react";
 import styles from "./Dummie_Class.module.css";
 import Dummie_more_Layout from "./Dummie_more_Layout";
+import axios from "axios";
+
+axios({
+  method: "get",
+  url: "http://localhost:5262/api/Job/LessonList",
+})
+  .then((res) => {
+    console.log("LessonList:", res);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 const Dummie_Class = () => {
   const allCourses = [
