@@ -229,7 +229,6 @@ const TestTesting = () => {
     }
   };
 
-<<<<<<< HEAD
   if (questions[currentQuestion - 1].bgColor == 1) {
     Bg = styled.div`
       height: 100vh;
@@ -250,13 +249,15 @@ const TestTesting = () => {
       color: #745329;
     `;
     setTimeout(() => {
-      for(let i = 0; i <= test[i].length - 1; i++){
+      for(let i = 0; i <= test[currentQuestion-1].length - 1; i++){
         let ts = document.getElementById(`drag_source_multiple_${i}`)
         ts.classList.add(styles.card1)
       }
       for(let i = 0; i <= 6 - 1; i++){
         let ts = document.getElementById(`drag_drop_container${i}`)
-        ts.classList.add(styles.filled1)
+        if(ts.classList.contains('_filled_1hcue_319')){
+          ts.classList.add(styles.filled1)
+        }
       }
     }, 10);
   } else if (questions[currentQuestion - 1].bgColor == 2) {
@@ -279,13 +280,15 @@ const TestTesting = () => {
       color: #745329;
     `;
     setTimeout(() => {
-      for(let i = 0; i <= test[i].length - 1; i++){
+      for(let i = 0; i <= test[currentQuestion-1].length - 1; i++){
         let ts = document.getElementById(`drag_source_multiple_${i}`)
         ts.classList.add(styles.card2)
       }
       for(let i = 0; i <= 6 - 1; i++){
         let ts = document.getElementById(`drag_drop_container${i}`)
-        ts.classList.add(styles.filled2)
+        if(ts.classList.contains('_filled_1hcue_319')){
+          ts.classList.add(styles.filled2)
+        }
       }
     }, 10);
   } else if (questions[currentQuestion - 1].bgColor == 3) {
@@ -308,13 +311,15 @@ const TestTesting = () => {
       color: #745329;
     `;
     setTimeout(() => {
-      for(let i = 0; i <= test[i].length - 1; i++){
+      for(let i = 0; i <= test[currentQuestion-1].length - 1; i++){
         let ts = document.getElementById(`drag_source_multiple_${i}`)
         ts.classList.add(styles.card3)
       }
       for(let i = 0; i <= 6 - 1; i++){
         let ts = document.getElementById(`drag_drop_container${i}`)
-        ts.classList.add(styles.filled3)
+        if(ts.classList.contains('_filled_1hcue_319')){
+          ts.classList.add(styles.filled3)
+        }
       }
     }, 10);
   } else if (questions[currentQuestion - 1].bgColor == 4) {
@@ -337,13 +342,15 @@ const TestTesting = () => {
       color: #f1e2b8;
     `;
     setTimeout(() => {
-      for(let i = 0; i <= test[i].length - 1; i++){
+      for(let i = 0; i <= test[currentQuestion-1].length - 1; i++){
         let ts = document.getElementById(`drag_source_multiple_${i}`)
         ts.classList.add(styles.card4)
       }
       for(let i = 0; i <= 6 - 1; i++){
         let ts = document.getElementById(`drag_drop_container${i}`)
-        ts.classList.add(styles.filled4)
+        if(ts.classList.contains('_filled_1hcue_319')){
+          ts.classList.add(styles.filled4)
+        }
       }
     }, 10);
   } else if (questions[currentQuestion - 1].bgColor == 5) {
@@ -366,13 +373,15 @@ const TestTesting = () => {
       color: #745329;
     `;
     setTimeout(() => {
-      for(let i = 0; i <= test[i].length - 1; i++){
+      for(let i = 0; i <= test[currentQuestion-1].length - 1; i++){
         let ts = document.getElementById(`drag_source_multiple_${i}`)
         ts.classList.add(styles.card5)
       }
       for(let i = 0; i <= 6 - 1; i++){
         let ts = document.getElementById(`drag_drop_container${i}`)
-        ts.classList.add(styles.filled5)
+        if(ts.classList.contains('_filled_1hcue_319')){
+          ts.classList.add(styles.filled5)
+        }
       }
     }, 10);
   } else if (questions[currentQuestion - 1].bgColor == 6) {
@@ -395,21 +404,19 @@ const TestTesting = () => {
       color: #745329;
     `;
     setTimeout(() => {
-      for(let i = 0; i <= test[i].length - 1; i++){
+      for(let i = 0; i <= test[currentQuestion-1].length - 1; i++){
         let ts = document.getElementById(`drag_source_multiple_${i}`)
         ts.classList.add(styles.card6)
       }
       for(let i = 0; i <= 6 - 1; i++){
         let ts = document.getElementById(`drag_drop_container${i}`)
-        ts.classList.add(styles.filled6)
+        if(ts.classList.contains('_filled_1hcue_319')){
+          ts.classList.add(styles.filled6)
+        }
       }
     }, 10);
   }
   
-=======
-  const bg1 = {};
-
->>>>>>> 0b0644a01ca04f883fd9da81fe487e1b79404e6a
   //#region return
   return (
     <Bg>
