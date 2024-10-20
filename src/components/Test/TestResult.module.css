@@ -186,6 +186,12 @@
   align-items: center;
 }
 
+.icon-wrap p{
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
 .icon {
   background-color: #f6cf80;
   width: 100%;

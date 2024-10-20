@@ -226,6 +226,7 @@ const TestTesting = () => {
     }
   };
 
+  //#region 根據題目改顏色
   if (questions[currentQuestion - 1].bgColor == 1) {
     Bg = styled.div`
       height: 100vh;
@@ -539,6 +540,14 @@ const TestTesting = () => {
       }
     }, 10);
   }
+
+//#region 根據題目改背景圖片
+  if(questions[currentQuestion - 1].bgImg != null){
+    Bg = styled.div`
+      background: ;
+    `;
+  }
+
 
   //#region return
   return (
