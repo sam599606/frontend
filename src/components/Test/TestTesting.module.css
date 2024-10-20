@@ -27,7 +27,7 @@
   left: 40px;
 }
 
-.nextbtn,
+/* .nextbtn,
 .previousbtn,
 .sendoutbtn {
   white-space: nowrap;
@@ -45,14 +45,14 @@
   bottom: 2%;
   right: 2%;
   transition: background-color 0.3s ease;
-}
+} */
 
-.nextbtn:hover,
+/* .nextbtn:hover,
 .sendoutbtn:hover,
 .previousbtn:hover {
   background-color: #ffdb9c;
   cursor: pointer;
-}
+} */
 
 .disabled {
   background-color: #cccccc;
@@ -182,39 +182,44 @@
 
 /* 選項卡顏色 bgColor */
 .card1{
-  background-color: pink;
+  padding: 0 10px;
+  background-color: #ffb144;
+  color: #6e3d26;
+  font-size: 20px;
+  font-weight: 500;
 }
 .card2{
-  background-color: blue;
+  padding: 0 10px;
+  background-color: #e67e22;
+  color: #fdfefe;
+  font-size: 20px;
+  font-weight: 500;
 }
 .card3{
-  background-color: red;
+  padding: 0 10px;
+  background-color: #8b572a;
+  color: #fdfefe;
+  font-size: 20px;
+  font-weight: 500;
 }
 .card4{
-  background-color: green;
+  padding: 0 10px;
+  background-color: #bdc3c7;
+  color: #8B5A2B;
+  font-size: 20px;
+  font-weight: 500;
 }
 .card5{
-  background-color: yellow;
+  padding: 0 10px;
+  background-color: #6e3d26;
+  color: #fdfefe;
+  font-size: 20px;
+  font-weight: 500;
 }
 .card6{
-  background-color: white;
-}
-
-.filled1{
-  background-color: pink;
-}
-.filled2{
-  background-color: blue;
-}
-.filled3{
-  background-color: red;
-}
-.filled4{
-  background-color: green;
-}
-.filled5{
-  background-color: yellow;
-}
-.filled6{
-  background-color: white;
+  padding: 0 10px;
+  background-color: #c0392b;
+  color: #ecf0f1;
+  font-size: 20px;
+  font-weight: 500;
 }

@@ -5,15 +5,12 @@ import styles from "./TestTesting.module.css";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-let option = [];
-let seletionArr = [];
-let ts_idArr = [];
-let ts_ida = [];
-let t_id;
 let token = localStorage.getItem("token");
 let Bg = styled.div;
 let Qp = styled.p;
 let Cp = styled.span;
+let Qb = styled.div;
+let Qs = styled.span;
 
 const TestTesting = () => {
   const [currentQuestion, setCurrentQuestion] = useState(1); // 當前題目進度
@@ -115,15 +112,15 @@ const TestTesting = () => {
 
   const handleNextQuestion = () => {
     // 檢查是否已填滿6張卡片
-    // if (!isFilled) {
-    //   Swal.fire({
-    //     icon: "warning",
-    //     title: "請完成本題",
-    //     text: "你需要將6張選項卡全部放置到槽位中才可進入下一題！",
-    //     confirmButtonColor: "#d5ad8a",
-    //   });
-    //   return;
-    // }
+    if (!isFilled) {
+      Swal.fire({
+        icon: "warning",
+        title: "請完成本題",
+        text: "你需要將6張選項卡全部放置到槽位中才可進入下一題！",
+        confirmButtonColor: "#d5ad8a",
+      });
+      return;
+    }
 
     // 如果已經填滿了6張卡片，進入下一題
     if (currentQuestion < questions.length) {
@@ -238,7 +235,7 @@ const TestTesting = () => {
       align-items: center;
       justify-content: space-around;
       overflow: hidden;
-      background-color: #f6cf80;
+      background-color: #f6cf80; 
     `;
     Qp = styled.p`
       width: 75%;
@@ -248,6 +245,27 @@ const TestTesting = () => {
     Cp = styled.span`
       color: #745329;
     `;
+    Qb = styled.div`
+      white-space: nowrap;
+      height: 5%;
+      width: 5%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px;
+      border-radius: 20px;
+      background-color: #ffb144;
+      font-size: 28px;
+      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+      position: absolute;
+      bottom: 2%;
+      right: 2%;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    `;
+    Qs =styled.span`
+      color: #6e3d26;
+    `
     setTimeout(() => {
       for (let i = 0; i <= test[currentQuestion - 1].length - 1; i++) {
         let ts = document.getElementById(`drag_source_multiple_${i}`);
@@ -255,8 +273,8 @@ const TestTesting = () => {
       }
       for (let i = 0; i <= 6 - 1; i++) {
         let ts = document.getElementById(`drag_drop_container${i}`);
-        if (ts.classList.contains("_filled_1hcue_319")) {
-          ts.classList.add(styles.filled1);
+        if (ts.classList.contains(styles.filled)) {
+          ts.classList.add(styles.card1);
         }
       }
     }, 10);
@@ -279,6 +297,27 @@ const TestTesting = () => {
     Cp = styled.span`
       color: #745329;
     `;
+    Qb = styled.div`
+      white-space: nowrap;
+      height: 5%;
+      width: 5%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px;
+      border-radius: 20px;
+      background-color: #e67e22;
+      font-size: 28px;
+      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+      position: absolute;
+      bottom: 2%;
+      right: 2%;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    `;
+    Qs = styled.span`
+    color: #fdfefe;
+    `
     setTimeout(() => {
       for (let i = 0; i <= test[currentQuestion - 1].length - 1; i++) {
         let ts = document.getElementById(`drag_source_multiple_${i}`);
@@ -286,8 +325,8 @@ const TestTesting = () => {
       }
       for (let i = 0; i <= 6 - 1; i++) {
         let ts = document.getElementById(`drag_drop_container${i}`);
-        if (ts.classList.contains("_filled_1hcue_319")) {
-          ts.classList.add(styles.filled2);
+        if (ts.classList.contains(styles.filled)) {
+          ts.classList.add(styles.card2);
         }
       }
     }, 10);
@@ -310,6 +349,27 @@ const TestTesting = () => {
     Cp = styled.span`
       color: #745329;
     `;
+    Qb = styled.div`
+      white-space: nowrap;
+      height: 5%;
+      width: 5%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px;
+      border-radius: 20px;
+      background-color: #8b572a;
+      font-size: 28px;
+      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+      position: absolute;
+      bottom: 2%;
+      right: 2%;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    `;
+    Qs = styled.span`
+    color: #fdfefe;
+    `
     setTimeout(() => {
       for (let i = 0; i <= test[currentQuestion - 1].length - 1; i++) {
         let ts = document.getElementById(`drag_source_multiple_${i}`);
@@ -317,8 +377,8 @@ const TestTesting = () => {
       }
       for (let i = 0; i <= 6 - 1; i++) {
         let ts = document.getElementById(`drag_drop_container${i}`);
-        if (ts.classList.contains("_filled_1hcue_319")) {
-          ts.classList.add(styles.filled3);
+        if (ts.classList.contains(styles.filled)) {
+          ts.classList.add(styles.card3);
         }
       }
     }, 10);
@@ -341,6 +401,27 @@ const TestTesting = () => {
     Cp = styled.span`
       color: #f1e2b8;
     `;
+    Qb = styled.div`
+      white-space: nowrap;
+      height: 5%;
+      width: 5%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px;
+      border-radius: 20px;
+      background-color: #bdc3c7;
+      font-size: 28px;
+      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+      position: absolute;
+      bottom: 2%;
+      right: 2%;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    `;
+    Qs = styled.span`
+    color: #8B5A2B;
+    `
     setTimeout(() => {
       for (let i = 0; i <= test[currentQuestion - 1].length - 1; i++) {
         let ts = document.getElementById(`drag_source_multiple_${i}`);
@@ -348,8 +429,8 @@ const TestTesting = () => {
       }
       for (let i = 0; i <= 6 - 1; i++) {
         let ts = document.getElementById(`drag_drop_container${i}`);
-        if (ts.classList.contains("_filled_1hcue_319")) {
-          ts.classList.add(styles.filled4);
+        if (ts.classList.contains(styles.filled)) {
+          ts.classList.add(styles.card4);
         }
       }
     }, 10);
@@ -372,6 +453,27 @@ const TestTesting = () => {
     Cp = styled.span`
       color: #745329;
     `;
+    Qb = styled.div`
+      white-space: nowrap;
+      height: 5%;
+      width: 5%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px;
+      border-radius: 20px;
+      background-color: #6e3d26;
+      font-size: 28px;
+      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+      position: absolute;
+      bottom: 2%;
+      right: 2%;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    `;
+    Qs = styled.span`
+    color: #fdfefe;
+    `
     setTimeout(() => {
       for (let i = 0; i <= test[currentQuestion - 1].length - 1; i++) {
         let ts = document.getElementById(`drag_source_multiple_${i}`);
@@ -379,8 +481,8 @@ const TestTesting = () => {
       }
       for (let i = 0; i <= 6 - 1; i++) {
         let ts = document.getElementById(`drag_drop_container${i}`);
-        if (ts.classList.contains("_filled_1hcue_319")) {
-          ts.classList.add(styles.filled5);
+        if (ts.classList.contains(styles.filled)) {
+          ts.classList.add(styles.card5);
         }
       }
     }, 10);
@@ -403,6 +505,27 @@ const TestTesting = () => {
     Cp = styled.span`
       color: #745329;
     `;
+    Qb = styled.div`
+      white-space: nowrap;
+      height: 5%;
+      width: 5%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px;
+      border-radius: 20px;
+      background-color: #c0392b;
+      font-size: 28px;
+      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+      position: absolute;
+      bottom: 2%;
+      right: 2%;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    `;
+    Qs = styled.span`
+    color: #ecf0f1;
+    `
     setTimeout(() => {
       for (let i = 0; i <= test[currentQuestion - 1].length - 1; i++) {
         let ts = document.getElementById(`drag_source_multiple_${i}`);
@@ -410,8 +533,8 @@ const TestTesting = () => {
       }
       for (let i = 0; i <= 6 - 1; i++) {
         let ts = document.getElementById(`drag_drop_container${i}`);
-        if (ts.classList.contains("_filled_1hcue_319")) {
-          ts.classList.add(styles.filled6);
+        if (ts.classList.contains(styles.filled)) {
+          ts.classList.add(styles.card6);
         }
       }
     }, 10);
@@ -487,36 +610,38 @@ const TestTesting = () => {
 
         {/* 顯示上一題按鈕，當 currentQuestion > 1 時顯示按鈕 */}
         {currentQuestion > 1 && (
-          <div
+          <Qb
             className={`${styles.previousbtn}`}
             onClick={handlePreviousQuestion}
+            id="backBtn"
           >
-            <span>上一題</span>
-          </div>
+            <Qs>上一題</Qs>
+          </Qb>
         )}
 
         {/* 顯示下一題按鈕 */}
         {currentQuestion < questions.length && (
-          <div
+          <Qb
             className={`${styles.nextbtn} ${!isFilled ? styles.disabled : ""}`}
             onClick={handleNextQuestion}
+            id="nextBtn"
             // style={{ pointerEvents: isFilled ? "auto" : "none" }} // 禁止點擊
           >
-            <span>下一題</span>
-          </div>
+            <Qs>下一題</Qs>
+          </Qb>
         )}
 
         {/* 顯示送出按鈕 */}
         {currentQuestion === questions.length && (
-          <div
+          <Qb
             className={`${styles.sendoutbtn} ${
               !isFilled ? styles.disabled : ""
             }`}
             onClick={handleNextQuestion}
             // style={{ pointerEvents: isFilled ? "auto" : "none" }} // 禁止點擊
           >
-            <span>送出</span>
-          </div>
+            <Qs>送出</Qs>
+          </Qb>
         )}
       </div>
     </Bg>
