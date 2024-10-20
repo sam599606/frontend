@@ -1,44 +1,72 @@
-  .content {
-    background-color: #fff;
-    border-radius: 15px;
-    font-size: 24px;
-    margin: 20px 0;
-    padding: 5px 10px;
-    padding-right: 75px;
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
-  }
+/* 課程外框樣式 */
+.content {
+  background-color: #fff;
+  border-radius: 15px;
+  font-size: 18px;
+  /* 調整字體大小為18px，保持內容易讀 */
+  margin: 20px 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  /* 添加陰影以突出每個課程框 */
+}
 
-  .content:first-of-type {
-    margin-top: 0;
-  }
+/* 課程標題樣式 */
+.title {
+  color: #745329;
+  font-size: 30px;
+  /* 調整字體大小 */
+  font-weight: bold;
+  margin-bottom: 10px;
+}
 
-  .content:last-of-type {
-    margin-bottom: 0;
-  }
+.duration {
+  display: flex;
+  align-items: center;
+}
 
-  .title {
-    color: #745329;
-    line-height: 1.6;
-  }
+.duration img {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
 
-  .duration {
-    display: flex;
-    align-items: center;
-  }
+.duration p {
+  color: #ffba00;
+  font-size: 24px;
+}
 
-  .duration img {
-    width: 30px;
-    height: 30px;
-  }
+.search {
+  width: 500px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 25px;
+  right: 40px;
+}
 
-  .duration p {
-    color: #bb7331;
-  }
+.search input {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 
-  .more {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-  }
+.searchbtn {
+  margin-left: 8px;
+}
+
+.searchbtn img {
+  width: 20px;
+  height: 20px;
+}
+
+.searchnum {
+  font-size: 20px;
+  position: absolute;
+  top: 35px;
+  left: 40px;
+}

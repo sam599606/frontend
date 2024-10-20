@@ -67,7 +67,7 @@
   /* 可能需要這個來隱藏超出內容 */
 }
 
-.search {
+/* .search {
   width: 40%;
   height: 40px;
   display: flex;
@@ -75,21 +75,21 @@
   position: absolute;
   top: 20px;
   right: 40px;
-}
+} */
 
-input[type="search"] {
+/* input[type="search"] {
   font-size: 20px;
   width: calc(100% - 30px);
   height: 100%;
   border: none;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
-}
+} */
 
-.searchbtn {
+/* .searchbtn {
   width: 30px;
   height: 30px;
   display: flex;
-}
+} */
 
 .contents {
   width: 100%;

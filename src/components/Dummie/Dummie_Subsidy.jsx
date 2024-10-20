@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import styles from "./Dummie_Class.module.css";
+import styles from "./Dummie_Subsidy.module.css";
 import Dummie_more_Layout from "./Dummie_more_Layout";
 import axios from "axios";
 
@@ -106,6 +106,7 @@ const Content = ({ name, money }) => {
     <div className={styles.content}>
       <div className={styles.title}>{name}</div>
       <div className={styles.duration}>
+        <img src="../src/images/money.png" alt="時鐘" />
         <p>補助金額：{money} 元</p>
       </div>
     </div>
