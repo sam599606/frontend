@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./Dummie_Class.module.css";
 import Dummie_more_Layout from "./Dummie_more_Layout";
 import axios from "axios";
@@ -6,7 +6,12 @@ import axios from "axios";
 const Dummie_Class = () => {
   const [allCourses, setAllCourses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState(""); // 用來儲存搜尋關鍵字
+  const [searchQuery, setSearchQuery] = useState(""); // 用來儲存按下搜尋按鈕後的搜尋條件
   const itemsPerPage = 10;
+
+  // 引用 contentContainer 來抓取內容區塊
+  const contentContainerRef = useRef(null);
 
   useEffect(() => {
     axios({
@@ -22,33 +27,89 @@ const Dummie_Class = () => {
       });
   }, []);
 
+  // 當 currentPage 改變時滾動到 Content 區塊頂部
+  useEffect(() => {
+    if (contentContainerRef.current) {
+      contentContainerRef.current.scrollIntoView();
+    }
+  }, [currentPage]);
+
+  // 根據按下搜尋按鈕後的 searchQuery 進行過濾，篩選 name, time, intro, address 中包含搜尋關鍵字的課程
+  const filteredCourses = allCourses.filter((course) =>
+    [course.name, course.time, course.content, course.address]
+      .join(" ")
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
+  );
+
   // 計算當前頁的課程資料
-  const currentCourses = allCourses.slice(
+  const currentCourses = filteredCourses.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
+  // 按下搜尋按鈕時更新搜尋條件
+  const handleSearch = () => {
+    setSearchQuery(searchTerm);
+    setCurrentPage(1);
+    contentContainerRef.current.scrollIntoView();
+  };
+
+  // 處理按下 Enter 鍵的事件
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <Dummie_more_Layout
-      totalItems={allCourses.length}
+      totalItems={filteredCourses.length}
       itemsPerPage={itemsPerPage}
       currentPage={currentPage}
       setCurrentPage={setCurrentPage}
     >
-      {currentCourses.map((course, index) => (
-        <Content
-          key={course.l_id}
-          title={course.name}
-          time={course.time}
-          intro={course.content}
-          http={course.http} // 傳入課程的 http 資料
-        />
-      ))}
+      {/* 搜尋欄和筆數顯示 */}
+      <div className={styles.searchArea}>
+        <div className={styles.searchnum}>
+          <p>已搜尋到 {filteredCourses.length} 筆資料</p>
+        </div>
+        <div className={styles.search}>
+          <input
+            type="search"
+            placeholder="搜尋"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)} // 更新搜尋關鍵字
+            onKeyDown={handleKeyDown} // 監聽 Enter 鍵事件
+          />
+          <a href="#" className={styles.searchbtn} onClick={handleSearch}>
+            <img src="../src/images/search.png" alt="搜尋按鈕" />
+          </a>
+        </div>
+      </div>
+
+      {/* 用 ref 抓取 Content 的容器 */}
+      <div ref={contentContainerRef}>
+        {currentCourses.length > 0 ? (
+          currentCourses.map((course) => (
+            <Content
+              key={course.l_id}
+              title={course.name}
+              time={course.time}
+              intro={course.content}
+              address={course.address}
+              http={course.http} // 傳入課程的 http 資料
+            />
+          ))
+        ) : (
+          <p>找不到符合條件的課程</p>
+        )}
+      </div>
     </Dummie_more_Layout>
   );
 };
 
-const Content = ({ title, time, intro, http }) => {
+const Content = ({ title, time, intro, address, http }) => {
   return (
     <div className={styles.content}>
       <div className={styles.title}>{title}</div>
@@ -69,7 +130,9 @@ const Content = ({ title, time, intro, http }) => {
         </a>
       )}
 
-      <div className={styles.intro}>{intro || "暫無課程簡介"}</div>
+      {intro && <div className={styles.intro}>{intro}</div>}
+
+      <div className={styles.address}>地址: {address}</div>
     </div>
   );
 };
