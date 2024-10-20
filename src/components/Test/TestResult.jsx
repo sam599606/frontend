@@ -209,6 +209,31 @@ const TestResult = () => {
     };
   };
 
+  let test = [
+    {
+      work: "工程師",
+      icon: "",
+    },
+    {
+      work: "醫生",
+      icon: "",
+    },
+    {
+      work: "護理師",
+      icon: "",
+    },
+    {
+      work: "老師",
+      icon: "",
+    },
+    {
+      work: "總統",
+      icon: "",
+    },
+  ];
+  
+
+  //#region return
   return (
     <div className={styles.result}>
       <div className={styles.chart}>
@@ -270,18 +295,12 @@ const TestResult = () => {
 
       {/* Icons */}
       <div id={styles.icons}>
-        {[
-          "ElectronicsEngineer",
-          "DesignEngineer",
-          "CommunicationsEngineer",
-          "MechanicalEngineer",
-          "SystemEngineer",
-        ].map((iconName, index) => (
+        {test.map((test, index) => (
           <div className={styles["icon-wrap"]} key={index}>
             <div className={styles.icon}>
-              <img src={`/src/images/${iconName}.png`} alt={iconName} />
+              <img src={`/src/images/${test.icon}.png`} alt={test} />
             </div>
-            <p>{iconName.replace(/([A-Z])/g, " $1")}</p>
+            <p>{test.work.replace(/([A-Z])/g, " $1")}</p>
           </div>
         ))}
       </div>
