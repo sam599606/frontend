@@ -15,12 +15,6 @@ const Dummie_more_Layout = ({
   // 處理頁面點擊事件
   const handlePageClick = (pageNum) => {
     setCurrentPage(pageNum);
-
-    // 讓內容滾動回頂端
-    const contentElement = document.getElementById("content-container");
-    if (contentElement) {
-      contentElement.scrollIntoView({ behavior: "smooth" });
-    }
   };
 
   // 計算頁碼範圍 (最多顯示9個頁碼)
@@ -65,12 +59,12 @@ const Dummie_more_Layout = ({
 
       <div className={styles.container}>
         {/* 搜尋 */}
-        <div className={styles.search}>
+        {/* <div className={styles.search}>
           <input type="search" placeholder="搜尋" />
           <a href="#" className={styles.searchbtn}>
             <img src="../src/images/search.png" alt="搜尋按鈕" />
           </a>
-        </div>
+        </div> */}
 
         {/* 主要內容區塊 */}
         <div className={styles.contents} id="content-container">

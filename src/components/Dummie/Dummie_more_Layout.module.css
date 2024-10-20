@@ -189,8 +189,6 @@ input[type="search"] {
   justify-content: center;
   align-items: center;
   gap: 10px;
-
-
 }
 
 /* 分頁按鈕 */
@@ -205,8 +203,6 @@ input[type="search"] {
   align-items: center;
   justify-content: center;
 }
-
-
 
 /* 頁碼懸停時效果 */
 .pages button:hover {

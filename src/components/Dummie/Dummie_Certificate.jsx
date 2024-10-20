@@ -8,7 +8,7 @@ axios({
   url: "http://localhost:5262/api/Job/CertificateList",
 })
   .then((res) => {
-    console.log("CertificateList:", res);
+    console.log("CertificateList:", res.data.result);
   })
   .catch((err) => {
     console.log(err);

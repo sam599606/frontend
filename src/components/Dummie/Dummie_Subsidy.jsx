@@ -8,7 +8,7 @@ axios({
   url: "http://localhost:5262/api/Job/SubsidyList",
 })
   .then((res) => {
-    console.log("SubsidyList:", res);
+    console.log("SubsidyList:", res.data.result);
   })
   .catch((err) => {
     console.log(err);
