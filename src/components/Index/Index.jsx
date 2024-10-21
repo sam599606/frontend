@@ -1,5 +1,21 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
+import axios from "axios";
+
+let token = localStorage.getItem("token");
+  axios({
+    method: "get",
+    url: "http://localhost:5262/api/ActRecord/GetHotRecord",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
 const Index = () => {
   const [currentIndex, setCurrentIndex] = useState(0); // 控制當前圖片索引

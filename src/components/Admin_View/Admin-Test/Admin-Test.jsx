@@ -1,23 +1,97 @@
 import React, { useState } from "react";
 import styles from "./Admin-Test.module.css";
+import axios from "axios";
+
+let token = localStorage.getItem("token");
+let testList = []
+let question
+let bgColor
+axios({
+  method: "get",
+  url: `http://localhost:5262/api/Test/TestList`,
+  headers: {
+    Authorization: "Bearer " + token,
+  },
+})
+.then((res) => {
+  console.log(res);
+  for(let i = 0; i < res.data.result.length; i++){
+    testList[i] = {
+      id: res.data.result[i].t_id,
+      content: res.data.result[i].question
+    }
+  }
+})
+.catch((err) => {
+  console.log(err);
+});
+
 
 const AdminTest = () => {
-  const [questions, setQuestions] = useState([
-    { id: 1, content: "內容", date: "2024/09/20" },
-    { id: 2, content: "內容", date: "2024/09/20" },
-    { id: 3, content: "內容", date: "2024/09/20" },
-    { id: 4, content: "內容", date: "2024/09/20" },
-    { id: 5, content: "內容", date: "2024/09/20" },
-    { id: 6, content: "內容", date: "2024/09/20" },
-  ]);
-
+  const [questions, setQuestions] = useState(testList);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  
 
   const sortTable = (index) => {
     // Sorting logic here
   };
 
-  const openEditDialog = () => {
+  const openEditDialog = (t_id) => {
+    let object = { t_id }
+    let jsondata = JSON.stringify(object)
+    axios({
+      method: "post",
+      url: "http://localhost:5262/api/Test/GetTest",
+      data: jsondata,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: "Bearer " + token,
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      question = res.data.result.question
+      bgColor = res.data.result.bgColor
+      if(bgColor == 1){
+        document.getElementById('f6cf80').checked = true
+      }
+      else if(bgColor == 2){
+        document.getElementById('ffe785').checked = true
+      }
+      else if(bgColor == 3){
+        document.getElementById('fdfecb').checked = true
+      }
+      else if(bgColor == 4){
+        document.getElementById('745329').checked = true
+      }
+      else if(bgColor == 5){
+        document.getElementById('d5ad8a').checked = true
+      }
+      else if(bgColor == 6){
+        document.getElementById('dbc8b6').checked = true
+      }
+      axios({
+        method: "post",
+        url: "http://localhost:5262/api/Test/GetTestSeletion",
+        data: jsondata,
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: "Bearer " + token,
+        },
+      })
+        .then((res) => {
+          console.log(res)
+        })
+        .then(() => {
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
     setIsEditOpen(true);
   };
 
@@ -43,9 +117,6 @@ const AdminTest = () => {
             題號
           </div>
           <div className={styles.content}>測驗題目內容</div>
-          <div className={styles.date} onClick={() => sortTable(2)}>
-            更新時間
-          </div>
         </div>
 
         <table className={styles.items}>
@@ -53,11 +124,10 @@ const AdminTest = () => {
             <tr key={index}>
               <td className={styles.number}>{question.id}</td>
               <td className={styles.content}>{question.content}</td>
-              <td className={styles.date}>{question.date}</td>
               <td className={styles.edit}>
-                <a href="#" onClick={openEditDialog}>
+                <button onClick={() => openEditDialog(question.id)} id={question.id}>
                   <img src="../src/images/edit.svg" alt="Edit" />
-                </a>
+                </button>
               </td>
             </tr>
           ))}
@@ -89,14 +159,14 @@ const AdminTest = () => {
               <tr>
                 <th>題目</th>
                 <td>
-                  <textarea></textarea>
+                  <textarea>{question}</textarea>
                 </td>
               </tr>
               <tr>
                 <th>選項</th>
                 <td id={styles.inputarea}>
                   <a href="#">
-                    <img src="../src/images/add.svg" alt="Add option" />
+                    <img src="../src/images/add.svg" alt="Add option"/>
                   </a>
                 </td>
               </tr>
