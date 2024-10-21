@@ -37,11 +37,10 @@ table {
 }
 
 .tableContainer {
-  height: 80%;
+  height: 90%;
   /* 限制表格容器的高度，使其可以滾動 */
   overflow-y: auto;
   /* 啟用垂直滾動 */
-  margin-top: 0px;
   position: relative;
   bottom: 0px;
 }

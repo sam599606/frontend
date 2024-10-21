@@ -2,10 +2,11 @@ import React from "react";
 import "./Dialog.css";
 import axios from "axios";
 import Swal from "sweetalert2"; // 引入 SweetAlert2
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const InfoDialog = ({ isOpen, onClose }) => {
   if (!isOpen) return null; // 如果未打開，則不渲染彈出視窗
+  const navigate = useNavigate();
 
   let token = localStorage.getItem("token");
   //#region 抓會員資料
@@ -128,6 +129,7 @@ const InfoDialog = ({ isOpen, onClose }) => {
       if (result.isConfirmed) {
         // 清除token並關閉視窗
         localStorage.clear();
+        navigate("/");
         Swal.fire({
           title: "已成功登出",
           icon: "success",
@@ -251,9 +253,9 @@ const InfoDialog = ({ isOpen, onClose }) => {
           <button type="submit" className="submit-button" onClick={EditInfo}>
             儲存
           </button>
-          <Link to="/" id="logout" onClick={logout}>
+          <button id="logout" onClick={logout}>
             登出
-          </Link>
+          </button>
         </div>
       </dialog>
     </>
