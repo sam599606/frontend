@@ -13,10 +13,14 @@ const Dummie_Class = () => {
   // 引用 contentContainer 來抓取內容區塊
   const contentContainerRef = useRef(null);
 
+  let token = localStorage.getItem("token");
   useEffect(() => {
     axios({
       method: "get",
       url: "http://localhost:5262/api/Job/LessonList",
+      headers: {
+        Authorization: `Bearer ${token}`, // Bearer 跟 token 中間有一個空格
+      },
     })
       .then((res) => {
         console.log("LessonList:", res.data.result);
@@ -102,7 +106,9 @@ const Dummie_Class = () => {
             />
           ))
         ) : (
-          <p>找不到符合條件的課程</p>
+          <div className={styles.notfound}>
+            <p>找不到符合條件的課程</p>
+          </div>
         )}
       </div>
     </Dummie_more_Layout>

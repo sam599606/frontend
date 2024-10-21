@@ -10,6 +10,7 @@ const Dummie_Subsidy = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
+  let token = localStorage.getItem("token");
   // 引用 contentContainer 來抓取內容區塊
   const contentContainerRef = useRef(null);
 
@@ -18,6 +19,9 @@ const Dummie_Subsidy = () => {
     axios({
       method: "get",
       url: "http://localhost:5262/api/Job/SubsidyList",
+      headers: {
+        Authorization: `Bearer ${token}`, // Bearer 跟 token 中間有一個空格
+      },
     })
       .then((res) => {
         console.log("SubsidyList:", res.data.result);
@@ -88,13 +92,19 @@ const Dummie_Subsidy = () => {
 
       {/* 內容區塊，加入引用以便滾動 */}
       <div ref={contentContainerRef}>
-        {currentSubsidies.map((subsidy) => (
-          <Content
-            key={subsidy.s_id}
-            name={subsidy.name}
-            money={subsidy.money}
-          />
-        ))}
+        {currentSubsidies.length > 0 ? (
+          currentSubsidies.map((subsidy) => (
+            <Content
+              key={subsidy.s_id}
+              name={subsidy.name}
+              money={subsidy.money}
+            />
+          ))
+        ) : (
+          <div className={styles.notfound}>
+            <p>找不到符合條件的課程</p>
+          </div>
+        )}
       </div>
     </Dummie_more_Layout>
   );

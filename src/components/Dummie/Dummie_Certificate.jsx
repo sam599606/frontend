@@ -13,11 +13,15 @@ const Dummie_Certificate = () => {
   // 引用 contentContainer 來抓取內容區塊
   const contentContainerRef = useRef(null);
 
+  let token = localStorage.getItem("token");
   // 取得 CertificateList 的 API 資料
   useEffect(() => {
     axios({
       method: "get",
       url: "http://localhost:5262/api/Job/CertificateList",
+      headers: {
+        Authorization: `Bearer ${token}`, // Bearer 跟 token 中間有一個空格
+      },
     })
       .then((res) => {
         console.log("CertificateList:", res.data.result);
@@ -89,17 +93,23 @@ const Dummie_Certificate = () => {
 
       {/* 顯示搜尋結果 */}
       <div ref={contentContainerRef}>
-        {currentCertificates.map((certificate) => (
-          <Content
-            key={certificate.c_id}
-            name={certificate.name}
-            type={certificate.type}
-            testTIme={certificate.testTIme}
-            applyTime={certificate.applyTime}
-            address={certificate.address}
-            link={certificate.http}
-          />
-        ))}
+        {currentCertificates.length > 0 ? (
+          currentCertificates.map((certificate) => (
+            <Content
+              key={certificate.c_id}
+              name={certificate.name}
+              type={certificate.type}
+              testTIme={certificate.testTIme}
+              applyTime={certificate.applyTime}
+              address={certificate.address}
+              link={certificate.http}
+            />
+          ))
+        ) : (
+          <div className={styles.notfound}>
+            <p>找不到符合條件的課程</p>
+          </div>
+        )}
       </div>
     </Dummie_more_Layout>
   );
@@ -120,13 +130,13 @@ const Content = ({ name, type, testTIme, applyTime, address, link }) => {
     <div className={styles.content}>
       <div className={styles.title}>{name}</div>
       <div className={styles.duration}>
-        <p>
+        <p className={styles.duration_type}>
           類型：{type}
           {renderIcon()}
         </p>
-        <p>測驗時間：{testTIme}</p>
-        <p>報名時間：{applyTime}</p>
-        <p>地點：{address}</p>
+        <p className={styles.duration_testTIme}>測驗時間：{testTIme}</p>
+        <p className={styles.duration_applyTime}>報名時間：{applyTime}</p>
+        <p className={styles.duration_address}>地點：{address}</p>
       </div>
       {link && (
         <a
