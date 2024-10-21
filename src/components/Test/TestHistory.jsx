@@ -25,29 +25,34 @@ const TestHistory = () => {
         let account = [];
         let date = [];
         let time = [];
-        let result = [];
+        let mbti_result = [];
+        let hol_result = [];
 
         for (let i = 0; i < res.data.result.length; i++) {
           ua_id[i] = res.data.result[i].ua_id;
           account[i] = res.data.result[i].account;
           date[i] = res.data.result[i].testTime.substr(0, 10);
           time[i] = res.data.result[i].testTime.substr(11, 18);
-          result[i] = res.data.result[i].mbtI_Result;
+          mbti_result[i] = res.data.result[i].mbtI_Result;
+          hol_result[i] = res.data.result[i].hoL_Result;
         }
+        
 
         // 將資料儲存到 localStorage 中
         localStorage.setItem("ua_id", JSON.stringify(ua_id));
         localStorage.setItem("test_account", JSON.stringify(account));
         localStorage.setItem("date", JSON.stringify(date));
         localStorage.setItem("time", JSON.stringify(time));
-        localStorage.setItem("result", JSON.stringify(result));
+        localStorage.setItem("mbti_result", JSON.stringify(mbti_result));
+        localStorage.setItem("hol_result", JSON.stringify(hol_result));
 
         // 從 localStorage 取出資料
         let a = JSON.parse(localStorage.getItem("ua_id"));
         let b = JSON.parse(localStorage.getItem("test_account"));
         let c = JSON.parse(localStorage.getItem("date"));
         let d = JSON.parse(localStorage.getItem("time"));
-        let e = JSON.parse(localStorage.getItem("result"));
+        let e = JSON.parse(localStorage.getItem("mbti_result"));
+        let f = JSON.parse(localStorage.getItem("hol_result"));
 
         let fetchedTestData = [];
 
@@ -56,8 +61,9 @@ const TestHistory = () => {
           let test_account = b[i];
           let date = c[i];
           let time = d[i];
-          let result = e[i];
-          fetchedTestData.push({ ua_ida, test_account, date, time, result });
+          let mbti_result = e[i];
+          let hol_result = f[i]
+          fetchedTestData.push({ ua_ida, test_account, date, time, mbti_result, hol_result });
         }
 
         // 過濾與目前帳號不符的資料
@@ -103,13 +109,14 @@ const TestHistory = () => {
       console.log(err);
     }
   };
+  console.log(testData)
 
   return (
     <div className={styles.wrap}>
       <div className={styles.sort}>
         <div className={styles.date}>測驗日期</div>
         <div className={styles.time}>測驗時間</div>
-        <div className={styles.result}>結果</div>
+        <div className={styles.result}>結果（MBTI / HOLLAND）</div>
         <div className={styles.btns}>查看</div>
       </div>
       <div className={styles.tableContainer}>
@@ -119,7 +126,7 @@ const TestHistory = () => {
               <tr key={index}>
                 <td className={styles.date}>{data.date}</td>
                 <td className={styles.time}>{data.time}</td>
-                <td className={styles.result}>{data.result}</td>
+                <td className={styles.result}>{data.mbti_result} / {data.hol_result}</td>
                 <td className={styles.btns}>
                   <button
                     className={styles.info}

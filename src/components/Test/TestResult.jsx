@@ -211,24 +211,24 @@ const TestResult = () => {
 
   let test = [
     {
-      work: "工程師",
-      icon: "",
+      work: "電子工程師",
+      icon: "ElectronicsEngineer",
     },
     {
-      work: "醫生",
-      icon: "",
+      work: "機械工程師",
+      icon: "MechanicalEngineer",
     },
     {
-      work: "護理師",
-      icon: "",
+      work: "設計工程師",
+      icon: "DesignEngineer",
     },
     {
-      work: "老師",
-      icon: "",
+      work: "通訊工程師",
+      icon: "CommunicationsEngineer",
     },
     {
-      work: "總統",
-      icon: "",
+      work: "系統工程師",
+      icon: "SystemEngineer",
     },
   ];
   
