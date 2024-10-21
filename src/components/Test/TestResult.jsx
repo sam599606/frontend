@@ -10,14 +10,6 @@ const TestResult = () => {
   let data = localStorage.getItem("ua_data");
   let ua_data = JSON.parse(data);
 
-  let HOL_total =
-    ua_data.count_HOL_R +
-    ua_data.count_HOL_I +
-    ua_data.count_HOL_A +
-    ua_data.count_HOL_S +
-    ua_data.count_HOL_E +
-    ua_data.count_HOL_C;
-
   console.log("ua_data:", ua_data);
 
   //#region HOLLAND雷達圖
@@ -40,7 +32,6 @@ const TestResult = () => {
     ], // 測試數據
   };
 
-  // MBTI圖表
   const getRadarOption = () => {
     return {
       backgroundColor: "#f4eee2",
@@ -66,7 +57,7 @@ const TestResult = () => {
         },
         name: {
           textStyle: {
-            fontSize: 20,
+            fontSize: 22,
             color: "#745329",
           },
         },
@@ -91,26 +82,26 @@ const TestResult = () => {
   const getMbtiBarOption = () => {
     const data = [
       {
-        leftLabel: "E 外向",
-        rightLabel: "I 內向",
+        leftLabel: "E",
+        rightLabel: "I",
         leftValue: ua_data.count_MBTI_E,
         rightValue: ua_data.count_MBTI_I,
       },
       {
-        leftLabel: "N 直覺",
-        rightLabel: "S 實感",
+        leftLabel: "N",
+        rightLabel: "S",
         leftValue: ua_data.count_MBTI_N,
         rightValue: ua_data.count_MBTI_S,
       },
       {
-        leftLabel: "F 情感",
-        rightLabel: "T 理性",
+        leftLabel: "F",
+        rightLabel: "T",
         leftValue: ua_data.count_MBTI_F,
         rightValue: ua_data.count_MBTI_T,
       },
       {
-        leftLabel: "P 知覺",
-        rightLabel: "J 判斷",
+        leftLabel: "P",
+        rightLabel: "J",
         leftValue: ua_data.count_MBTI_P,
         rightValue: ua_data.count_MBTI_J,
       },
@@ -119,14 +110,14 @@ const TestResult = () => {
     return {
       backgroundColor: "#f4eee2",
       grid: {
-        left: "5%",
-        right: "5%",
-        bottom: "10%",
-        top: "10%",
+        left: "0%",
+        right: "0%",
+        bottom: "0%",
+        top: "-300%", // 將 top 改為 0% 或可以調整為更小的值來移動
         containLabel: true,
       },
       xAxis: {
-        max: 1, // 100% 範圍 (0-1)
+        max: 1,
         min: 0,
         splitLine: { show: false },
         axisLabel: { show: false },
@@ -135,55 +126,64 @@ const TestResult = () => {
       },
       yAxis: {
         type: "category",
-        data: data.map(() => ""), // 移除y軸標籤名稱
+        data: ["P - J", "F - T", "N - S", "E - I"],
         axisTick: { show: false },
         axisLine: { show: false },
-        axisLabel: { show: false }, // 不顯示左右標籤名稱
+        axisLabel: {
+          show: false,
+          margin: 0,
+          fontSize: 14,
+          color: "#745329",
+        },
       },
       series: data
         .map((item, index) => {
           const total = item.leftValue + item.rightValue;
-          const leftPercentage = item.leftValue / total; // 左側比例
-          const rightPercentage = item.rightValue / total; // 右側比例
+          const leftPercentage = item.leftValue / total;
+          const rightPercentage = item.rightValue / total;
 
           return [
             {
               type: "bar",
-              stack: `stack${index}`, // 為每個圖條設置單獨的stack，確保它們彼此不干擾
-              barWidth: "100%",
-              data: [leftPercentage], // 左側比例
+              stack: `stack${index}`,
+              barWidth: "20%",
+              data: [leftPercentage],
               itemStyle: {
-                color: leftPercentage > rightPercentage ? "#ffb144" : "#e0dfd5", // 如果左側分數高，則左側填色，否則背景色
+                color: leftPercentage > rightPercentage ? "#ffb144" : "#e0dfd5",
               },
               label: {
                 show: true,
                 position: "insideLeft",
-                formatter: `${item.leftValue}`,
-                color: "#fff",
-                fontSize: 14,
+                formatter: `${item.leftLabel} ${(leftPercentage * 100).toFixed(
+                  1
+                )}%`,
+                color: "#000",
+                fontSize: 20,
               },
               z: 10,
             },
             {
               type: "bar",
-              stack: `stack${index}`, // 為每個圖條設置單獨的stack，確保它們彼此不干擾
-              barWidth: "100%",
-              data: [rightPercentage], // 右側比例
+              stack: `stack${index}`,
+              barWidth: "60%",
+              data: [rightPercentage],
               itemStyle: {
-                color: rightPercentage > leftPercentage ? "#ffb144" : "#e0dfd5", // 如果右側分數高，則右側填色，否則背景色
+                color: rightPercentage > leftPercentage ? "#ffb144" : "#e0dfd5",
               },
               label: {
                 show: true,
                 position: "insideRight",
-                formatter: `${item.rightValue}`,
-                color: "#fff",
-                fontSize: 14,
+                formatter: `${(rightPercentage * 100).toFixed(1)}% ${
+                  item.rightLabel
+                }`,
+                color: "#000",
+                fontSize: 20,
               },
               z: 10,
             },
           ];
         })
-        .flat(), // 合併左右橫條
+        .flat(),
     };
   };
 
@@ -250,10 +250,22 @@ const TestResult = () => {
           <div className={styles.content}>
             <div id={styles["type-name"]}>{ua_data.mbtI_Result}</div>
             <div className={styles.front}>
+              <div className={styles.leftcontent}>
+                <p>E 外向</p>
+                <p>N 直覺</p>
+                <p>F 感性</p>
+                <p>P 彈性</p>
+              </div>
               <ReactECharts
                 option={getMbtiBarOption()} // 使用條形圖的配置
                 className={styles.mbtiBarChart} // 新增樣式類別來控制圖表大小
               />
+              <div className={styles.rightcontent}>
+                <p>I 內向</p>
+                <p>S 實感</p>
+                <p>T 理性</p>
+                <p>J 調理</p>
+              </div>
             </div>
             <div className={styles.back}>
               <div id={styles.intro}>
@@ -277,7 +289,9 @@ const TestResult = () => {
             <div className={styles.icon}>
               <img src={`/src/images/${test.icon}.png`} alt={test} />
             </div>
-            <p>{test.work.replace(/([A-Z])/g, " $1")}</p>
+            <p className={styles.jobname}>
+              {test.work.replace(/([A-Z])/g, " $1")}
+            </p>
           </div>
         ))}
       </div>
