@@ -23,12 +23,12 @@ const TestResult = () => {
   //#region HOLLAND雷達圖
   const radarData = {
     indicator: [
-      { name: "實用型 Realistic", max: 30 },
-      { name: "研究型 Investigative", max: 30 },
-      { name: "藝術型 Artistic", max: 30 },
-      { name: "社會型 Social", max: 30 },
-      { name: "企業型 Enterprising", max: 30 },
-      { name: "資料型 Conventional", max: 30 },
+      { name: "實用型 Realistic", max: 50 },
+      { name: "研究型 Investigative", max: 50 },
+      { name: "藝術型 Artistic", max: 50 },
+      { name: "社會型 Social", max: 50 },
+      { name: "企業型 Enterprising", max: 50 },
+      { name: "資料型 Conventional", max: 50 },
     ],
     data: [
       ua_data.count_HOL_R,
@@ -40,6 +40,7 @@ const TestResult = () => {
     ], // 測試數據
   };
 
+  // MBTI圖表
   const getRadarOption = () => {
     return {
       backgroundColor: "#f4eee2",
@@ -115,8 +116,6 @@ const TestResult = () => {
       },
     ];
 
-    // console.log("data:", data);
-
     return {
       backgroundColor: "#f4eee2",
       grid: {
@@ -136,37 +135,16 @@ const TestResult = () => {
       },
       yAxis: {
         type: "category",
-        data: data.map((item) => `${item.leftLabel} vs ${item.rightLabel}`), // 設定y軸為左右標籤
+        data: data.map(() => ""), // 移除y軸標籤名稱
         axisTick: { show: false },
         axisLine: { show: false },
-        axisLabel: {
-          fontSize: 16,
-          color: "#745329",
-          formatter: function (value, index) {
-            const item = data[index];
-            return `{left|${item.leftLabel}} {right|${item.rightLabel}}`;
-          },
-          rich: {
-            left: {
-              align: "left",
-              fontSize: 16,
-              color: "#745329",
-              padding: [0, 0, 0, 0], // 左側內邊距
-            },
-            right: {
-              align: "right",
-              fontSize: 16,
-              color: "#745329",
-              padding: [0, 0, 0, 0], // 右側內邊距
-            },
-          },
-        },
+        axisLabel: { show: false }, // 不顯示左右標籤名稱
       },
       series: data
         .map((item, index) => {
           const total = item.leftValue + item.rightValue;
-          const leftPercentage = item.leftValue / total; // 計算左側百分比
-          const rightPercentage = item.rightValue / total; // 計算右側百分比
+          const leftPercentage = item.leftValue / total; // 左側比例
+          const rightPercentage = item.rightValue / total; // 右側比例
 
           return [
             {
@@ -175,7 +153,7 @@ const TestResult = () => {
               barWidth: "100%",
               data: [leftPercentage], // 左側比例
               itemStyle: {
-                color: item.leftValue > item.rightValue ? "#ffb144" : "#e0dfd5", // 如果左側分數高，則左側填色，否則背景色
+                color: leftPercentage > rightPercentage ? "#ffb144" : "#e0dfd5", // 如果左側分數高，則左側填色，否則背景色
               },
               label: {
                 show: true,
@@ -192,7 +170,7 @@ const TestResult = () => {
               barWidth: "100%",
               data: [rightPercentage], // 右側比例
               itemStyle: {
-                color: item.rightValue > item.leftValue ? "#ffb144" : "#e0dfd5", // 如果右側分數高，則右側填色，否則背景色
+                color: rightPercentage > leftPercentage ? "#ffb144" : "#e0dfd5", // 如果右側分數高，則右側填色，否則背景色
               },
               label: {
                 show: true,
@@ -231,7 +209,6 @@ const TestResult = () => {
       icon: "SystemEngineer",
     },
   ];
-  
 
   //#region return
   return (

@@ -14,6 +14,7 @@ import TestHistory from "./components/Test/TestHistory";
 import TestResult from "./components/Test/TestResult";
 import Dummie_Subsidy from "./components/Dummie/Dummie_subsidy";
 import Dummie_Certificate from "./components/Dummie/Dummie_Certificate";
+import AdminTest from "./components/Admin_View/Admin-Test/Admin-Test";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/test-testing" element={<TestTesting />} />
           <Route path="/test-history" element={<TestHistory />} />
           <Route path="/test-result" element={<TestResult />} />
+          <Route path="/admin_view/admin-test" element={<AdminTest />} />
           <Route path="0" element={<OutOfTheWorld />} />
         </Routes>
       </main>

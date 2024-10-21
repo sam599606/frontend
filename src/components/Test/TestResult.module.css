@@ -70,7 +70,7 @@
 .content {
   background-color: #f4eee2;
   width: 100%;
-  height: 400px;
+  height: 200px;
   padding: 0;
   border-radius: 20px;
   display: flex;
@@ -78,7 +78,7 @@
   align-items: center;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
   position: relative;
-  bottom: 7.5%;
+  bottom: 5%;
 
 }
 
@@ -186,7 +186,7 @@
   align-items: center;
 }
 
-.icon-wrap p{
+.icon-wrap p {
   display: flex;
   align-items: center;
   text-align: center;

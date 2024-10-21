@@ -105,6 +105,7 @@ const Dummie_Subsidy = () => {
             <p>找不到符合條件的課程</p>
           </div>
         )}
+        {}
       </div>
     </Dummie_more_Layout>
   );
