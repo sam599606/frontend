@@ -1,44 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Admin_Member.module.css";
+import axios from "axios";
 
 const Admin_Member = () => {
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      gender: "男",
-      account: "gogg@fhhfdfkdf",
-      name: "田裕賢",
-      time: "一天前上線",
-    },
-    {
-      id: 2,
-      gender: "男",
-      account: "gogg@fhhfdfkdf",
-      name: "田裕賢",
-      time: "一天前上線",
-    },
-    {
-      id: 3,
-      gender: "男",
-      account: "gogg@fhhfdfkdf",
-      name: "田裕賢",
-      time: "一天前上線",
-    },
-    {
-      id: 4,
-      gender: "男",
-      account: "gogg@fhhfdfkdf",
-      name: "田裕賢",
-      time: "一天前上線",
-    },
-    {
-      id: 5,
-      gender: "男",
-      account: "gogg@fhhfdfkdf",
-      name: "田裕賢",
-      time: "一天前上線",
-    },
-  ]);
+  const [users, setUsers] = useState([]);
+  let userList = [];
+  let token = localStorage.getItem("token");
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      axios({
+      method: "get",
+      url: "http://localhost:5262/api/User/UserList",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        let gender
+        for (let i = 0; i < res.data.result.length; i++) {
+          if (res.data.result[i].sex == 1) {
+            gender = "男"
+          }
+          else if (res.data.result[i].sex == 2) {
+            gender = "女"
+          }
+          else if (res.data.result[i].sex == 3) {
+            gender = "不透漏"
+          }
+          let loginDay = new Date(res.data.result[i].loginDay)
+          let today = new Date()
+          let time = Math.floor((today - loginDay) / (1000*60*60*24))
+          
+          userList[i] = {
+            gender: gender,
+            account: res.data.result[i].account,
+            name: res.data.result[i].name,
+            time: `${time}天前上線`,
+          };
+        }
+      })
+      .then(() => {
+        setUsers(userList)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    };
+
+    fetchData();
+  }, []);
+  
 
   return (
     <div className={styles.wrap}>

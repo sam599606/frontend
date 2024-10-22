@@ -9,38 +9,27 @@ const InfoDialog = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
 
   let token = localStorage.getItem("token");
+  let account = localStorage.getItem('acc')
   //#region 抓會員資料
   axios({
-    method: "get",
-    url: "http://localhost:5262/api/User/UserList",
+    method: "post",
+    url: "http://localhost:5262/api/User/GetUser",
+    data: JSON.stringify({account}),
     headers: {
       Authorization: "Bearer " + token,
+      'Content-Type' : 'application/json'
     },
   })
     .then((res) => {
       console.log(res);
-      let acc = localStorage.getItem("acc");
-      for (let i = 0; i <= res.data.result.length - 1; i++) {
-        if (res.data.result[i].account == acc) {
-          let account = res.data.result[i].account;
-          let name = res.data.result[i].name;
-          let password = res.data.result[i].password;
-          let phone = res.data.result[i].phone;
-          let address = res.data.result[i].address;
-          let edu = res.data.result[i].edu;
-          let sex = res.data.result[i].sex;
-          let birth = res.data.result[i].birth;
-
-          document.getElementById("name").value = name;
-          document.getElementById("account").value = account;
-          document.getElementById("password").value = password;
-          document.getElementById("phone").value = phone;
-          document.getElementById("address").value = address;
-          document.getElementById("edu").value = edu;
-          document.getElementById("sex").value = sex;
-          document.getElementById("birth").value = birth.substr(0, 10);
-        }
-      }
+      document.getElementById("name").value = res.data.result.name;
+      document.getElementById("account").value = res.data.result.account;
+      document.getElementById("password").value = res.data.result.password;
+      document.getElementById("phone").value = res.data.result.phone;
+      document.getElementById("address").value = res.data.result.address;
+      document.getElementById("edu").value = res.data.result.edu;
+      document.getElementById("sex").value = res.data.result.sex;
+      document.getElementById("birth").value = res.data.result.birth.substr(0, 10);
     })
     .catch((err) => {
       console.log(err);

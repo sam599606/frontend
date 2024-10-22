@@ -2,23 +2,22 @@ import React, { useState, useEffect } from "react";
 import "./index.css";
 import axios from "axios";
 
-let token = localStorage.getItem("token");
-  axios({
-    method: "get",
-    url: "http://localhost:5262/api/ActRecord/GetHotRecord",
-    headers: {
-      Authorization: "Bearer " + token,
-    },
+axios({
+  method: "get",
+  url: "http://localhost:5262/api/User/GetHotRecord",
+})
+  .then((res) => {
+    console.log(res);
   })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  .catch((err) => {
+    console.log(err);
+  });
 
 const Index = () => {
   const [currentIndex, setCurrentIndex] = useState(0); // 控制當前圖片索引
+
+
+
   const images = [
     "src/images/meeting.png",
     "src/images/successful.png",
