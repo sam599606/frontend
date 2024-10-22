@@ -4,10 +4,18 @@ import axios from "axios";
 
 let token = localStorage.getItem("token");
 let testList = []
-let question
 let bgColor
 
-
+let fakeData = [
+  '依據現有資訊制定詳細計畫並執行',
+  '隨心所欲地四處探索尋找線索',
+  '設法找更多資料以理解這張地圖的全貌',
+  '憑直覺和靈感去猜測方向探索',
+  '與人分享地圖尋求幫助和建議',
+  '獨自解決問題專注於寶藏的實際位置',
+  '與朋友組隊一起解謎共同分擔風險',
+  '獨自找安靜的地方仔細推理線索'
+]
 
 const AdminTest = () => {
   const [questions, setQuestions] = useState([]);
@@ -83,7 +91,7 @@ const AdminTest = () => {
         },
       })
         .then((res) => {
-          console.log(res)
+          console.log("GetTestSeletion:",res);
         })
         .catch((err) => {
           console.log(err);
