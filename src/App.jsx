@@ -16,6 +16,7 @@ import Dummie_Subsidy from "./components/Dummie/Dummie_subsidy";
 import Dummie_Certificate from "./components/Dummie/Dummie_Certificate";
 import AdminTest from "./components/Admin_View/Admin-Test/Admin-Test";
 import Admin_Member from "./components/Admin_View/Admin_Member/Admin_Member";
+import AdminActivity from "./components/Admin_View/Admin_Activity/Admin_Activity";
 
 function App() {
   return (
@@ -36,6 +37,10 @@ function App() {
           <Route path="/test-result" element={<TestResult />} />
           <Route path="/admin_view/admin-test" element={<AdminTest />} />
           <Route path="/admin_view/admin-member" element={<Admin_Member />} />
+          <Route
+            path="/admin_view/admin-activity"
+            element={<AdminActivity />}
+          />
           <Route path="0" element={<OutOfTheWorld />} />
         </Routes>
       </main>
