@@ -13,9 +13,12 @@ const InfoDialog = ({ isOpen, onClose }) => {
   axios({
     method: "get",
     url: "http://localhost:5262/api/User/UserList",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
   })
     .then((res) => {
-      // console.log(res);
+      console.log(res);
       let acc = localStorage.getItem("acc");
       for (let i = 0; i <= res.data.result.length - 1; i++) {
         if (res.data.result[i].account == acc) {

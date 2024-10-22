@@ -68,10 +68,12 @@ const TestHistory = () => {
 
         // 過濾與目前帳號不符的資料
         let aa = localStorage.getItem("acc");
-        fetchedTestData = fetchedTestData.filter(
-          (data) => data.test_account === aa
-        );
-
+        for (let i = 0; i < fetchedTestData.length; i++){
+          if (aa != fetchedTestData[i].test_account){
+            fetchedTestData.splice(i, 1)
+          }
+        }
+        
         // 更新狀態
         setTestData(fetchedTestData);
         localStorage.setItem("testData", JSON.stringify(fetchedTestData));
@@ -109,7 +111,6 @@ const TestHistory = () => {
       console.log(err);
     }
   };
-  console.log(testData)
 
   return (
     <div className={styles.wrap}>

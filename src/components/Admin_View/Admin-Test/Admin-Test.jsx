@@ -6,31 +6,34 @@ let token = localStorage.getItem("token");
 let testList = []
 let question
 let bgColor
-axios({
-  method: "get",
-  url: `http://localhost:5262/api/Test/TestList`,
-  headers: {
-    Authorization: "Bearer " + token,
-  },
-})
-.then((res) => {
-  console.log(res);
-  for(let i = 0; i < res.data.result.length; i++){
-    testList[i] = {
-      id: res.data.result[i].t_id,
-      content: res.data.result[i].question
-    }
-  }
-})
-.catch((err) => {
-  console.log(err);
-});
+
 
 
 const AdminTest = () => {
-  const [questions, setQuestions] = useState(testList);
+  const [questions, setQuestions] = useState([]);
   const [isEditOpen, setIsEditOpen] = useState(false);
   
+  axios({
+    method: "get",
+    url: `http://localhost:5262/api/Test/TestList`,
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  })
+  .then((res) => {
+    for(let i = 0; i < res.data.result.length; i++){
+      testList[i] = {
+        id: res.data.result[i].t_id,
+        content: res.data.result[i].question
+      }
+    }
+  })
+  .then(() => {
+    setQuestions(testList)
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
   const sortTable = (index) => {
     // Sorting logic here
@@ -49,8 +52,9 @@ const AdminTest = () => {
       },
     })
     .then((res) => {
-      console.log(res);
+      console.log("GetTest:",res);
       question = res.data.result.question
+      console.log(question)
       bgColor = res.data.result.bgColor
       if(bgColor == 1){
         document.getElementById('f6cf80').checked = true
@@ -81,8 +85,6 @@ const AdminTest = () => {
       })
         .then((res) => {
           console.log(res)
-        })
-        .then(() => {
         })
         .catch((err) => {
           console.log(err);
