@@ -15,9 +15,7 @@ axios({
 
 const Index = () => {
   const [currentIndex, setCurrentIndex] = useState(0); // 控制當前圖片索引
-
-
-
+  
   const images = [
     "src/images/meeting.png",
     "src/images/successful.png",

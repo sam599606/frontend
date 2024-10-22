@@ -53,8 +53,7 @@ const AdminTest = () => {
     })
     .then((res) => {
       console.log("GetTest:",res);
-      question = res.data.result.question
-      console.log(question)
+      document.getElementById('questionText').value = res.data.result.question
       bgColor = res.data.result.bgColor
       if(bgColor == 1){
         document.getElementById('f6cf80').checked = true
@@ -161,7 +160,7 @@ const AdminTest = () => {
               <tr>
                 <th>題目</th>
                 <td>
-                  <textarea>{question}</textarea>
+                  <textarea id="questionText"></textarea>
                 </td>
               </tr>
               <tr>
