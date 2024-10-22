@@ -73,6 +73,7 @@ input[type="search"] {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 20px;
 }
 
 canvas {
@@ -120,6 +121,10 @@ canvas {
   height: 50px;
   border-radius: 10px;
   position: relative;
+}
+
+.icon:hover {
+  opacity: 0.5;
 }
 
 .icon img {
