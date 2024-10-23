@@ -4,7 +4,6 @@ import "./App.css";
 import Footer from "./components/footer/footer";
 import Forcast from "./components/Forcast/Forcast";
 import Headbar from "./components/Headbar/Headbar";
-import Index from "./components/index";
 import Dummie from "./components/Dummie/Dummie";
 import OutOfTheWorld from "./components/OutOfTheWorld/OutOfTheWorld";
 import Dummie_Class from "./components/Dummie/Dummie_Class";
@@ -17,6 +16,7 @@ import Dummie_Certificate from "./components/Dummie/Dummie_Certificate";
 import AdminTest from "./components/Admin_View/Admin-Test/Admin-Test";
 import Admin_Member from "./components/Admin_View/Admin_Member/Admin_Member";
 import AdminActivity from "./components/Admin_View/Admin_Activity/Admin_Activity";
+import Index from "./components/Index/Index";
 
 function App() {
   return (

@@ -15,11 +15,12 @@ axios({
 
 const Index = () => {
   const [currentIndex, setCurrentIndex] = useState(0); // 控制當前圖片索引
-  
+
   const images = [
-    "src/images/meeting.png",
-    "src/images/successful.png",
-    "src/images/stonk.png",
+    "src/images/輪播圖_1.png",
+    "src/images/輪播圖_2.png",
+    "src/images/輪播圖_3.png",
+    "src/images/輪播圖_4.png",
   ];
   const totalImages = images.length;
 
