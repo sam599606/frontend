@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import styles from "./TestHistory.module.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 const TestHistory = () => {
   const [testData, setTestData] = useState([]);
   const navigate = useNavigate();
+  const cookies = new Cookies();
+
   // 使用 useEffect 來確保在組件首次渲染時抓取資料
   useEffect(() => {
     const fetchData = async () => {
-      let token = localStorage.getItem("token");
+      let token = cookies.get("token");
 
       try {
         const res = await axios({
@@ -36,7 +39,6 @@ const TestHistory = () => {
           mbti_result[i] = res.data.result[i].mbtI_Result;
           hol_result[i] = res.data.result[i].hoL_Result;
         }
-        
 
         // 將資料儲存到 localStorage 中
         localStorage.setItem("ua_id", JSON.stringify(ua_id));
@@ -62,18 +64,25 @@ const TestHistory = () => {
           let date = c[i];
           let time = d[i];
           let mbti_result = e[i];
-          let hol_result = f[i]
-          fetchedTestData.push({ ua_ida, test_account, date, time, mbti_result, hol_result });
+          let hol_result = f[i];
+          fetchedTestData.push({
+            ua_ida,
+            test_account,
+            date,
+            time,
+            mbti_result,
+            hol_result,
+          });
         }
 
         // 過濾與目前帳號不符的資料
-        let aa = localStorage.getItem("acc");
-        for (let i = 0; i < fetchedTestData.length; i++){
-          if (aa != fetchedTestData[i].test_account){
-            fetchedTestData.splice(i, 1)
+        let aa = cookies.get("acc");
+        for (let i = 0; i < fetchedTestData.length; i++) {
+          if (aa != fetchedTestData[i].test_account) {
+            fetchedTestData.splice(i, 1);
           }
         }
-        
+
         // 更新狀態
         setTestData(fetchedTestData);
         localStorage.setItem("testData", JSON.stringify(fetchedTestData));
@@ -100,13 +109,13 @@ const TestHistory = () => {
           Authorization: "Bearer " + token,
         },
       })
-      .then((res) => {
-        console.log(res);
-        localStorage.setItem('ua_data', JSON.stringify(res.data.result))
-      })
-      .then(() => {
-        navigate("/test-result");
-      })
+        .then((res) => {
+          console.log(res);
+          localStorage.setItem("ua_data", JSON.stringify(res.data.result));
+        })
+        .then(() => {
+          navigate("/test-result");
+        });
     } catch (err) {
       console.log(err);
     }
@@ -127,7 +136,9 @@ const TestHistory = () => {
               <tr key={index}>
                 <td className={styles.date}>{data.date}</td>
                 <td className={styles.time}>{data.time}</td>
-                <td className={styles.result}>{data.mbti_result} / {data.hol_result}</td>
+                <td className={styles.result}>
+                  {data.mbti_result} / {data.hol_result}
+                </td>
                 <td className={styles.btns}>
                   <button
                     className={styles.info}

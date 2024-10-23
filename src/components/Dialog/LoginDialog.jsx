@@ -2,9 +2,11 @@ import React from "react";
 import "./Dialog.css";
 import axios from "axios";
 import Swal from "sweetalert2"; // 引入 SweetAlert2
+import Cookies from "universal-cookie";
 
 const LoginDialog = ({ isOpen, onClose, onRegister }) => {
   if (!isOpen) return null; // 如果未打開，則不渲染彈出視窗
+  const cookies = new Cookies();
 
   //#region Enter觸發事件
   const keyDown = (event) => {
@@ -58,8 +60,8 @@ const LoginDialog = ({ isOpen, onClose, onRegister }) => {
 
         let token = res.data.result;
         // console.log(token);
-        localStorage.setItem("token", token);
-        localStorage.setItem("acc", account);
+        cookies.set("token", token);
+        cookies.set("acc", account);
 
         // 登入成功，跳出彈窗告知
         Swal.fire({

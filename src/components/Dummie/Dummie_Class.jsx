@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./Dummie_Class.module.css";
 import Dummie_more_Layout from "./Dummie_more_Layout";
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 const Dummie_Class = () => {
   const [allCourses, setAllCourses] = useState([]);
@@ -9,11 +10,12 @@ const Dummie_Class = () => {
   const [searchTerm, setSearchTerm] = useState(""); // 用來儲存搜尋關鍵字
   const [searchQuery, setSearchQuery] = useState(""); // 用來儲存按下搜尋按鈕後的搜尋條件
   const itemsPerPage = 10;
+  const cookies = new Cookies();
 
   // 引用 contentContainer 來抓取內容區塊
   const contentContainerRef = useRef(null);
 
-  let token = localStorage.getItem("token");
+  let token = cookies.get("token");
   useEffect(() => {
     axios({
       method: "get",

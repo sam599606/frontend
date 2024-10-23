@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom"; // 使用 React Router 進行頁面跳轉
 import styles from "./TestIntro.module.css"; // 使用模組樣式
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 let t_idList = [];
 let questionList = [];
@@ -15,9 +16,10 @@ let t_id;
 
 const TestIntro = () => {
   const navigate = useNavigate();
+  const cookies = new Cookies();
 
   const getTest = () => {
-    let token = localStorage.getItem("token");
+    let token = cookies.get("token");
 
     if (!token) {
       Swal.fire({

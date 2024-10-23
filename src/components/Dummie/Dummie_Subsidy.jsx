@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./Dummie_Subsidy.module.css";
 import Dummie_more_Layout from "./Dummie_more_Layout";
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 const Dummie_Subsidy = () => {
   const [allSubsidies, setAllSubsidies] = useState([]);
@@ -9,8 +10,9 @@ const Dummie_Subsidy = () => {
   const [filteredSubsidies, setFilteredSubsidies] = useState([]); // 儲存過濾後的資料
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const cookies = new Cookies();
 
-  let token = localStorage.getItem("token");
+  let token = cookies.get("token");
   // 引用 contentContainer 來抓取內容區塊
   const contentContainerRef = useRef(null);
 

@@ -3,21 +3,23 @@ import "./Dialog.css";
 import axios from "axios";
 import Swal from "sweetalert2"; // 引入 SweetAlert2
 import { useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 const InfoDialog = ({ isOpen, onClose }) => {
   if (!isOpen) return null; // 如果未打開，則不渲染彈出視窗
   const navigate = useNavigate();
+  const cookies = new Cookies();
 
-  let token = localStorage.getItem("token");
-  let account = localStorage.getItem('acc')
+  let token = cookies.get("token");
+  let account = cookies.get("acc");
   //#region 抓會員資料
   axios({
     method: "post",
     url: "http://localhost:5262/api/User/GetUser",
-    data: JSON.stringify({account}),
+    data: JSON.stringify({ account }),
     headers: {
       Authorization: "Bearer " + token,
-      'Content-Type' : 'application/json'
+      "Content-Type": "application/json",
     },
   })
     .then((res) => {
@@ -29,7 +31,10 @@ const InfoDialog = ({ isOpen, onClose }) => {
       document.getElementById("address").value = res.data.result.address;
       document.getElementById("edu").value = res.data.result.edu;
       document.getElementById("sex").value = res.data.result.sex;
-      document.getElementById("birth").value = res.data.result.birth.substr(0, 10);
+      document.getElementById("birth").value = res.data.result.birth.substr(
+        0,
+        10
+      );
     })
     .catch((err) => {
       console.log(err);
@@ -121,6 +126,8 @@ const InfoDialog = ({ isOpen, onClose }) => {
       if (result.isConfirmed) {
         // 清除token並關閉視窗
         localStorage.clear();
+        cookies.remove("token");
+        cookies.remove("acc");
         navigate("/");
         Swal.fire({
           title: "已成功登出",

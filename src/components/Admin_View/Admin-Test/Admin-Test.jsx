@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import styles from "./Admin-Test.module.css";
 import axios from "axios";
+import Cookies from "universal-cookie";
 
-let token = localStorage.getItem("token");
+const cookies = new Cookies();
+let token = cookies.get("token");
 let testList = []
 let bgColor
 

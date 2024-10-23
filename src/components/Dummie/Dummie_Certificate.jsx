@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./Dummie_Certificate.module.css";
 import Dummie_more_Layout from "./Dummie_more_Layout";
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 const Dummie_Certificate = () => {
   const [allCertificates, setAllCertificates] = useState([]); // 儲存所有證照資料
@@ -9,11 +10,12 @@ const Dummie_Certificate = () => {
   const [searchTerm, setSearchTerm] = useState(""); // 搜尋欄的輸入
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const cookies = new Cookies();
 
   // 引用 contentContainer 來抓取內容區塊
   const contentContainerRef = useRef(null);
 
-  let token = localStorage.getItem("token");
+  let token = cookies.get("token");
   // 取得 CertificateList 的 API 資料
   useEffect(() => {
     axios({

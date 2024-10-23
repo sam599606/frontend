@@ -4,17 +4,19 @@ import "./Headbar.css";
 import LoginDialog from "../Dialog/LoginDialog";
 import RegisterDialog from "../Dialog/RegisterDialog";
 import InfoDialog from "../Dialog/InfoDialog";
+import Cookies from "universal-cookie";
 
 const Headbar = () => {
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isRegisterOpen, setRegisterOpen] = useState(false);
   const [isInfoOpen, setInfoOpen] = useState(false);
   const [isInvisible, setInvisible] = useState(false);
+  const cookies = new Cookies();
 
   const location = useLocation(); // 使用 useLocation 來獲取當前路徑
   const isTestTestingPage = location.pathname === "/test-testing"; // 判斷是否在 /test-testing 頁面
 
-  let token = localStorage.getItem("token");
+  let token = cookies.get("token");
   let userInfo = document.getElementById("userinfo");
   let loginBtn = document.getElementById("login");
 

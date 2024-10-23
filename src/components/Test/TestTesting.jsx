@@ -4,8 +4,10 @@ import axios from "axios";
 import styles from "./TestTesting.module.css";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Cookies from "universal-cookie";
 
-let token = localStorage.getItem("token");
+const cookies = new Cookies();
+let token = cookies.get("token");
 let Bg = styled.div;
 let Qp = styled.p;
 let Cp = styled.span;
@@ -236,7 +238,7 @@ const TestTesting = () => {
       align-items: center;
       justify-content: space-around;
       overflow: hidden;
-      background-color: #f6cf80; 
+      background-color: #f6cf80;
     `;
     Qp = styled.p`
       width: 75%;
@@ -264,9 +266,9 @@ const TestTesting = () => {
       transition: background-color 0.3s ease;
       cursor: pointer;
     `;
-    Qs =styled.span`
+    Qs = styled.span`
       color: #6e3d26;
-    `
+    `;
     setTimeout(() => {
       for (let i = 0; i <= test[currentQuestion - 1].length - 1; i++) {
         let ts = document.getElementById(`drag_source_multiple_${i}`);
@@ -317,8 +319,8 @@ const TestTesting = () => {
       cursor: pointer;
     `;
     Qs = styled.span`
-    color: #fdfefe;
-    `
+      color: #fdfefe;
+    `;
     setTimeout(() => {
       for (let i = 0; i <= test[currentQuestion - 1].length - 1; i++) {
         let ts = document.getElementById(`drag_source_multiple_${i}`);
@@ -369,8 +371,8 @@ const TestTesting = () => {
       cursor: pointer;
     `;
     Qs = styled.span`
-    color: #fdfefe;
-    `
+      color: #fdfefe;
+    `;
     setTimeout(() => {
       for (let i = 0; i <= test[currentQuestion - 1].length - 1; i++) {
         let ts = document.getElementById(`drag_source_multiple_${i}`);
@@ -421,8 +423,8 @@ const TestTesting = () => {
       cursor: pointer;
     `;
     Qs = styled.span`
-    color: #8B5A2B;
-    `
+      color: #8b5a2b;
+    `;
     setTimeout(() => {
       for (let i = 0; i <= test[currentQuestion - 1].length - 1; i++) {
         let ts = document.getElementById(`drag_source_multiple_${i}`);
@@ -473,8 +475,8 @@ const TestTesting = () => {
       cursor: pointer;
     `;
     Qs = styled.span`
-    color: #fdfefe;
-    `
+      color: #fdfefe;
+    `;
     setTimeout(() => {
       for (let i = 0; i <= test[currentQuestion - 1].length - 1; i++) {
         let ts = document.getElementById(`drag_source_multiple_${i}`);
@@ -525,8 +527,8 @@ const TestTesting = () => {
       cursor: pointer;
     `;
     Qs = styled.span`
-    color: #ecf0f1;
-    `
+      color: #ecf0f1;
+    `;
     setTimeout(() => {
       for (let i = 0; i <= test[currentQuestion - 1].length - 1; i++) {
         let ts = document.getElementById(`drag_source_multiple_${i}`);
@@ -541,13 +543,12 @@ const TestTesting = () => {
     }, 10);
   }
 
-//#region 根據題目改背景圖片
-  if(questions[currentQuestion - 1].bgImg != null){
+  //#region 根據題目改背景圖片
+  if (questions[currentQuestion - 1].bgImg != null) {
     Bg = styled.div`
       background: ;
     `;
   }
-
 
   //#region return
   return (
