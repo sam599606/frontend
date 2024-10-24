@@ -223,3 +223,51 @@
   font-size: 20px;
   font-weight: 500;
 }
+
+/* 淡入淡出動畫 */
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 1s;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* 圖片樣式 */
+.image {
+  width: 100%;
+  height: auto;
+  animation: fadeIn 1s forwards; /* 手動觸發淡入 */
+}
+
+/* 網頁內容樣式 */
+.page {
+  text-align: center;
+  padding: 20px;
+  animation: fadeIn 1s forwards; /* 手動觸發淡入 */
+}

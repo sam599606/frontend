@@ -95,7 +95,7 @@ const TestHistory = () => {
   }, []);
 
   const handleClick = async (ua_id) => {
-    let token = localStorage.getItem("token");
+    let token = cookies.get("token");
     try {
       let object = { ua_id };
       let jsondata = JSON.stringify(object);

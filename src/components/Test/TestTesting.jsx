@@ -5,6 +5,7 @@ import styles from "./TestTesting.module.css";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Cookies from "universal-cookie";
+import { CSSTransition } from 'react-transition-group';
 
 const cookies = new Cookies();
 let token = cookies.get("token");
@@ -19,6 +20,8 @@ const TestTesting = () => {
   const [selectedAnswers, setSelectedAnswers] = useState([]); // 儲存已選擇的選項卡
   const [usedAnswers, setUsedAnswers] = useState({}); // 記錄每個位置上的選項
   const [answerLog, setAnswerLog] = useState([]); // 新增陣列來記錄每一題的選項與槽位
+  const [showImage, setShowImage] = useState(true); // 控制圖片顯示
+  const [showPage, setShowPage] = useState(false);  // 控制網頁畫面顯示
   const navigate = useNavigate();
 
   //#region 抓取題目
@@ -544,16 +547,42 @@ const TestTesting = () => {
   }
 
   //#region 根據題目改背景圖片
-  if (questions[currentQuestion - 1].bgImg != null) {
-    Bg = styled.div`
-      background: ;
-    `;
-  }
+  useEffect(() => {
+    // 1秒後淡出圖片
+    const timer = setTimeout(() => {
+      setShowImage(false);
+    }, 1000);
+
+    // 2秒後顯示網頁畫面
+    const pageTimer = setTimeout(() => {
+      setShowPage(true);
+    }, 2000);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(pageTimer);
+    };
+  }, []);
 
   //#region return
   return (
     <Bg>
-      <div className={styles.wrap}>
+      <CSSTransition
+        in={showImage}
+        timeout={1000}
+        classNames="fade"
+        unmountOnExit
+      >
+        <img src="src/images/emoji.png" alt="Logo" className="image" />
+      </CSSTransition>
+
+      <CSSTransition
+        in={showPage}
+        timeout={1000}
+        classNames="fade"
+        unmountOnExit
+      >
+        <div className={styles.wrap}>
         <Qp>{questions[currentQuestion - 1].question}</Qp>
 
         {/* 題目進度 */}
@@ -654,6 +683,7 @@ const TestTesting = () => {
           </Qb>
         )}
       </div>
+      </CSSTransition>
     </Bg>
   );
 };
