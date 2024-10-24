@@ -2,19 +2,19 @@ import React, { useState, useEffect } from "react";
 import "./index.css";
 import axios from "axios";
 
-axios({
-  method: "get",
-  url: "http://localhost:5262/api/User/GetHotRecord",
-})
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
 const Index = () => {
   const [currentIndex, setCurrentIndex] = useState(0); // 控制當前圖片索引
+
+  axios({
+    method: "get",
+    url: "http://localhost:5262/api/User/GetHotRecord",
+  })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   
   const images = [
     "src/images/meeting.png",

@@ -5,24 +5,24 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 let token = cookies.get("token");
-let testList = []
-let bgColor
+let testList = [];
+let bgColor;
 
 let fakeData = [
-  '依據現有資訊制定詳細計畫並執行',
-  '隨心所欲地四處探索尋找線索',
-  '設法找更多資料以理解這張地圖的全貌',
-  '憑直覺和靈感去猜測方向探索',
-  '與人分享地圖尋求幫助和建議',
-  '獨自解決問題專注於寶藏的實際位置',
-  '與朋友組隊一起解謎共同分擔風險',
-  '獨自找安靜的地方仔細推理線索'
-]
+  "依據現有資訊制定詳細計畫並執行",
+  "隨心所欲地四處探索尋找線索",
+  "設法找更多資料以理解這張地圖的全貌",
+  "憑直覺和靈感去猜測方向探索",
+  "與人分享地圖尋求幫助和建議",
+  "獨自解決問題專注於寶藏的實際位置",
+  "與朋友組隊一起解謎共同分擔風險",
+  "獨自找安靜的地方仔細推理線索",
+];
 
 const AdminTest = () => {
   const [questions, setQuestions] = useState([]);
   const [isEditOpen, setIsEditOpen] = useState(false);
-  
+
   axios({
     method: "get",
     url: `http://localhost:5262/api/Test/TestList`,
@@ -30,28 +30,28 @@ const AdminTest = () => {
       Authorization: "Bearer " + token,
     },
   })
-  .then((res) => {
-    for(let i = 0; i < res.data.result.length; i++){
-      testList[i] = {
-        id: res.data.result[i].t_id,
-        content: res.data.result[i].question
+    .then((res) => {
+      for (let i = 0; i < res.data.result.length; i++) {
+        testList[i] = {
+          id: res.data.result[i].t_id,
+          content: res.data.result[i].question,
+        };
       }
-    }
-  })
-  .then(() => {
-    setQuestions(testList)
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    })
+    .then(() => {
+      setQuestions(testList);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
   const sortTable = (index) => {
     // Sorting logic here
   };
 
   const openEditDialog = (t_id) => {
-    let object = { t_id }
-    let jsondata = JSON.stringify(object)
+    let object = { t_id };
+    let jsondata = JSON.stringify(object);
     axios({
       method: "post",
       url: "http://localhost:5262/api/Test/GetTest",
@@ -61,47 +61,43 @@ const AdminTest = () => {
         Authorization: "Bearer " + token,
       },
     })
-    .then((res) => {
-      console.log("GetTest:",res);
-      document.getElementById('questionText').value = res.data.result.question
-      bgColor = res.data.result.bgColor
-      if(bgColor == 1){
-        document.getElementById('f6cf80').checked = true
-      }
-      else if(bgColor == 2){
-        document.getElementById('ffe785').checked = true
-      }
-      else if(bgColor == 3){
-        document.getElementById('fdfecb').checked = true
-      }
-      else if(bgColor == 4){
-        document.getElementById('745329').checked = true
-      }
-      else if(bgColor == 5){
-        document.getElementById('d5ad8a').checked = true
-      }
-      else if(bgColor == 6){
-        document.getElementById('dbc8b6').checked = true
-      }
-      axios({
-        method: "post",
-        url: "http://localhost:5262/api/Test/GetTestSeletion",
-        data: jsondata,
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: "Bearer " + token,
-        },
-      })
-        .then((res) => {
-          console.log("GetTestSeletion:",res);
+      .then((res) => {
+        console.log("GetTest:", res);
+        document.getElementById("questionText").value =
+          res.data.result.question;
+        bgColor = res.data.result.bgColor;
+        if (bgColor == 1) {
+          document.getElementById("f6cf80").checked = true;
+        } else if (bgColor == 2) {
+          document.getElementById("ffe785").checked = true;
+        } else if (bgColor == 3) {
+          document.getElementById("fdfecb").checked = true;
+        } else if (bgColor == 4) {
+          document.getElementById("745329").checked = true;
+        } else if (bgColor == 5) {
+          document.getElementById("d5ad8a").checked = true;
+        } else if (bgColor == 6) {
+          document.getElementById("dbc8b6").checked = true;
+        }
+        axios({
+          method: "post",
+          url: "http://localhost:5262/api/Test/GetTestSeletion",
+          data: jsondata,
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            Authorization: "Bearer " + token,
+          },
         })
-        .catch((err) => {
-          console.log(err);
-        });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+          .then((res) => {
+            console.log("GetTestSeletion:", res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     setIsEditOpen(true);
   };
@@ -136,7 +132,10 @@ const AdminTest = () => {
               <td className={styles.number}>{question.id}</td>
               <td className={styles.content}>{question.content}</td>
               <td className={styles.edit}>
-                <button onClick={() => openEditDialog(question.id)} id={question.id}>
+                <button
+                  onClick={() => openEditDialog(question.id)}
+                  id={question.id}
+                >
                   <img src="../src/images/edit.svg" alt="Edit" />
                 </button>
               </td>
@@ -177,7 +176,7 @@ const AdminTest = () => {
                 <th>選項</th>
                 <td id={styles.inputarea}>
                   <a href="#">
-                    <img src="../src/images/add.svg" alt="Add option"/>
+                    <img src="../src/images/add.svg" alt="Add option" />
                   </a>
                 </td>
               </tr>

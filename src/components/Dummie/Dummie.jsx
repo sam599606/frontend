@@ -1,13 +1,70 @@
 import React, { useState } from "react";
 import styles from "./Dummie.module.css";
+import axios from "axios";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
+let token = cookies.get("token");
 
 const Dummie = () => {
   const [isOpen, setIsOpen] = useState(false); // 控制下拉選單顯示
   const [selectedJob, setSelectedJob] = useState("選擇職業"); // 預設顯示選擇職業
 
-  const jobs = ["牙科技術員", "陶工", "建築設計員", "模型工", "細木工"];
-  const skills = ["技能1", "技能2", "技能3", "技能4", "技能5"];
-  const licences = ["證照1", "證照2", "證照3", "證照4"];
+  axios({
+    method: "get",
+    url: "http://localhost:5262/api/Job/JobList",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  })
+    .then((res) => {
+      console.log(res);
+      let jobs = []
+      let jid = []
+      for(let i = 0; i < res.data.result.length; i++){
+        jobs[i] = res.data.result[i].name
+        jid[i] = res.data.result[i].j_id
+      }
+      setTimeout(() => {
+        sessionStorage.setItem('jobs', JSON.stringify(jobs))
+        sessionStorage.setItem('jid', JSON.stringify(jid))
+      }, 10);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+    let jobs = JSON.parse(sessionStorage.getItem('jobs'))
+    let jid = JSON.parse(sessionStorage.getItem('jid'))
+
+    let skills = []
+    let licences = []
+    
+    setTimeout(() => {
+      for(let i = 0; i < jobs.length; i++){
+        let j_id = jid[i]
+        let object = { j_id }
+        axios({
+          method: "post",
+          url: "http://localhost:5262/api/Job/GetJob",
+          data: JSON.stringify(object),
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json; charset=utf-8",
+          },
+        })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    }, 30);
+
+  // jobs = ["牙科技術員", "陶工", "建築設計員", "模型工", "細木工"];
+  skills = ["技能1", "技能2", "技能3", "技能4", "技能5"];
+  licences = ["證照1", "證照2", "證照3", "證照4"];
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
