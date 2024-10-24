@@ -198,6 +198,7 @@ const TestTesting = () => {
         },
       })
         .then((res) => {
+          console.log("success");
           let ua_id = res.data.result;
           let jsondata = JSON.stringify(ua_id);
           axios({
