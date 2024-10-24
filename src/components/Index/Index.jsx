@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
 import axios from "axios";
+import { Link, useLocation } from "react-router-dom";
 
 const Index = () => {
   const [currentIndex, setCurrentIndex] = useState(0); // 控制當前圖片索引
+  const location = useLocation(); // 使用 useLocation 來獲取當前路徑
+  const isTestTestingPage = location.pathname === "/test-testing"; // 判斷是否在 /test-testing 頁面
 
   axios({
     method: "get",
@@ -15,7 +18,7 @@ const Index = () => {
     .catch((err) => {
       console.log(err);
     });
-  
+
   const images = [
     "src/images/輪播圖_1.png",
     "src/images/輪播圖_2.png",
@@ -79,24 +82,87 @@ const Index = () => {
       {/* 底部圖示部分 */}
       <div id="icons">
         <div className="icon">
-          <img src="src/images/emoji.png" alt="" />
-          <p>icon描述</p>
+          <Link
+            id="iconlink"
+            to="/forcast"
+            className={isTestTestingPage ? "disabled-link" : ""}
+            onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
+          >
+            <div className="link_icon">
+              <img src="src/images/prediction.png" />
+            </div>
+            <p>產業景氣預測</p>
+          </Link>
         </div>
+
         <div className="icon">
-          <img src="src/images/emoji.png" alt="" />
-          <p>icon描述</p>
+          <Link
+            id="iconlink"
+            to="/dummie"
+            className={isTestTestingPage ? "disabled-link" : ""}
+            onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
+          >
+            <div className="link_icon">
+              <img src="src/images/businessman.png" />
+            </div>
+            <p>職業資訊懶人包</p>
+          </Link>
         </div>
+
         <div className="icon">
-          <img src="src/images/emoji.png" alt="" />
-          <p>icon描述</p>
+          <Link
+            id="iconlink"
+            to="/dummie/class"
+            className={isTestTestingPage ? "disabled-link" : ""}
+            onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
+          >
+            <div className="link_icon">
+              <img src="src/images/success.png" />
+            </div>
+            <p>課程資訊</p>
+          </Link>
         </div>
+
         <div className="icon">
-          <img src="src/images/emoji.png" alt="" />
-          <p>icon描述</p>
+          <Link
+            id="iconlink"
+            to="/dummie/Subsidy"
+            className={isTestTestingPage ? "disabled-link" : ""}
+            onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
+          >
+            <div className="link_icon">
+              <img src="src/images/moneylink.png" />
+            </div>
+            <p>補助資訊</p>
+          </Link>
         </div>
+
         <div className="icon">
-          <img src="src/images/emoji.png" alt="" />
-          <p>icon描述</p>
+          <Link
+            id="iconlink"
+            to="/dummie/Certificate"
+            className={isTestTestingPage ? "disabled-link" : ""}
+            onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
+          >
+            <div className="link_icon">
+              <img src="src/images/certificate.png" />
+            </div>
+            <p>證照資訊</p>
+          </Link>
+        </div>
+
+        <div className="icon">
+          <Link
+            id="iconlink"
+            to="/test"
+            className={isTestTestingPage ? "disabled-link" : ""}
+            onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
+          >
+            <div className="link_icon">
+              <img src="src/images/feedback.png" />
+            </div>
+            <p>職涯診斷測驗</p>
+          </Link>
         </div>
       </div>
     </>
