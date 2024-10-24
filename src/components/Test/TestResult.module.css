@@ -122,6 +122,10 @@
 
 .back {
   transform: rotateY(180deg);
+  width: 90%;
+  font-size: 28px;
+  padding-left: 40px;
+  height: 100%;
 }
 
 #sort {

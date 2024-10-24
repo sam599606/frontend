@@ -29,7 +29,7 @@ table {
   font-size: 20px;
 }
 
-input[type="date"] {
+.dateContainer input {
   padding: 5px;
   font-size: 14px;
   width: 100px;
@@ -177,4 +177,23 @@ input[type="search"] {
 
 .pages a:hover {
   color: #f0f0f0;
+}
+
+#contents::-webkit-scrollbar {
+  width: 12px;
+}
+
+#contents::-webkit-scrollbar-track {
+  background: #f4eee2;
+  border-radius: 10px;
+}
+
+#contents::-webkit-scrollbar-thumb {
+  background-color: #d5ad8a;
+  border-radius: 10px;
+  border: 3px solid #f4eee2;
+}
+
+#contents::-webkit-scrollbar-thumb:hover {
+  background-color: #b89471;
 }

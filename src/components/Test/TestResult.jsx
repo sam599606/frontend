@@ -230,7 +230,9 @@ const TestResult = () => {
             </div>
             <div className={styles.back}>
               <div id={styles.intro}>
-                喜歡用手和眼睛探索，用冷靜的理性主義和熱情的好奇心觸摸和審視他們周圍的世界...
+                喜歡用手和眼睛探索，用冷靜的理性主義和熱情的好奇心觸摸和審視他們周圍的世界。具有這種個性類型的人是天生的創造者，
+                他們從一個項目轉移到另一個項目，
+                從樂趣出發構建有用的事物和冗餘， 並在前進的過程中向環境學習。
               </div>
             </div>
             <button
@@ -248,7 +250,7 @@ const TestResult = () => {
         >
           <div className={styles.title}>MBTI</div>
           <div className={styles.content}>
-            <div id={styles["type-name"]}>{ua_data.mbtI_Result}</div>
+            <div id={styles["type-name"]}></div>
             <div className={styles.front}>
               <div className={styles.leftcontent}>
                 <p>E 外向</p>
@@ -269,7 +271,9 @@ const TestResult = () => {
             </div>
             <div className={styles.back}>
               <div id={styles.intro}>
-                喜歡用手和眼睛探索，用冷靜的理性主義和熱情的好奇心觸摸和審視他們周圍的世界...
+                喜歡用手和眼睛探索，用冷靜的理性主義和熱情的好奇心觸摸和審視他們周圍的世界。具有這種個性類型的人是天生的創造者，
+                他們從一個項目轉移到另一個項目，
+                從樂趣出發構建有用的事物和冗餘， 並在前進的過程中向環境學習。
               </div>
             </div>
             <button

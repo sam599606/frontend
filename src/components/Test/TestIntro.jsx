@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"; // 使用 React Router 進行頁
 import styles from "./TestIntro.module.css"; // 使用模組樣式
 import axios from "axios";
 import Cookies from "universal-cookie";
+import Swal from "sweetalert2";
 
 let t_idList = [];
 let questionList = [];
