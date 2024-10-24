@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Dummie.module.css";
 import axios from "axios";
 import Cookies from "universal-cookie";
@@ -9,7 +9,15 @@ let token = cookies.get("token");
 const Dummie = () => {
   const [isOpen, setIsOpen] = useState(false); // 控制下拉選單顯示
   const [selectedJob, setSelectedJob] = useState("選擇職業"); // 預設顯示選擇職業
-
+  const [skills, setSkills] = useState([]);
+  const [licences, setLicences] = useState([]);
+  const [oneDown, setOneDown] = useState([]);
+  const [oneTothree, setOneTothree] = useState([]);
+  const [threeTofive, setThreeTofive] = useState([]);
+  const [fiveToten, setFiveToten] = useState([]);
+  const [tenTofifteen, setTenTofifteen] = useState([]);
+  const [fifteenUp, setFifteenUp] = useState([]);
+  
   axios({
     method: "get",
     url: "http://localhost:5262/api/Job/JobList",
@@ -18,62 +26,94 @@ const Dummie = () => {
     },
   })
     .then((res) => {
-      console.log(res);
-      let jobs = []
-      let jid = []
-      for(let i = 0; i < res.data.result.length; i++){
-        jobs[i] = res.data.result[i].name
-        jid[i] = res.data.result[i].j_id
+      let jobList = [];
+      for (let i = 0; i < res.data.result.length; i++) {
+        let jobs = res.data.result[i].name;
+        let j_id = res.data.result[i].j_id;
+        jobList[i] = { jobs, j_id };
       }
       setTimeout(() => {
-        sessionStorage.setItem('jobs', JSON.stringify(jobs))
-        sessionStorage.setItem('jid', JSON.stringify(jid))
-      }, 10);
+        sessionStorage.setItem("jobList", JSON.stringify(jobList));
+      }, 20);
     })
     .catch((err) => {
       console.log(err);
     });
 
-    let jobs = JSON.parse(sessionStorage.getItem('jobs'))
-    let jid = JSON.parse(sessionStorage.getItem('jid'))
-
-    let skills = []
-    let licences = []
-    
-    setTimeout(() => {
-      for(let i = 0; i < jobs.length; i++){
-        let j_id = jid[i]
-        let object = { j_id }
-        axios({
-          method: "post",
-          url: "http://localhost:5262/api/Job/GetJob",
-          data: JSON.stringify(object),
-          headers: {
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/json; charset=utf-8",
-          },
-        })
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    }, 30);
-
-  // jobs = ["牙科技術員", "陶工", "建築設計員", "模型工", "細木工"];
-  skills = ["技能1", "技能2", "技能3", "技能4", "技能5"];
-  licences = ["證照1", "證照2", "證照3", "證照4"];
+  let jobList = JSON.parse(sessionStorage.getItem("jobList"));
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
   const selectJob = (job) => {
-    setSelectedJob(job);
+    setSelectedJob(job.jobs);
+    let j_id = job.j_id;
+    let object = { j_id };
+
+    axios({
+      method: "post",
+      url: "http://localhost:5262/api/Job/GetJob",
+      data: JSON.stringify(object),
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json; charset=utf-8",
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        let fetchedSkills = res.data.result.skill.split(',')
+        sessionStorage.setItem('skills', JSON.stringify(fetchedSkills))
+        let fetchedLicences = res.data.result.certificate.split(',')
+        sessionStorage.setItem('licences', JSON.stringify(fetchedLicences))
+        let fetchedOneDown = res.data.result.oneDown
+        sessionStorage.setItem('oneDown', oneDown)
+        let fetchedOneTothree = res.data.result.oneTothree
+        sessionStorage.setItem('oneTothree', oneTothree)
+        let fetchedThreeTofive = res.data.result.threeTofive
+        sessionStorage.setItem('threeTofive', threeTofive)
+        let fetchedFiveToten = res.data.result.fiveToten
+        sessionStorage.setItem('fiveToten', fiveToten)
+        let fetchedTenTofifteen = res.data.result.tenTofifteen
+        sessionStorage.setItem('tenTofifteen', tenTofifteen)
+        let fetchedFifteenUp = res.data.result.fifteenUp
+        sessionStorage.setItem('fifteenUp', fifteenUp)
+
+        setSkills(fetchedSkills);
+        setLicences(fetchedLicences)
+        setOneDown(fetchedOneDown)
+        setOneTothree(fetchedOneTothree)
+        setThreeTofive(fetchedThreeTofive)
+        setFiveToten(fetchedFiveToten)
+        setTenTofifteen(fetchedTenTofifteen)
+        setFifteenUp(fetchedFifteenUp)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     setIsOpen(false); // 選擇後關閉下拉菜單
   };
+
+  useEffect(() => {
+    const storedSkills = JSON.parse(sessionStorage.getItem("skills"));
+    const storedLicences = JSON.parse(sessionStorage.getItem("licences"));
+    const storedOneDown = sessionStorage.getItem('oneDown')
+    const storedOneTothree = sessionStorage.getItem('oneTothree')
+    const storedThreeTofive = sessionStorage.getItem('threeTofive')
+    const storedFiveToten = sessionStorage.getItem('fiveToten')
+    const storedTenTofifteen = sessionStorage.getItem('tenTofifteen')
+    const storedFifteenUp = sessionStorage.getItem('fifteenUp')
+    if (storedSkills) {
+      setSkills(storedSkills); // 设置 state，从而触发重新渲染
+      setLicences(storedLicences);
+      setOneDown(storedOneDown)
+      setOneTothree(storedOneTothree)
+      setThreeTofive(storedThreeTofive)
+      setFiveToten(storedFiveToten)
+      setTenTofifteen(storedTenTofifteen)
+      setFifteenUp(storedFifteenUp)
+    }
+  }, []);
 
   return (
     <div className={styles.wrap}>
@@ -90,13 +130,13 @@ const Dummie = () => {
           </button>
           {isOpen && (
             <ul className={styles.dropdownMenu}>
-              {jobs.map((job, index) => (
+              {jobList.map((job, index) => (
                 <li
                   key={index}
                   onClick={() => selectJob(job)}
                   className={styles.dropdownItem}
                 >
-                  {job}
+                  {job.jobs}
                 </li>
               ))}
             </ul>
@@ -114,32 +154,32 @@ const Dummie = () => {
               </div>
               <div className={styles.salarycolumn}>
                 <a href="">
-                  <div className={styles.link}>41,000</div>
+                  <div className={styles.link}>{oneDown}</div>
                 </a>
                 <a href="">
-                  <div className={styles.link}>42,000</div>
+                  <div className={styles.link}>{oneTothree}</div>
                 </a>
                 <a href="">
-                  <div className={styles.link}>43,000</div>
+                  <div className={styles.link}>{threeTofive}</div>
                 </a>
               </div>
             </div>
 
             <div className={styles.salaryRight}>
               <div className={styles.salarycolumn}>
-                <div className={styles.seniority}>6 ~ 8年</div>
-                <div className={styles.seniority}>8 ~ 10年</div>
-                <div className={styles.seniority}>10年以上</div>
+                <div className={styles.seniority}>5 ~ 10年</div>
+                <div className={styles.seniority}>10 ~ 15年</div>
+                <div className={styles.seniority}>15年以上</div>
               </div>
               <div className={styles.salarycolumn}>
                 <a href="">
-                  <div className={styles.link}>44,000</div>
+                  <div className={styles.link}>{fiveToten}</div>
                 </a>
                 <a href="">
-                  <div className={styles.link}>45,000</div>
+                  <div className={styles.link}>{tenTofifteen}</div>
                 </a>
                 <a href="">
-                  <div className={styles.link}>46,000</div>
+                  <div className={styles.link}>{fifteenUp}</div>
                 </a>
               </div>
             </div>

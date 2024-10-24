@@ -5,7 +5,6 @@ import axios from "axios";
 const Index = () => {
   const [currentIndex, setCurrentIndex] = useState(0); // 控制當前圖片索引
 
-<<<<<<< HEAD
   axios({
     method: "get",
     url: "http://localhost:5262/api/User/GetHotRecord",
@@ -17,8 +16,6 @@ const Index = () => {
       console.log(err);
     });
   
-=======
->>>>>>> f10f9f412ef83b3ef2d364a138a90ca87c5e2ecf
   const images = [
     "src/images/輪播圖_1.png",
     "src/images/輪播圖_2.png",
