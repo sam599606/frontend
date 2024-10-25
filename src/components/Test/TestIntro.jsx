@@ -9,6 +9,7 @@ let t_idList = [];
 let questionList = [];
 let bgColorList = [];
 let bgImgList = [];
+let animateImgList = [];
 let test = [];
 let ts_id = [];
 let seletionArr = [];
@@ -46,6 +47,7 @@ const TestIntro = () => {
           t_idList[i] = questions[i].t_id;
           bgColorList[i] = questions[i].bgColor;
           bgImgList[i] = questions[i].bgImg;
+          animateImgList[i] = questions[i].animateImg;
           questionList[i] = questions[i].question;
         }
       })
@@ -86,8 +88,9 @@ const TestIntro = () => {
                     JSON.stringify(bgColorList)
                   );
                   localStorage.setItem("bgImgList", JSON.stringify(bgImgList));
+                  localStorage.setItem("animateImgList", JSON.stringify(animateImgList));
                 }
-              }, 10);
+              }, 20);
             })
             .catch((err) => {
               console.log(err);
@@ -97,7 +100,7 @@ const TestIntro = () => {
       .then(() => {
         setTimeout(() => {
           navigate("/test-testing");
-        }, 100);
+        }, 200);
         console.log();
       })
       .catch((err) => {

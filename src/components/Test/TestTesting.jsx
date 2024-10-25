@@ -5,7 +5,8 @@ import styles from "./TestTesting.module.css";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Cookies from "universal-cookie";
-import { CSSTransition } from 'react-transition-group';
+import { CSSTransition } from "react-transition-group";
+import "./TestTesting.css";
 
 const cookies = new Cookies();
 let token = cookies.get("token");
@@ -14,14 +15,13 @@ let Qp = styled.p;
 let Cp = styled.span;
 let Qb = styled.div;
 let Qs = styled.span;
+let animateImgSrc
 
 const TestTesting = () => {
   const [currentQuestion, setCurrentQuestion] = useState(1); // 當前題目進度
   const [selectedAnswers, setSelectedAnswers] = useState([]); // 儲存已選擇的選項卡
   const [usedAnswers, setUsedAnswers] = useState({}); // 記錄每個位置上的選項
   const [answerLog, setAnswerLog] = useState([]); // 新增陣列來記錄每一題的選項與槽位
-  const [showImage, setShowImage] = useState(true); // 控制圖片顯示
-  const [showPage, setShowPage] = useState(false);  // 控制網頁畫面顯示
   const navigate = useNavigate();
 
   //#region 抓取題目
@@ -30,12 +30,14 @@ const TestTesting = () => {
   let questionList = JSON.parse(localStorage.getItem("questionList"));
   let bgColorList = JSON.parse(localStorage.getItem("bgColorList"));
   let bgImgList = JSON.parse(localStorage.getItem("bgImgList"));
+  let animateImgList = JSON.parse(localStorage.getItem("animateImgList"));
 
   const questions = [];
   for (let i = 0; i <= questionList.length - 1; i++) {
     questions[i] = {
       id: ts_id[i],
       bgImg: bgImgList[i],
+      animateImg: animateImgList[i],
       bgColor: bgColorList[i],
       question: questionList[i],
       options: test[i],
@@ -92,6 +94,8 @@ const TestTesting = () => {
     setCurrentQuestion((prev) => {
       const newQuestion = prev - 1;
       restorePreviousAnswer(newQuestion); // 還原上一題的答案
+      animateImgSrc = questions[currentQuestion].animateImg
+      setValue(value - 1);
       return newQuestion;
     });
   };
@@ -132,6 +136,8 @@ const TestTesting = () => {
       setCurrentQuestion((prev) => {
         const newQuestion = prev + 1;
         restorePreviousAnswer(newQuestion); // 還原下一題的答案
+        animateImgSrc = questions[currentQuestion].animateImg
+        setValue(value + 1);
         return newQuestion;
       });
     } else {
@@ -220,6 +226,7 @@ const TestTesting = () => {
               localStorage.removeItem("questionList");
               localStorage.removeItem("bgColorList");
               localStorage.removeItem("bgImgList");
+              localStorage.removeItem("animateImgList");
               navigate("/test-result");
             })
             .catch((err) => {
@@ -548,142 +555,159 @@ const TestTesting = () => {
   }
 
   //#region 根據題目改背景圖片
+  const [value, setValue] = useState(0);
+  const [showImage, setShowImage] = useState(false);
+  const [showContent, setShowContent] = useState(true);
+
   useEffect(() => {
-    // 1秒後淡出圖片
-    const timer = setTimeout(() => {
-      setShowImage(false);
-    }, 1000);
+    if (value == 0) {
+      animateImgSrc = questions[currentQuestion - 1].animateImg
+      setShowImage(true);
+      setShowContent(false);
+      const timer = setTimeout(() => {
+        setShowImage(false);
+        setShowContent(true);
+      }, 2000); // 圖片顯示2秒
+    }
+    if (value !== 0) {
+      setShowImage(true);
+      setShowContent(false);
+      const timer = setTimeout(() => {
+        setShowImage(false);
+        setShowContent(true);
+      }, 2000); // 圖片顯示2秒
 
-    // 2秒後顯示網頁畫面
-    const pageTimer = setTimeout(() => {
-      setShowPage(true);
-    }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [value]);
 
-    return () => {
-      clearTimeout(timer);
-      clearTimeout(pageTimer);
-    };
-  }, []);
+  
 
+  console.log(currentQuestion)
+  console.log(animateImgSrc)
   //#region return
   return (
     <Bg>
       <CSSTransition
         in={showImage}
-        timeout={1000}
+        timeout={500}
         classNames="fade"
         unmountOnExit
       >
-        <img src="src/images/emoji.png" alt="Logo" className="image" />
+        <div className="image-overlay">
+          <img src={`src/images/animate_IMG/${animateImgSrc}`} alt="Logo" className="image" />
+        </div>
       </CSSTransition>
 
       <CSSTransition
-        in={showPage}
-        timeout={1000}
+        in={showContent}
+        timeout={500}
         classNames="fade"
         unmountOnExit
       >
         <div className={styles.wrap}>
-        <Qp>{questions[currentQuestion - 1].question}</Qp>
+          <Qp>{questions[currentQuestion - 1].question}</Qp>
 
-        {/* 題目進度 */}
-        <div className={styles.counter}>
-          <Cp>
-            {currentQuestion}/{questions.length}
-          </Cp>
-        </div>
-
-        {/* 放選項的槽位 */}
-        <div className={styles.targetContainer} id="answers">
-          <div className={`${styles.likerow}`}>
-            {[0, 1, 2].map((idx) => (
-              <div
-                key={idx}
-                className={`${styles.ans} ${styles.like} ${
-                  usedAnswers[`like${idx}`] ? styles.filled : ""
-                }`}
-                id={`drag_drop_container${idx}`}
-                data-role="drag_drop_container"
-                onDrop={(e) => handleDrop(e, `like${idx}`)}
-                onDragOver={(e) => e.preventDefault()}
-                onClick={() => handleRemove(`like${idx}`)}
-              >
-                {usedAnswers[`like${idx}`]}
-              </div>
-            ))}
+          {/* 題目進度 */}
+          <div className={styles.counter}>
+            <Cp>
+              {currentQuestion}/{questions.length}
+            </Cp>
           </div>
-          <div className={`${styles.dislikerow}`}>
-            {[0, 1, 2].map((idx) => (
-              <div
-                key={idx}
-                className={`${styles.ans} ${styles.dislike} ${
-                  usedAnswers[`dislike${idx}`] ? styles.filled : ""
-                }`}
-                id={`drag_drop_container${idx + 3}`}
-                data-role="drag_drop_container"
-                onDrop={(e) => handleDrop(e, `dislike${idx}`)}
-                onDragOver={(e) => e.preventDefault()}
-                onClick={() => handleRemove(`dislike${idx}`)}
-              >
-                {usedAnswers[`dislike${idx}`]}
-              </div>
-            ))}
-          </div>
-        </div>
 
-        {/* 選項:可拖曳 */}
-        <div className={styles.sourceContainer} id="options">
-          {questions[currentQuestion - 1].options.map((option, index) => (
-            <div
-              key={index}
-              className={`${styles.opt} ${
-                selectedAnswers.includes(option) ? styles.selected : ""
-              }`}
-              draggable="true"
-              id={`drag_source_multiple_${index}`}
-              onDragStart={(e) => handleDragStart(e, option)}
-            >
-              {option}
+          {/* 放選項的槽位 */}
+          <div className={styles.targetContainer} id="answers">
+            <div className={`${styles.likerow}`}>
+              {[0, 1, 2].map((idx) => (
+                <div
+                  key={idx}
+                  className={`${styles.ans} ${styles.like} ${
+                    usedAnswers[`like${idx}`] ? styles.filled : ""
+                  }`}
+                  id={`drag_drop_container${idx}`}
+                  data-role="drag_drop_container"
+                  onDrop={(e) => handleDrop(e, `like${idx}`)}
+                  onDragOver={(e) => e.preventDefault()}
+                  onClick={() => handleRemove(`like${idx}`)}
+                >
+                  {usedAnswers[`like${idx}`]}
+                </div>
+              ))}
             </div>
-          ))}
+            <div className={`${styles.dislikerow}`}>
+              {[0, 1, 2].map((idx) => (
+                <div
+                  key={idx}
+                  className={`${styles.ans} ${styles.dislike} ${
+                    usedAnswers[`dislike${idx}`] ? styles.filled : ""
+                  }`}
+                  id={`drag_drop_container${idx + 3}`}
+                  data-role="drag_drop_container"
+                  onDrop={(e) => handleDrop(e, `dislike${idx}`)}
+                  onDragOver={(e) => e.preventDefault()}
+                  onClick={() => handleRemove(`dislike${idx}`)}
+                >
+                  {usedAnswers[`dislike${idx}`]}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 選項:可拖曳 */}
+          <div className={styles.sourceContainer} id="options">
+            {questions[currentQuestion - 1].options.map((option, index) => (
+              <div
+                key={index}
+                className={`${styles.opt} ${
+                  selectedAnswers.includes(option) ? styles.selected : ""
+                }`}
+                draggable="true"
+                id={`drag_source_multiple_${index}`}
+                onDragStart={(e) => handleDragStart(e, option)}
+              >
+                {option}
+              </div>
+            ))}
+          </div>
+
+          {/* 顯示上一題按鈕，當 currentQuestion > 1 時顯示按鈕 */}
+          {currentQuestion > 1 && (
+            <Qb
+              className={`${styles.previousbtn}`}
+              onClick={handlePreviousQuestion}
+              id="backBtn"
+            >
+              <Qs>上一題</Qs>
+            </Qb>
+          )}
+
+          {/* 顯示下一題按鈕 */}
+          {currentQuestion < questions.length && (
+            <Qb
+              className={`${styles.nextbtn} ${
+                !isFilled ? styles.disabled : ""
+              }`}
+              onClick={handleNextQuestion}
+              id="nextBtn"
+              // style={{ pointerEvents: isFilled ? "auto" : "none" }} // 禁止點擊
+            >
+              <Qs>下一題</Qs>
+            </Qb>
+          )}
+
+          {/* 顯示送出按鈕 */}
+          {currentQuestion === questions.length && (
+            <Qb
+              className={`${styles.sendoutbtn} ${
+                !isFilled ? styles.disabled : ""
+              }`}
+              onClick={handleNextQuestion}
+              // style={{ pointerEvents: isFilled ? "auto" : "none" }} // 禁止點擊
+            >
+              <Qs>送出</Qs>
+            </Qb>
+          )}
         </div>
-
-        {/* 顯示上一題按鈕，當 currentQuestion > 1 時顯示按鈕 */}
-        {currentQuestion > 1 && (
-          <Qb
-            className={`${styles.previousbtn}`}
-            onClick={handlePreviousQuestion}
-            id="backBtn"
-          >
-            <Qs>上一題</Qs>
-          </Qb>
-        )}
-
-        {/* 顯示下一題按鈕 */}
-        {currentQuestion < questions.length && (
-          <Qb
-            className={`${styles.nextbtn} ${!isFilled ? styles.disabled : ""}`}
-            onClick={handleNextQuestion}
-            id="nextBtn"
-            // style={{ pointerEvents: isFilled ? "auto" : "none" }} // 禁止點擊
-          >
-            <Qs>下一題</Qs>
-          </Qb>
-        )}
-
-        {/* 顯示送出按鈕 */}
-        {currentQuestion === questions.length && (
-          <Qb
-            className={`${styles.sendoutbtn} ${
-              !isFilled ? styles.disabled : ""
-            }`}
-            onClick={handleNextQuestion}
-            // style={{ pointerEvents: isFilled ? "auto" : "none" }} // 禁止點擊
-          >
-            <Qs>送出</Qs>
-          </Qb>
-        )}
-      </div>
       </CSSTransition>
     </Bg>
   );
