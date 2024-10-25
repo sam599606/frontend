@@ -1,0 +1,33 @@
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1; /* 確保在內容之上 */
+}
+
+.image-overlay img{
+    height: 80vh;
+}
+
+.fade-enter {
+  opacity: 0; /* 初始透明度 */
+}
+
+.fade-enter-active {
+  opacity: 1; /* 進入時的透明度 */
+  transition: opacity 500ms ease-in; /* 進入時的過渡效果 */
+}
+
+.fade-exit {
+  opacity: 1; /* 離開時的透明度 */
+}
+
+.fade-exit-active {
+  opacity: 0; /* 離開時的透明度 */
+  transition: opacity 500ms ease-out; /* 離開時的過渡效果 */
+}
