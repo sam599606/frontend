@@ -1,26 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Dialog.css";
 import axios from "axios";
-import Swal from "sweetalert2"; // 引入 SweetAlert2
+import Swal from "sweetalert2";
 import Cookies from "universal-cookie";
 
 const LoginDialog = ({ isOpen, onClose, onRegister }) => {
-  if (!isOpen) return null; // 如果未打開，則不渲染彈出視窗
-  const cookies = new Cookies();
+  if (!isOpen) return null;
 
-  //#region Enter觸發事件
+  const cookies = new Cookies();
+  let logoutTimer;
+
   const keyDown = (event) => {
-    if (event.key == "Enter") {
+    if (event.key === "Enter") {
       getQuote();
     }
   };
 
-  //#region 登入
   const getQuote = () => {
     let account = document.getElementById("account").value;
     let password = document.getElementById("password").value;
 
-    // 檢查帳號或密碼是否為空
     if (!account || !password) {
       Swal.fire({
         icon: "warning",
@@ -28,26 +27,20 @@ const LoginDialog = ({ isOpen, onClose, onRegister }) => {
         text: "請輸入帳號和密碼",
         confirmButtonColor: "#d5ad8a",
       });
-      return; // 如果欄位為空則不繼續往下執行
+      return;
     }
 
-    const memberdata = {
-      account,
-      password,
-    };
+    const memberdata = { account, password };
 
     axios({
       method: "post",
       url: "http://localhost:5262/api/User/Login",
       data: JSON.stringify(memberdata),
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-      },
+      headers: { "Content-Type": "application/json; charset=utf-8" },
     })
       .then((res) => {
         console.log("login_response:", res);
 
-        // 檢查API回傳資料是否有結果，若無結果視為查無帳號
         if (!res.data.result) {
           Swal.fire({
             icon: "error",
@@ -59,11 +52,10 @@ const LoginDialog = ({ isOpen, onClose, onRegister }) => {
         }
 
         let token = res.data.result;
-        // console.log(token);
-        cookies.set("token", token);
-        cookies.set("acc", account);
+        cookies.set("token", token, { path: "/" });
+        cookies.set("acc", account, { path: "/" });
 
-        // 登入成功，跳出彈窗告知
+        // 登入成功彈窗
         Swal.fire({
           icon: "success",
           title: "登入成功",
@@ -71,13 +63,25 @@ const LoginDialog = ({ isOpen, onClose, onRegister }) => {
           confirmButtonColor: "#d5ad8a",
         });
 
+        // 設定登出計時器為一小時
+        logoutTimer = setTimeout(() => {
+          cookies.remove("token");
+          Swal.fire({
+            icon: "info",
+            title: "已自動登出",
+            text: "由於超過登入時間，您已被自動登出。",
+            confirmButtonColor: "#d5ad8a",
+          }).then(() => {
+            window.location.reload(); // 刷新頁面或重定向
+          });
+        }, 3600 * 1000);
+
         // 模擬關閉動作
         onClose();
       })
       .catch((err) => {
         console.log(err);
 
-        // 理查無帳號的錯誤情況
         if (
           err.response &&
           err.response.data &&
@@ -91,7 +95,6 @@ const LoginDialog = ({ isOpen, onClose, onRegister }) => {
           });
         }
 
-        // 處理未進行email驗證的錯誤情況
         if (
           err.response &&
           err.response.data &&
@@ -106,6 +109,11 @@ const LoginDialog = ({ isOpen, onClose, onRegister }) => {
         }
       });
   };
+
+  // 清除計時器當組件卸載或更新時
+  useEffect(() => {
+    return () => clearTimeout(logoutTimer);
+  }, []);
 
   //#region return
   return (
