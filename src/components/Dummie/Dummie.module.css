@@ -103,6 +103,7 @@
   align-items: center;
   border: none;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .money {
@@ -121,6 +122,7 @@
   display: flex;
   flex-wrap: wrap;
   height: 50%;
+  margin-top: 10px;
 }
 
 .skill,

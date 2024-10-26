@@ -21,6 +21,7 @@ const Dummie = () => {
   const [fiveToten, setFiveToten] = useState([]);
   const [tenTofifteen, setTenTofifteen] = useState([]);
   const [fifteenUp, setFifteenUp] = useState([]);
+  const [isFirstTime, setIsFirstTime] = useState(true); // 假設用來判斷是否第一次渲染
   const navigate = useNavigate();
 
   sessionStorage.removeItem("skills");
@@ -59,6 +60,7 @@ const Dummie = () => {
   };
 
   const selectJob = (job) => {
+    console.log(job)
     setSelectedJob(job.jobs);
     let j_id = job.j_id;
     let object = { j_id };
@@ -102,6 +104,21 @@ const Dummie = () => {
       )
     );
   };
+
+  useEffect(() => {
+    // 初次渲染時執行的邏輯
+    let job = JSON.parse(localStorage.getItem('job'))
+    if (isFirstTime) {
+      if(job != null){
+        selectJob(job)
+      }
+      // 執行想要的程式碼
+      setIsFirstTime(false); // 更新狀態，防止後續渲染重複執行
+      setTimeout(() => {
+        localStorage.removeItem('job')
+      }, 10);
+    }
+  }, []); // 空依賴陣列，確保只在初次渲染執行一次
 
   const clickjob = (skill) => {
     localStorage.setItem("skill", skill);

@@ -216,7 +216,7 @@ const TestResult = () => {
         })
           .then((res) => {
             return {
-              work: res.data.result.name,
+              jobs: res.data.result.name,
               j_id: res.data.result.j_id,
               icon: "ElectronicsEngineer",
             };
@@ -236,8 +236,7 @@ const TestResult = () => {
   }, []); // 空依賴數組確保此 useEffect 只在組件首次渲染時執行一次
 
   const clickjob = (job) => {
-    console.log(job);
-    localStorage.setItem("job", job);
+    localStorage.setItem("job", JSON.stringify(job));
     navigate("/dummie");
   };
 
@@ -320,12 +319,12 @@ const TestResult = () => {
       {/* Icons */}
       <div id={styles.icons}>
         {test.map((test, index) => (
-          <div className={styles["icon-wrap"]} key={index} onClick={() => clickjob(test.j_id)}>
+          <div className={styles["icon-wrap"]} key={index} onClick={() => clickjob(test)}>
             <div className={styles.icon}>
               <img src={`/src/images/${test.icon}.png`} alt={test} />
             </div>
             <p className={styles.jobname}>
-              {test.work.replace(/([A-Z])/g, " $1")}
+              {test.jobs.replace(/([A-Z])/g, " $1")}
             </p>
           </div>
         ))}
