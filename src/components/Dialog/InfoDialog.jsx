@@ -118,8 +118,8 @@ const InfoDialog = ({ isOpen, onClose }) => {
       title: "確定要登出嗎？",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#dbc8b6",
+      cancelButtonColor: "#d5ad8a",
       confirmButtonText: "是的，登出",
       cancelButtonText: "取消",
     }).then((result) => {
@@ -133,7 +133,7 @@ const InfoDialog = ({ isOpen, onClose }) => {
           title: "已成功登出",
           icon: "success",
           confirmButtonText: "確定",
-          confirmButtonColor: "#3085d6",
+          confirmButtonColor: "#d5ad8a",
         }).then(() => {
           document.getElementById("close").click();
         });

@@ -55,6 +55,10 @@
   height: 100px;
 }
 
+.activeTag {
+  height: 100px;
+}
+
 .container {
   background-color: #f4eee2;
   width: calc(100% - 80px);
@@ -63,8 +67,6 @@
   padding: 80px 40px 0;
   position: relative;
   z-index: 1;
-  overflow: hidden;
-  /* 可能需要這個來隱藏超出內容 */
 }
 
 /* .search {

@@ -10,6 +10,9 @@ let token = cookies.get("token");
 const Dummie = () => {
   const [isOpen, setIsOpen] = useState(false); // 控制下拉選單顯示
   const [selectedJob, setSelectedJob] = useState("選擇職業"); // 預設顯示選擇職業
+  const [searchTerm, setSearchTerm] = useState(""); // 新增的搜尋關鍵字狀態
+  const [jobList, setJobList] = useState([]); // 儲存職業清單
+  const [filteredJobList, setFilteredJobList] = useState([]); // 儲存篩選後的職業清單
   const [skills, setSkills] = useState([]);
   const [licences, setLicences] = useState([]);
   const [oneDown, setOneDown] = useState([]);
@@ -29,30 +32,27 @@ const Dummie = () => {
   sessionStorage.removeItem("tenTofifteen");
   sessionStorage.removeItem("fifteenUp");
 
-  axios({
-    method: "get",
-    url: "http://localhost:5262/api/Job/JobList",
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  })
-    .then((res) => {
-      console.log("JobList:", res);
-      let jobList = [];
-      for (let i = 0; i < res.data.result.length; i++) {
-        let jobs = res.data.result[i].name;
-        let j_id = res.data.result[i].j_id;
-        jobList[i] = { jobs, j_id };
-      }
-      setTimeout(() => {
-        sessionStorage.setItem("jobList", JSON.stringify(jobList));
-      }, 20);
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "http://localhost:5262/api/Job/JobList",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
     })
-    .catch((err) => {
-      console.log(err);
-    });
-
-  let jobList = JSON.parse(sessionStorage.getItem("jobList"));
+      .then((res) => {
+        console.log("JobList:", res);
+        const jobListData = res.data.result.map((job) => ({
+          jobs: job.name,
+          j_id: job.j_id,
+        }));
+        setJobList(jobListData);
+        setFilteredJobList(jobListData); // 初始設定過濾後的職業清單
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -75,30 +75,15 @@ const Dummie = () => {
       .then((res) => {
         console.log(res);
         let fetchedSkills = res.data.result.skill.split(",");
-        sessionStorage.setItem("skills", JSON.stringify(fetchedSkills));
         let fetchedLicences = res.data.result.certificate.split(",");
-        sessionStorage.setItem("licences", JSON.stringify(fetchedLicences));
-        let fetchedOneDown = res.data.result.oneDown;
-        sessionStorage.setItem("oneDown", oneDown);
-        let fetchedOneTothree = res.data.result.oneTothree;
-        sessionStorage.setItem("oneTothree", oneTothree);
-        let fetchedThreeTofive = res.data.result.threeTofive;
-        sessionStorage.setItem("threeTofive", threeTofive);
-        let fetchedFiveToten = res.data.result.fiveToten;
-        sessionStorage.setItem("fiveToten", fiveToten);
-        let fetchedTenTofifteen = res.data.result.tenTofifteen;
-        sessionStorage.setItem("tenTofifteen", tenTofifteen);
-        let fetchedFifteenUp = res.data.result.fifteenUp;
-        sessionStorage.setItem("fifteenUp", fifteenUp);
-
         setSkills(fetchedSkills);
         setLicences(fetchedLicences);
-        setOneDown(fetchedOneDown);
-        setOneTothree(fetchedOneTothree);
-        setThreeTofive(fetchedThreeTofive);
-        setFiveToten(fetchedFiveToten);
-        setTenTofifteen(fetchedTenTofifteen);
-        setFifteenUp(fetchedFifteenUp);
+        setOneDown(res.data.result.oneDown);
+        setOneTothree(res.data.result.oneTothree);
+        setThreeTofive(res.data.result.threeTofive);
+        setFiveToten(res.data.result.fiveToten);
+        setTenTofifteen(res.data.result.tenTofifteen);
+        setFifteenUp(res.data.result.fifteenUp);
       })
       .catch((err) => {
         console.log(err);
@@ -106,26 +91,17 @@ const Dummie = () => {
     setIsOpen(false); // 選擇後關閉下拉菜單
   };
 
-  useEffect(() => {
-    const storedSkills = JSON.parse(sessionStorage.getItem("skills"));
-    const storedLicences = JSON.parse(sessionStorage.getItem("licences"));
-    const storedOneDown = sessionStorage.getItem("oneDown");
-    const storedOneTothree = sessionStorage.getItem("oneTothree");
-    const storedThreeTofive = sessionStorage.getItem("threeTofive");
-    const storedFiveToten = sessionStorage.getItem("fiveToten");
-    const storedTenTofifteen = sessionStorage.getItem("tenTofifteen");
-    const storedFifteenUp = sessionStorage.getItem("fifteenUp");
-    if (storedSkills) {
-      setSkills(storedSkills); // 设置 state，从而触发重新渲染
-      setLicences(storedLicences);
-      setOneDown(storedOneDown);
-      setOneTothree(storedOneTothree);
-      setThreeTofive(storedThreeTofive);
-      setFiveToten(storedFiveToten);
-      setTenTofifteen(storedTenTofifteen);
-      setFifteenUp(storedFifteenUp);
-    }
-  }, []);
+  // 處理搜尋輸入框的變更事件
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+    // 根據搜尋字詞過濾職業清單
+    setFilteredJobList(
+      jobList.filter((job) =>
+        job.jobs.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  };
 
   const clickjob = (skill) => {
     localStorage.setItem("skill", skill);
@@ -159,17 +135,26 @@ const Dummie = () => {
             {selectedJob}
           </button>
           {isOpen && (
-            <ul className={styles.dropdownMenu}>
-              {jobList.map((job, index) => (
-                <li
-                  key={index}
-                  onClick={() => selectJob(job)}
-                  className={styles.dropdownItem}
-                >
-                  {job.jobs}
-                </li>
-              ))}
-            </ul>
+            <div className={styles.dropdownContent}>
+              <input
+                type="text"
+                placeholder="搜尋職業"
+                value={searchTerm}
+                onChange={handleSearch}
+                className={styles.searchInput}
+              />
+              <ul className={styles.dropdownMenu}>
+                {filteredJobList.map((job, index) => (
+                  <li
+                    key={index}
+                    onClick={() => selectJob(job)}
+                    className={styles.dropdownItem}
+                  >
+                    {job.jobs}
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
         </div>
 
@@ -207,7 +192,6 @@ const Dummie = () => {
         <div className={styles.requirement}>
           <div className={styles.title}>技能與執照</div>
           <div className={styles.content}>
-            {/* 技能區塊 */}
             <div className={styles.skill}>
               <p>技能</p>
               <div className={styles.links}>
@@ -222,8 +206,6 @@ const Dummie = () => {
                 ))}
               </div>
             </div>
-
-            {/* 證照區塊 */}
             <div className={styles.licence}>
               <p>證照</p>
               <div className={styles.links}>
