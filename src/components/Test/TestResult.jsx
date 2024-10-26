@@ -3,6 +3,7 @@ import ReactECharts from "echarts-for-react";
 import styles from "./TestResult.module.css";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import { useNavigate } from "react-router-dom";
 
 const cookies = new Cookies();
 let token = cookies.get("token");
@@ -12,6 +13,7 @@ const TestResult = () => {
   const [isHollandFlipped, setIsHollandFlipped] = useState(false);
   const [isMbtiFlipped, setIsMbtiFlipped] = useState(false);
   const [test, setTest] = useState([]); // 保存工作資料的狀態
+  const navigate = useNavigate();
 
   let data = localStorage.getItem("ua_data");
   let ua_data = JSON.parse(data);
@@ -232,6 +234,12 @@ const TestResult = () => {
     });
   }, []); // 空依賴數組確保此 useEffect 只在組件首次渲染時執行一次
 
+  const clickjob = (job) => {
+    console.log(job);
+    localStorage.setItem("job", job);
+    navigate("/dummie");
+  };
+
   //#region return
   return (
     <div className={styles.result}>
@@ -311,7 +319,7 @@ const TestResult = () => {
       {/* Icons */}
       <div id={styles.icons}>
         {test.map((test, index) => (
-          <div className={styles["icon-wrap"]} key={index}>
+          <div className={styles["icon-wrap"]} key={index} onClick={() => clickjob(test.work.replace(/([A-Z])/g, " $1"))}>
             <div className={styles.icon}>
               <img src={`/src/images/${test.icon}.png`} alt={test} />
             </div>

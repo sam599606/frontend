@@ -190,6 +190,7 @@
   flex-direction: column;
   align-items: center;
   margin-right: 180px;
+  cursor: pointer;
 }
 
 .icon-wrap:last-of-type {
