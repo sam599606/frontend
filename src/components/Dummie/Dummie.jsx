@@ -19,7 +19,16 @@ const Dummie = () => {
   const [tenTofifteen, setTenTofifteen] = useState([]);
   const [fifteenUp, setFifteenUp] = useState([]);
   const navigate = useNavigate();
-  
+
+  sessionStorage.removeItem("skills");
+  sessionStorage.removeItem("licences");
+  sessionStorage.removeItem("oneDown");
+  sessionStorage.removeItem("oneTothree");
+  sessionStorage.removeItem("threeTofive");
+  sessionStorage.removeItem("fiveToten");
+  sessionStorage.removeItem("tenTofifteen");
+  sessionStorage.removeItem("fifteenUp");
+
   axios({
     method: "get",
     url: "http://localhost:5262/api/Job/JobList",
@@ -64,31 +73,31 @@ const Dummie = () => {
     })
       .then((res) => {
         console.log(res);
-        let fetchedSkills = res.data.result.skill.split(',')
-        sessionStorage.setItem('skills', JSON.stringify(fetchedSkills))
-        let fetchedLicences = res.data.result.certificate.split(',')
-        sessionStorage.setItem('licences', JSON.stringify(fetchedLicences))
-        let fetchedOneDown = res.data.result.oneDown
-        sessionStorage.setItem('oneDown', oneDown)
-        let fetchedOneTothree = res.data.result.oneTothree
-        sessionStorage.setItem('oneTothree', oneTothree)
-        let fetchedThreeTofive = res.data.result.threeTofive
-        sessionStorage.setItem('threeTofive', threeTofive)
-        let fetchedFiveToten = res.data.result.fiveToten
-        sessionStorage.setItem('fiveToten', fiveToten)
-        let fetchedTenTofifteen = res.data.result.tenTofifteen
-        sessionStorage.setItem('tenTofifteen', tenTofifteen)
-        let fetchedFifteenUp = res.data.result.fifteenUp
-        sessionStorage.setItem('fifteenUp', fifteenUp)
+        let fetchedSkills = res.data.result.skill.split(",");
+        sessionStorage.setItem("skills", JSON.stringify(fetchedSkills));
+        let fetchedLicences = res.data.result.certificate.split(",");
+        sessionStorage.setItem("licences", JSON.stringify(fetchedLicences));
+        let fetchedOneDown = res.data.result.oneDown;
+        sessionStorage.setItem("oneDown", oneDown);
+        let fetchedOneTothree = res.data.result.oneTothree;
+        sessionStorage.setItem("oneTothree", oneTothree);
+        let fetchedThreeTofive = res.data.result.threeTofive;
+        sessionStorage.setItem("threeTofive", threeTofive);
+        let fetchedFiveToten = res.data.result.fiveToten;
+        sessionStorage.setItem("fiveToten", fiveToten);
+        let fetchedTenTofifteen = res.data.result.tenTofifteen;
+        sessionStorage.setItem("tenTofifteen", tenTofifteen);
+        let fetchedFifteenUp = res.data.result.fifteenUp;
+        sessionStorage.setItem("fifteenUp", fifteenUp);
 
         setSkills(fetchedSkills);
-        setLicences(fetchedLicences)
-        setOneDown(fetchedOneDown)
-        setOneTothree(fetchedOneTothree)
-        setThreeTofive(fetchedThreeTofive)
-        setFiveToten(fetchedFiveToten)
-        setTenTofifteen(fetchedTenTofifteen)
-        setFifteenUp(fetchedFifteenUp)
+        setLicences(fetchedLicences);
+        setOneDown(fetchedOneDown);
+        setOneTothree(fetchedOneTothree);
+        setThreeTofive(fetchedThreeTofive);
+        setFiveToten(fetchedFiveToten);
+        setTenTofifteen(fetchedTenTofifteen);
+        setFifteenUp(fetchedFifteenUp);
       })
       .catch((err) => {
         console.log(err);
@@ -99,33 +108,33 @@ const Dummie = () => {
   useEffect(() => {
     const storedSkills = JSON.parse(sessionStorage.getItem("skills"));
     const storedLicences = JSON.parse(sessionStorage.getItem("licences"));
-    const storedOneDown = sessionStorage.getItem('oneDown')
-    const storedOneTothree = sessionStorage.getItem('oneTothree')
-    const storedThreeTofive = sessionStorage.getItem('threeTofive')
-    const storedFiveToten = sessionStorage.getItem('fiveToten')
-    const storedTenTofifteen = sessionStorage.getItem('tenTofifteen')
-    const storedFifteenUp = sessionStorage.getItem('fifteenUp')
+    const storedOneDown = sessionStorage.getItem("oneDown");
+    const storedOneTothree = sessionStorage.getItem("oneTothree");
+    const storedThreeTofive = sessionStorage.getItem("threeTofive");
+    const storedFiveToten = sessionStorage.getItem("fiveToten");
+    const storedTenTofifteen = sessionStorage.getItem("tenTofifteen");
+    const storedFifteenUp = sessionStorage.getItem("fifteenUp");
     if (storedSkills) {
       setSkills(storedSkills); // 设置 state，从而触发重新渲染
       setLicences(storedLicences);
-      setOneDown(storedOneDown)
-      setOneTothree(storedOneTothree)
-      setThreeTofive(storedThreeTofive)
-      setFiveToten(storedFiveToten)
-      setTenTofifteen(storedTenTofifteen)
-      setFifteenUp(storedFifteenUp)
+      setOneDown(storedOneDown);
+      setOneTothree(storedOneTothree);
+      setThreeTofive(storedThreeTofive);
+      setFiveToten(storedFiveToten);
+      setTenTofifteen(storedTenTofifteen);
+      setFifteenUp(storedFifteenUp);
     }
   }, []);
 
   const clickjob = (skill) => {
     console.log(skill);
-    localStorage.setItem('skill', skill)
+    localStorage.setItem("skill", skill);
     navigate("/dummie/class");
   };
 
   const clickcerti = (licence) => {
     console.log(licence);
-    localStorage.setItem('licence', licence)
+    localStorage.setItem("licence", licence);
     navigate("/dummie/certificate");
   };
 
@@ -208,9 +217,13 @@ const Dummie = () => {
               <p>技能</p>
               <div className={styles.links}>
                 {skills.map((skill, index) => (
-                  <button key={index} className={styles.link}  onClick={() => clickjob(skill)}>
-                  {skill}
-                </button>
+                  <button
+                    key={index}
+                    className={styles.link}
+                    onClick={() => clickjob(skill)}
+                  >
+                    {skill}
+                  </button>
                 ))}
               </div>
             </div>
@@ -220,7 +233,11 @@ const Dummie = () => {
               <p>證照</p>
               <div className={styles.links}>
                 {licences.map((licence, index) => (
-                  <button key={index} className={styles.link}  onClick={() => clickcerti(licence)}>
+                  <button
+                    key={index}
+                    className={styles.link}
+                    onClick={() => clickcerti(licence)}
+                  >
                     {licence}
                   </button>
                 ))}
