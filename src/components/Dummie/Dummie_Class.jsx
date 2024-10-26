@@ -11,6 +11,7 @@ const Dummie_Class = () => {
   const [searchQuery, setSearchQuery] = useState(""); // 用來儲存按下搜尋按鈕後的搜尋條件
   const itemsPerPage = 10;
   const cookies = new Cookies();
+  const [searchValue, setSearchValue] = useState('');
 
   // 引用 contentContainer 來抓取內容區塊
   const contentContainerRef = useRef(null);
@@ -68,6 +69,19 @@ const Dummie_Class = () => {
     }
   };
 
+  
+  useEffect(() => {
+    // 從 localStorage 取得預設搜尋值
+    let skill = localStorage.getItem('skill')
+    if (skill) {
+      setSearchTerm(skill); // 設定為 searchTerm 初始值
+      setTimeout(() => {
+        localStorage.removeItem('skill')
+        handleSearch()
+      }, 20);
+    }
+  }, []);
+
   return (
     <Dummie_more_Layout
       totalItems={filteredCourses.length}
@@ -84,13 +98,14 @@ const Dummie_Class = () => {
           <input
             type="search"
             placeholder="搜尋"
+            id="search"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)} // 更新搜尋關鍵字
             onKeyDown={handleKeyDown} // 監聽 Enter 鍵事件
           />
-          <a href="#" className={styles.searchbtn} onClick={handleSearch}>
+          <button className={styles.searchbtn} onClick={handleSearch} id="searchBtn">
             <img src="../src/images/search.png" alt="搜尋按鈕" />
-          </a>
+          </button>
         </div>
       </div>
 

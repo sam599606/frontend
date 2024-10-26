@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Dummie.module.css";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import { useNavigate } from "react-router-dom";
 
 const cookies = new Cookies();
 let token = cookies.get("token");
@@ -17,6 +18,7 @@ const Dummie = () => {
   const [fiveToten, setFiveToten] = useState([]);
   const [tenTofifteen, setTenTofifteen] = useState([]);
   const [fifteenUp, setFifteenUp] = useState([]);
+  const navigate = useNavigate();
   
   axios({
     method: "get",
@@ -115,6 +117,18 @@ const Dummie = () => {
     }
   }, []);
 
+  const clickjob = (skill) => {
+    console.log(skill);
+    localStorage.setItem('skill', skill)
+    navigate("/dummie/class");
+  };
+
+  const clickcerti = (licence) => {
+    console.log(licence);
+    localStorage.setItem('licence', licence)
+    navigate("/dummie/certificate");
+  };
+
   return (
     <div className={styles.wrap}>
       <div className={styles.word_cloud_area}>
@@ -194,9 +208,9 @@ const Dummie = () => {
               <p>技能</p>
               <div className={styles.links}>
                 {skills.map((skill, index) => (
-                  <a key={index} href="">
-                    <div className={styles.link}>{skill}</div>
-                  </a>
+                  <button key={index} className={styles.link}  onClick={() => clickjob(skill)}>
+                  {skill}
+                </button>
                 ))}
               </div>
             </div>
@@ -206,9 +220,9 @@ const Dummie = () => {
               <p>證照</p>
               <div className={styles.links}>
                 {licences.map((licence, index) => (
-                  <a key={index} href="">
-                    <div className={styles.link}>{licence}</div>
-                  </a>
+                  <button key={index} className={styles.link}  onClick={() => clickcerti(licence)}>
+                    {licence}
+                  </button>
                 ))}
               </div>
             </div>

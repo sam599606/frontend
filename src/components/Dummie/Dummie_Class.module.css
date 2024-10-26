@@ -98,6 +98,8 @@
 
 .searchbtn {
   margin-left: 8px;
+  border: none;
+  cursor: pointer;
 }
 
 .searchbtn img {

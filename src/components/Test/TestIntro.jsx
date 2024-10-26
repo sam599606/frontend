@@ -90,7 +90,7 @@ const TestIntro = () => {
                   localStorage.setItem("bgImgList", JSON.stringify(bgImgList));
                   localStorage.setItem("animateImgList", JSON.stringify(animateImgList));
                 }
-              }, 20);
+              }, 100);
             })
             .catch((err) => {
               console.log(err);
@@ -100,7 +100,7 @@ const TestIntro = () => {
       .then(() => {
         setTimeout(() => {
           navigate("/test-testing");
-        }, 200);
+        }, 300);
         console.log();
       })
       .catch((err) => {

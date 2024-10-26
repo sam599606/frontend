@@ -583,7 +583,7 @@ const TestTesting = () => {
   
 
   console.log(currentQuestion)
-  console.log(animateImgSrc)
+  console.log(test)
   //#region return
   return (
     <Bg>
