@@ -61,6 +61,18 @@ const Dummie_Certificate = () => {
     }
   };
 
+  useEffect(() => {
+    // 從 localStorage 取得預設搜尋值
+    let licence = localStorage.getItem('licence')
+    if (licence) {
+      setSearchTerm(licence); // 設定為 searchTerm 初始值
+      setTimeout(() => {
+        localStorage.removeItem('licence')
+        handleSearch();
+      }, 20);
+    }
+  }, []);
+
   // 計算當前頁的資料
   const currentCertificates = filteredCertificates.slice(
     (currentPage - 1) * itemsPerPage,
@@ -81,16 +93,17 @@ const Dummie_Certificate = () => {
 
       {/* 搜尋欄 */}
       <div className={styles.search}>
-        <input
-          type="search"
-          placeholder="搜尋"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)} // 更新輸入值
-          onKeyDown={handleKeyDown} // 監聽 Enter 鍵事件
-        />
-        <a href="#" className={styles.searchbtn} onClick={handleSearch}>
-          <img src="../src/images/search.png" alt="搜尋按鈕" />
-        </a>
+      <input
+            type="search"
+            placeholder="搜尋"
+            id="search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)} // 更新搜尋關鍵字
+            onKeyDown={handleKeyDown} // 監聽 Enter 鍵事件
+          />
+        <button className={styles.searchbtn} onClick={handleSearch} id="searchBtn">
+            <img src="../src/images/search.png" alt="搜尋按鈕" />
+          </button>
       </div>
 
       {/* 顯示搜尋結果 */}
