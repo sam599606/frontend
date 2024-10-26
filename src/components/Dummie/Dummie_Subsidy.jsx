@@ -6,61 +6,50 @@ import Cookies from "universal-cookie";
 
 const Dummie_Subsidy = () => {
   const [allSubsidies, setAllSubsidies] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // 搜尋欄的輸入
-  const [filteredSubsidies, setFilteredSubsidies] = useState([]); // 儲存過濾後的資料
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredSubsidies, setFilteredSubsidies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const cookies = new Cookies();
-
-  let token = cookies.get("token");
-  // 引用 contentContainer 來抓取內容區塊
   const contentContainerRef = useRef(null);
 
+  let token = cookies.get("token");
+
   useEffect(() => {
-    // 取得補助資料的 API
     axios({
       method: "get",
       url: "http://localhost:5262/api/Job/SubsidyList",
       headers: {
-        Authorization: `Bearer ${token}`, // Bearer 跟 token 中間有一個空格
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
         console.log("SubsidyList:", res.data.result);
-        setAllSubsidies(res.data.result); // 設定補助資料
-        setFilteredSubsidies(res.data.result); // 預設顯示全部資料
+        setAllSubsidies(res.data.result);
+        setFilteredSubsidies(res.data.result);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  // 當 currentPage 改變時滾動到 Content 區塊頂部
   useEffect(() => {
     if (contentContainerRef.current) {
       contentContainerRef.current.scrollIntoView();
     }
   }, [currentPage]);
 
-  // 處理搜尋功能
-  const handleSearch = () => {
+  // 自動更新搜尋結果
+  useEffect(() => {
     const filtered = allSubsidies.filter(
       (subsidy) =>
-        subsidy.name.toLowerCase().includes(searchTerm.toLowerCase()) || // 比對補助名稱
-        String(subsidy.money).includes(searchTerm) // 比對補助金額
+        subsidy.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        String(subsidy.money).includes(searchTerm)
     );
     setFilteredSubsidies(filtered);
-    setCurrentPage(1); // 搜尋後回到第一頁
-  };
+    setCurrentPage(1);
+  }, [searchTerm]);
 
-  // 處理按下 Enter 鍵的事件
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      handleSearch();
-    }
-  };
-
-  // 計算當前頁的資料
   const currentSubsidies = filteredSubsidies.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
@@ -73,26 +62,19 @@ const Dummie_Subsidy = () => {
       currentPage={currentPage}
       setCurrentPage={setCurrentPage}
     >
-      {/* 左上角顯示搜尋到的資料筆數 */}
       <div className={styles.searchnum}>
         <p>已搜尋到 {filteredSubsidies.length} 筆資料</p>
       </div>
 
-      {/* 搜尋欄 */}
       <div className={styles.search}>
         <input
           type="search"
           placeholder="搜尋"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)} // 更新輸入值
-          onKeyDown={handleKeyDown} // 監聽 Enter 鍵事件
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <a href="#" className={styles.searchbtn} onClick={handleSearch}>
-          <img src="../src/images/search.png" alt="搜尋按鈕" />
-        </a>
       </div>
 
-      {/* 內容區塊，加入引用以便滾動 */}
       <div ref={contentContainerRef}>
         {currentSubsidies.length > 0 ? (
           currentSubsidies.map((subsidy) => (
@@ -104,22 +86,20 @@ const Dummie_Subsidy = () => {
           ))
         ) : (
           <div className={styles.notfound}>
-            <p>找不到符合條件的課程</p>
+            <p>找不到符合條件的補助</p>
           </div>
         )}
-        {}
       </div>
     </Dummie_more_Layout>
   );
 };
 
-// Content 組件負責顯示補助資訊
 const Content = ({ name, money }) => {
   return (
     <div className={styles.content}>
       <div className={styles.title}>{name}</div>
       <div className={styles.duration}>
-        <img src="../src/images/money.png" alt="時鐘" />
+        <img src="../src/images/money.png" alt="金額圖標" />
         <p>補助金額：{money} 元</p>
       </div>
     </div>
