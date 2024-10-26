@@ -197,10 +197,7 @@ const TestResult = () => {
 
   //#region Job結果
    useEffect(() => {
-    let test_result
-    if(test_result != null){
-      test_result = ua_data.test_Result.split(",");
-    }
+    let test_result = ua_data.test_Result.split(",");
     let promises = [];
 
     for (let i = 0; i < test_result.length; i++) {
