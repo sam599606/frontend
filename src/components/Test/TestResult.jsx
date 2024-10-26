@@ -197,36 +197,38 @@ const TestResult = () => {
 
   //#region Job結果
    useEffect(() => {
-    let test_result = ua_data.test_Result.split(",");
-    let promises = [];
-
-    for (let i = 0; i < test_result.length; i++) {
-      let j_id = test_result[i];
-      let object = { j_id };
-
-      promises.push(
-        axios({
-          method: "post",
-          url: "http://localhost:5262/api/Job/GetJob",
-          data: JSON.stringify(object),
-          headers: {
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/json; charset=utf-8",
-          },
-        })
-          .then((res) => {
-            return {
-              jobs: res.data.result.name,
-              j_id: res.data.result.j_id,
-              icon: "ElectronicsEngineer",
-            };
+    let test_result
+    if(test_result != null){
+      test_result = ua_data.test_Result.split(",");
+      for (let i = 0; i < test_result.length; i++) {
+        let j_id = test_result[i];
+        let object = { j_id };
+  
+        promises.push(
+          axios({
+            method: "post",
+            url: "http://localhost:5262/api/Job/GetJob",
+            data: JSON.stringify(object),
+            headers: {
+              Authorization: "Bearer " + token,
+              "Content-Type": "application/json; charset=utf-8",
+            },
           })
-          .catch((err) => {
-            console.log(err);
-            return null; // 處理錯誤，返回 null 作為佔位
-          })
-      );
+            .then((res) => {
+              return {
+                jobs: res.data.result.name,
+                j_id: res.data.result.j_id,
+                icon: "ElectronicsEngineer",
+              };
+            })
+            .catch((err) => {
+              console.log(err);
+              return null; // 處理錯誤，返回 null 作為佔位
+            })
+        );
+      }
     }
+    let promises = [];    
 
     // 等待所有的請求完成
     Promise.all(promises).then((results) => {
