@@ -86,9 +86,9 @@ const Dummie_Class = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)} // 搜尋欄位變更即更新搜尋條件
           />
-          <button className={styles.searchbtn} id="searchBtn">
+          {/* <button className={styles.searchbtn} id="searchBtn">
             <img src="../src/images/search.png" alt="搜尋按鈕" />
-          </button>
+          </button> */}
         </div>
       </div>
 
