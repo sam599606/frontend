@@ -581,10 +581,6 @@ const TestTesting = () => {
     }
   }, [value]);
 
-  
-
-  console.log(currentQuestion)
-  console.log(test)
   //#region return
   return (
     <Bg>

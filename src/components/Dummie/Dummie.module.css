@@ -14,9 +14,10 @@
 
 .word_cloud_area {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 100%;
+  justify-content: center;
+  height: 90%;
   width: 60%;
   /* background-color: rgb(0, 119, 255); */
 }
@@ -33,14 +34,7 @@
 }
 
 .word_cloud_area img {
-  width: 100%;
-  height: auto;
-}
-
-.word_cloud {
-  background-color: #ffb144;
-  height: 100%;
-  width: 100%;
+  width: 70%;
 }
 
 .job_dropdown {
@@ -74,7 +68,6 @@
   width: 100%;
   height: 85%;
   display: flex;
-
 }
 
 .requirement .content {
@@ -110,6 +103,18 @@
   align-items: center;
   border: none;
   cursor: pointer;
+}
+
+.money {
+  background-color: #ffb144;
+  color: #fff;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
 }
 
 .links {
@@ -179,4 +184,14 @@
 .dropdownItem:hover {
   background-color: #ffc146;
   color: white;
+}
+
+.up {
+  display: flex;
+}
+
+.down {
+  display: flex;
+  justify-content: end;
+  margin-top: 20px;
 }

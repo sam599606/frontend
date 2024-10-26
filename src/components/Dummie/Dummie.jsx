@@ -37,7 +37,7 @@ const Dummie = () => {
     },
   })
     .then((res) => {
-      console.log("JobList:", res)
+      console.log("JobList:", res);
       let jobList = [];
       for (let i = 0; i < res.data.result.length; i++) {
         let jobs = res.data.result[i].name;
@@ -128,13 +128,11 @@ const Dummie = () => {
   }, []);
 
   const clickjob = (skill) => {
-    console.log(skill);
     localStorage.setItem("skill", skill);
     navigate("/dummie/class");
   };
 
   const clickcerti = (licence) => {
-    console.log(licence);
     localStorage.setItem("licence", licence);
     navigate("/dummie/certificate");
   };
@@ -142,10 +140,18 @@ const Dummie = () => {
   return (
     <div className={styles.wrap}>
       <div className={styles.word_cloud_area}>
-        <img
-          src="../src/images/word_cloud/WC_test.png"
-          className={styles.word_cloud}
-        />
+        <div className={styles.up}>
+          <img
+            src="../src/images/word_cloud/messageImage_1729957292696.jpg"
+            className={styles.word_cloud}
+          />
+        </div>
+        <div className={styles.down}>
+          <img
+            src="../src/images/word_cloud/messageImage_1729957271867.jpg"
+            className={styles.word_cloud}
+          />
+        </div>
       </div>
       <div className={styles.rightarea}>
         <div className={styles.job_dropdown}>
@@ -177,15 +183,9 @@ const Dummie = () => {
                 <div className={styles.seniority}>3 ~ 5年</div>
               </div>
               <div className={styles.salarycolumn}>
-                <a href="">
-                  <div className={styles.link}>{oneDown}</div>
-                </a>
-                <a href="">
-                  <div className={styles.link}>{oneTothree}</div>
-                </a>
-                <a href="">
-                  <div className={styles.link}>{threeTofive}</div>
-                </a>
+                <div className={styles.money}>{oneDown}</div>
+                <div className={styles.money}>{oneTothree}</div>
+                <div className={styles.money}>{threeTofive}</div>
               </div>
             </div>
 
@@ -196,15 +196,9 @@ const Dummie = () => {
                 <div className={styles.seniority}>15年以上</div>
               </div>
               <div className={styles.salarycolumn}>
-                <a href="">
-                  <div className={styles.link}>{fiveToten}</div>
-                </a>
-                <a href="">
-                  <div className={styles.link}>{tenTofifteen}</div>
-                </a>
-                <a href="">
-                  <div className={styles.link}>{fifteenUp}</div>
-                </a>
+                <div className={styles.money}>{fiveToten}</div>
+                <div className={styles.money}>{tenTofifteen}</div>
+                <div className={styles.money}>{fifteenUp}</div>
               </div>
             </div>
           </div>
