@@ -114,9 +114,9 @@ const TestIntro = () => {
       <div className={styles.intro}>
         <h2>測驗說明</h2>
         <p>
-          測驗一共20題，時間為50分鐘，
+          測驗一共15題，
           <br />
-          在規定時間內，將題目完成，在按下送出，即為成功。
+          將題目完成，再按下送出，即為成功。
         </p>
       </div>
       <div className={styles.intro}>

@@ -37,6 +37,7 @@ const Dummie = () => {
     },
   })
     .then((res) => {
+      console.log("JobList:", res)
       let jobList = [];
       for (let i = 0; i < res.data.result.length; i++) {
         let jobs = res.data.result[i].name;

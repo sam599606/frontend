@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import ReactECharts from "echarts-for-react";
 import styles from "./TestResult.module.css";
+import axios from "axios";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
+let token = cookies.get("token");
 
 const TestResult = () => {
   // 用於保存翻轉狀態
   const [isHollandFlipped, setIsHollandFlipped] = useState(false);
   const [isMbtiFlipped, setIsMbtiFlipped] = useState(false);
+  const [test, setTest] = useState([]); // 保存工作資料的狀態
 
   let data = localStorage.getItem("ua_data");
   let ua_data = JSON.parse(data);
-
   console.log("ua_data:", ua_data);
 
   //#region HOLLAND雷達圖
@@ -79,6 +84,7 @@ const TestResult = () => {
     };
   };
 
+  //#region MBTI圖
   const getMbtiBarOption = () => {
     const data = [
       {
@@ -187,28 +193,44 @@ const TestResult = () => {
     };
   };
 
-  let test = [
-    {
-      work: "電子工程師",
-      icon: "ElectronicsEngineer",
-    },
-    {
-      work: "機械工程師",
-      icon: "MechanicalEngineer",
-    },
-    {
-      work: "設計工程師",
-      icon: "DesignEngineer",
-    },
-    {
-      work: "通訊工程師",
-      icon: "CommunicationsEngineer",
-    },
-    {
-      work: "系統工程師",
-      icon: "SystemEngineer",
-    },
-  ];
+  //#region Job結果
+   useEffect(() => {
+    let test_result = ua_data.test_Result.split(",");
+    let promises = [];
+
+    for (let i = 0; i < test_result.length; i++) {
+      let j_id = test_result[i];
+      let object = { j_id };
+
+      promises.push(
+        axios({
+          method: "post",
+          url: "http://localhost:5262/api/Job/GetJob",
+          data: JSON.stringify(object),
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json; charset=utf-8",
+          },
+        })
+          .then((res) => {
+            return {
+              work: res.data.result.name,
+              icon: "ElectronicsEngineer",
+            };
+          })
+          .catch((err) => {
+            console.log(err);
+            return null; // 處理錯誤，返回 null 作為佔位
+          })
+      );
+    }
+
+    // 等待所有的請求完成
+    Promise.all(promises).then((results) => {
+      const dataArray = results.filter((item) => item !== null);
+      setTest(dataArray); // 更新 test 狀態以觸發重新渲染
+    });
+  }, []); // 空依賴數組確保此 useEffect 只在組件首次渲染時執行一次
 
   //#region return
   return (

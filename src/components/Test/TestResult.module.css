@@ -179,26 +179,33 @@
   height: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 .icon-wrap {
   color: #a99479;
-  width: 10%;
+  width: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-right: 180px;
+}
+
+.icon-wrap:last-of-type {
+  margin-right: 0; /* 修改最後一個元素的 margin-right */
 }
 
 .icon-wrap p {
   display: flex;
   align-items: center;
   text-align: center;
+  margin-top: 10px;
 }
 
 .icon {
   background-color: #f6cf80;
-  width: 100%;
+  width: 100px;
   aspect-ratio: 1/1;
   border-radius: 50%;
   display: flex;
