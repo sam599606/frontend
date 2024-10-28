@@ -55,7 +55,7 @@ input[type="search"] {
 .date {
   background-color: #ffe785;
   color: #fdfecb;
-  font-size: 32px;
+  font-size: 40px;
   width: 50%;
   height: 80px;
   border-radius: 50px;
@@ -73,7 +73,7 @@ input[type="search"] {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 canvas {
@@ -129,4 +129,10 @@ canvas {
 
 .icon img {
   height: 100%;
+}
+
+.indicators button {
+  background: none;
+  border: none;
+  cursor: pointer;
 }
