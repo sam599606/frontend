@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import ReactECharts from "echarts-for-react";
 import styles from "./TestResult.module.css";
 import axios from "axios";
@@ -196,7 +196,7 @@ const TestResult = () => {
   };
 
   //#region Job結果
-   useEffect(() => {
+  useEffect(() => {
     let test_result = ua_data.test_Result.split(",");
     let promises = [];
 
@@ -251,6 +251,9 @@ const TestResult = () => {
           }`}
         >
           <div className={styles.title}>HOLLAND</div>
+          <div className={styles.test_result}>
+            測驗結果：{ua_data.hoL_Result}
+          </div>
           <div className={styles.content}>
             <div className={styles.front}>
               <ReactECharts
@@ -279,24 +282,29 @@ const TestResult = () => {
           className={`${styles.mbti} ${isMbtiFlipped ? styles.flipped : ""}`}
         >
           <div className={styles.title}>MBTI</div>
+          <div className={styles.test_result}>
+            測驗結果：{ua_data.mbtI_Result}
+          </div>
           <div className={styles.content}>
             <div id={styles["type-name"]}></div>
             <div className={styles.front}>
-              <div className={styles.leftcontent}>
-                <p>E 外向</p>
-                <p>N 直覺</p>
-                <p>F 感性</p>
-                <p>P 彈性</p>
-              </div>
-              <ReactECharts
-                option={getMbtiBarOption()} // 使用條形圖的配置
-                className={styles.mbtiBarChart} // 新增樣式類別來控制圖表大小
-              />
-              <div className={styles.rightcontent}>
-                <p>I 內向</p>
-                <p>S 實感</p>
-                <p>T 理性</p>
-                <p>J 調理</p>
+              <div className={styles.mbtichartcontent}>
+                <div className={styles.leftcontent}>
+                  <p>E 外向</p>
+                  <p>N 直覺</p>
+                  <p>F 感性</p>
+                  <p>P 彈性</p>
+                </div>
+                <ReactECharts
+                  option={getMbtiBarOption()} // 使用條形圖的配置
+                  className={styles.mbtiBarChart} // 新增樣式類別來控制圖表大小
+                />
+                <div className={styles.rightcontent}>
+                  <p>I 內向</p>
+                  <p>S 實感</p>
+                  <p>T 理性</p>
+                  <p>J 調理</p>
+                </div>
               </div>
             </div>
             <div className={styles.back}>
@@ -319,7 +327,11 @@ const TestResult = () => {
       {/* Icons */}
       <div id={styles.icons}>
         {test.map((test, index) => (
-          <div className={styles["icon-wrap"]} key={index} onClick={() => clickjob(test)}>
+          <div
+            className={styles["icon-wrap"]}
+            key={index}
+            onClick={() => clickjob(test)}
+          >
             <div className={styles.icon}>
               <img src={`/src/images/${test.icon}.png`} alt={test} />
             </div>

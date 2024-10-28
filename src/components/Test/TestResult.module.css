@@ -7,7 +7,7 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 .result::-webkit-scrollbar {
@@ -67,6 +67,23 @@
   -webkit-text-stroke: 3px #745329;
 }
 
+.test_result {
+  /* background-color: #ffe785; */
+  color: #745329;
+  font-size: 30px;
+  width: 50%;
+  height: 15%;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 25%;
+  top: 12.5%;
+  z-index: 1;
+  /* -webkit-text-stroke: 3px #745329; */
+}
+
 .content {
   background-color: #f4eee2;
   width: 100%;
@@ -91,7 +108,6 @@
 
 .hollandecharts {
   width: 100%;
-  height: 300px;
 }
 
 
@@ -118,6 +134,15 @@
   left: 0;
   transition: all 0.6s;
   gap: 10px;
+  /*  background-color: black; */
+}
+
+.front {
+  display: flex;
+  align-items: flex-end;
+  /* background-color: black; */
+  width: 100%;
+  height: 100%;
 }
 
 .back {
@@ -126,6 +151,14 @@
   font-size: 28px;
   padding-left: 40px;
   height: 100%;
+}
+
+.mbtichartcontent {
+  /* border: 2px white solid; */
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 80%;
 }
 
 #sort {
@@ -178,7 +211,7 @@
   width: 80%;
   height: 100%;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: ; */
   overflow-x: scroll;
   overflow-y: hidden;
 }
@@ -189,12 +222,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 180px;
+  margin-right: 150px;
   cursor: pointer;
 }
 
 .icon-wrap:last-of-type {
-  margin-right: 0; /* 修改最後一個元素的 margin-right */
+  margin-right: 0;
+  /* 修改最後一個元素的 margin-right */
 }
 
 .icon-wrap p {
@@ -220,7 +254,7 @@
 }
 
 .flipbtn {
-  width: 100px;
+  width: 120px;
   margin-top: 10px;
   background-color: #ffb144;
   color: #fff;
@@ -229,8 +263,9 @@
   border-radius: 10px;
   cursor: pointer;
   position: relative;
-  top: 40%;
+  top: -40%;
   left: 40%;
+  font-size: 18px;
 }
 
 .flipbtn:hover {
@@ -244,21 +279,23 @@
 }
 
 .mbtiBarChart {
-  width: 60%;
+  width: 70%;
   height: 100%;
 }
 
 .jobname {
   font-size: 24px;
+  white-space: nowrap;
 }
 
 .leftcontent,
 .rightcontent {
+  /* border: #298451 2px solid; */
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   width: 80px;
-  height: 75%;
+  height: 100%;
   font-size: 20px;
 }
