@@ -49,13 +49,25 @@ const Headbar = () => {
         <ul className={isTestTestingPage ? "test-page-disabled" : ""}>
           <li>
             <Link
-              to="/forcast"
+              to="/test"
               className={isTestTestingPage ? "disabled-link" : ""}
               onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
             >
-              產業景氣預測
+              職涯診斷測驗
             </Link>
+            <ul>
+              <li>
+                <Link
+                  to="/test-history"
+                  className={isTestTestingPage ? "disabled-link" : ""}
+                  onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
+                >
+                  測驗紀錄
+                </Link>
+              </li>
+            </ul>
           </li>
+
           <li>
             <Link
               to="/dummie"
@@ -94,25 +106,15 @@ const Headbar = () => {
               </li>
             </ul>
           </li>
+
           <li>
             <Link
-              to="/test"
+              to="/forcast"
               className={isTestTestingPage ? "disabled-link" : ""}
               onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
             >
-              職涯診斷測驗
+              產業景氣預測
             </Link>
-            <ul>
-              <li>
-                <Link
-                  to="/test-history"
-                  className={isTestTestingPage ? "disabled-link" : ""}
-                  onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
-                >
-                  測驗紀錄
-                </Link>
-              </li>
-            </ul>
           </li>
         </ul>
 

@@ -84,14 +84,14 @@ const Index = () => {
         <div className="icon">
           <Link
             id="iconlink"
-            to="/forcast"
+            to="/test"
             className={isTestTestingPage ? "disabled-link" : ""}
             onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
           >
             <div className="link_icon">
-              <img src="src/images/prediction.png" />
+              <img src="src/images/feedback.png" />
             </div>
-            <p>產業景氣預測</p>
+            <p>職涯診斷測驗</p>
           </Link>
         </div>
 
@@ -154,14 +154,14 @@ const Index = () => {
         <div className="icon">
           <Link
             id="iconlink"
-            to="/test"
+            to="/forcast"
             className={isTestTestingPage ? "disabled-link" : ""}
             onClick={(e) => isTestTestingPage && e.preventDefault()} // 禁用連結
           >
             <div className="link_icon">
-              <img src="src/images/feedback.png" />
+              <img src="src/images/prediction.png" />
             </div>
-            <p>職涯診斷測驗</p>
+            <p>產業景氣預測</p>
           </Link>
         </div>
       </div>

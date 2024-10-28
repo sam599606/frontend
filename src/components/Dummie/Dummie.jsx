@@ -184,7 +184,6 @@ const Dummie = () => {
                 <div className={styles.seniority}>1 ~ 3年</div>
                 <div className={styles.seniority}>3 ~ 5年</div>
               </div>
-
               <div className={styles.salarycolumn}>
                 {selectedJob !== "選擇職業" && (
                   <>
@@ -202,7 +201,6 @@ const Dummie = () => {
                 <div className={styles.seniority}>10 ~ 15年</div>
                 <div className={styles.seniority}>15年以上</div>
               </div>
-
               <div className={styles.salarycolumn}>
                 {selectedJob !== "選擇職業" && (
                   <>

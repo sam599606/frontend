@@ -107,6 +107,10 @@
   font-size: 16px;
 }
 
+.link:hover {
+  background-color: #695335;
+}
+
 .money {
   background-color: #ffb144;
   color: #fff;
@@ -156,6 +160,10 @@
   border: none;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.dropdownButton:hover {
+  background-color: #c48200;
 }
 
 .dropdownContent {
