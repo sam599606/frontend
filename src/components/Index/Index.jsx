@@ -8,17 +8,6 @@ const Index = () => {
   const location = useLocation(); // 使用 useLocation 來獲取當前路徑
   const isTestTestingPage = location.pathname === "/test-testing"; // 判斷是否在 /test-testing 頁面
 
-  axios({
-    method: "get",
-    url: "http://localhost:5262/api/User/GetHotRecord",
-  })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
   const images = [
     "src/images/輪播圖_1.png",
     "src/images/輪播圖_2.png",

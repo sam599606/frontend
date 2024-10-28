@@ -134,12 +134,14 @@ const Dummie = () => {
     <div className={styles.wrap}>
       <div className={styles.word_cloud_area}>
         <div className={styles.up}>
+          <h2>工作內容</h2>
           <img
             src="../src/images/word_cloud/messageImage_1729957292696.jpg"
             className={styles.word_cloud}
           />
         </div>
         <div className={styles.down}>
+        <h2>工作心得</h2>
           <img
             src="../src/images/word_cloud/messageImage_1729957271867.jpg"
             className={styles.word_cloud}

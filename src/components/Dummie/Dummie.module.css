@@ -37,6 +37,11 @@
   width: 70%;
 }
 
+.word_cloud_area h2{
+  writing-mode: vertical-rl;
+  margin-right: 10px;
+}
+
 .job_dropdown {
   width: 80%;
   height: 30px;
@@ -229,10 +234,12 @@
 .up {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .down {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 20px;
 }
