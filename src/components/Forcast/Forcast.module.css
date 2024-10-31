@@ -168,6 +168,7 @@ canvas {
 .jobcontent a.selected {
   background-color: #e1d5c5;
   /* 當前選擇的底色 */
+  color: #d35b38;
 }
 
 /* 設置 jobcontent 區域的滾動效果 */
@@ -201,4 +202,5 @@ canvas {
   background-color: #d5ad8a;
   border-radius: 10px;
   border: 3px solid #f4eee2;
+
 }

@@ -150,14 +150,14 @@ const Dummie = () => {
             src={
               selectedJob.includes("會計")
                 ? "../src/images/word_cloud/acc_1.jpg"
-                : "../src/images/word_cloud/messageImage_1729957292696.jpg"
+                : "../src/images/word_cloud/dentisit_1.jpg"
             }
             className={styles.word_cloud}
             onClick={() =>
               handleImageClick(
                 selectedJob.includes("會計")
                   ? "../src/images/word_cloud/acc_1.jpg"
-                  : "../src/images/word_cloud/messageImage_1729957292696.jpg"
+                  : "../src/images/word_cloud/dentisit_1.jpg"
               )
             }
           />
@@ -168,14 +168,14 @@ const Dummie = () => {
             src={
               selectedJob.includes("會計")
                 ? "../src/images/word_cloud/acc_2.jpg"
-                : "../src/images/word_cloud/messageImage_1729957271867.jpg"
+                : "../src/images/word_cloud/dentisit_2.jpg"
             }
             className={styles.word_cloud}
             onClick={() =>
               handleImageClick(
                 selectedJob.includes("會計")
                   ? "../src/images/word_cloud/acc_2.jpg"
-                  : "../src/images/word_cloud/messageImage_1729957271867.jpg"
+                  : "../src/images/word_cloud/dentisit_2.jpg"
               )
             }
           />
