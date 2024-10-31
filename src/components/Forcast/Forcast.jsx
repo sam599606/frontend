@@ -8,27 +8,33 @@ const Forcast = () => {
 
   // 各指標對應的職位列表
   const jobList_1 = [
-    "經營/行政/總務",
+    "工程/研發/生技",
+    "新聞/出版/印刷",
+    "旅遊/餐飲/休閒",
+    "農林漁牧相關",
+    "技術/維修/操作",
     "業務/貿易/銷售",
-    "人資/法務/智財",
-    "財務/金融/保險",
-    "廣告/公關/設計",
+    "教育/學術/研究",
   ];
 
   const jobList_2 = [
-    "客服/門市",
-    "工程/研發/生技",
     "資訊/軟體/系統",
-    "品管/製造/環衛",
-    "技術/維修/操作",
+    "人資/法務/智財",
+    "營建/製圖/施作",
+    "財務/金融/保險",
+    "物流/運輸/資材",
+    "保全/軍警消",
+    "行銷/企劃/專案",
   ];
 
   const jobList_3 = [
-    "教育/學術/研究",
-    "物流/運輸/資材",
-    "旅遊/餐飲/休閒",
-    "醫療/美容/保健",
-    "保全/軍警消",
+    "客服/門市",
+    "品管/製造/環衛",
+    "傳播/娛樂/藝術",
+    "廣告/公關/設計",
+    "清潔/家事/托育(保姆)",
+    "經營/行政/總務",
+    "醫療/美容/保建",
   ];
 
   // 根據 chartType 設定對應的職位列表
@@ -41,7 +47,7 @@ const Forcast = () => {
 
   // 領先指標數據
   const leadingData = {
-    title: { text: "產業領先指標趨勢圖", show: false },
+    title: { text: "工程/研發/生技", show: true },
     tooltip: { trigger: "axis" },
     xAxis: {
       type: "category",
@@ -146,7 +152,7 @@ const Forcast = () => {
 
   // 同時指標數據
   const simultaneousData = {
-    title: { text: "產業同時指標趨勢圖", show: false },
+    title: { text: "資訊/軟體/系統", show: true },
     tooltip: { trigger: "axis" },
     xAxis: {
       type: "category",
@@ -252,7 +258,7 @@ const Forcast = () => {
 
   // 落後指標數據
   const laggingData = {
-    title: { text: "產業落後指標趨勢圖", show: false },
+    title: { text: "客服/門市", show: true },
     tooltip: { trigger: "axis" },
     xAxis: {
       type: "category",
@@ -357,7 +363,7 @@ const Forcast = () => {
 
   // 自訂圖表數據
   const customChartData = {
-    title: { text: "產業領先指標趨勢圖", show: false },
+    title: { text: "旅遊/餐飲/休閒", show: true },
     tooltip: { trigger: "axis" },
     xAxis: {
       type: "category",

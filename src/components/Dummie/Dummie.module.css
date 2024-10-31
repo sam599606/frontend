@@ -261,6 +261,10 @@
   height: 85%;
 }
 
+.word_cloud_area img:hover {
+  cursor: pointer;
+}
+
 .word_cloud_area h2 {
   margin-bottom: 5px;
 }

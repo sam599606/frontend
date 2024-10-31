@@ -23,6 +23,8 @@ const Dummie = () => {
   const [fifteenUp, setFifteenUp] = useState([]);
   const [isFirstTime, setIsFirstTime] = useState(true); // 假設用來判斷是否第一次渲染
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImageSrc, setModalImageSrc] = useState("");
 
   sessionStorage.removeItem("skills");
   sessionStorage.removeItem("licences");
@@ -130,27 +132,56 @@ const Dummie = () => {
     navigate("/dummie/certificate");
   };
 
+  const handleImageClick = (src) => {
+    window.open(src, "_blank"); // 開啟新視窗顯示圖片
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className={styles.wrap}>
       <div className={styles.word_cloud_area}>
-        <div style={{height: "30px"}}>
-
-        </div>
+        <div style={{ height: "30px" }}></div>
         <div className={styles.up}>
           <h2>工作內容</h2>
           <img
-            src="../src/images/word_cloud/messageImage_1729957292696.jpg"
+            src={
+              selectedJob.includes("會計")
+                ? "../src/images/word_cloud/acc_1.jpg"
+                : "../src/images/word_cloud/messageImage_1729957292696.jpg"
+            }
             className={styles.word_cloud}
+            onClick={() =>
+              handleImageClick(
+                selectedJob.includes("會計")
+                  ? "../src/images/word_cloud/acc_1.jpg"
+                  : "../src/images/word_cloud/messageImage_1729957292696.jpg"
+              )
+            }
           />
         </div>
         <div className={styles.down}>
-        <h2>工作心得</h2>
+          <h2>工作心得</h2>
           <img
-            src="../src/images/word_cloud/messageImage_1729957271867.jpg"
+            src={
+              selectedJob.includes("會計")
+                ? "../src/images/word_cloud/acc_2.jpg"
+                : "../src/images/word_cloud/messageImage_1729957271867.jpg"
+            }
             className={styles.word_cloud}
+            onClick={() =>
+              handleImageClick(
+                selectedJob.includes("會計")
+                  ? "../src/images/word_cloud/acc_2.jpg"
+                  : "../src/images/word_cloud/messageImage_1729957271867.jpg"
+              )
+            }
           />
         </div>
       </div>
+
       <div className={styles.rightarea}>
         <div className={styles.job_dropdown}>
           <button onClick={toggleDropdown} className={styles.dropdownButton}>
