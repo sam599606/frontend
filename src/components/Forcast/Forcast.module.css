@@ -88,7 +88,7 @@ canvas {
   width: calc(85% - 40px);
   height: calc(90% - 60px);
   padding: 20px;
-  padding-bottom: 40px;
+
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -99,9 +99,10 @@ canvas {
   width: 100%;
   height: 30%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   border-bottom: 1px dashed #745329;
+  font-size: 12px;
 }
 
 .column:not(:first-of-type) a {
@@ -135,4 +136,44 @@ canvas {
   background: none;
   border: none;
   cursor: pointer;
+}
+
+/* 讓每個連結獨立成一行 */
+.jobcontent a {
+  display: flex;
+  align-items: center;
+  /* 垂直置中 */
+  font-size: 24px;
+  margin-bottom: 8px;
+  height: 60px;
+  border-bottom: 1px dashed #745329;
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.3s;
+  /* 增加過渡效果 */
+}
+
+/* Hover 效果 */
+.jobcontent a:hover {
+  background-color: #f0e6d6;
+  /* 變更背景色 */
+}
+
+/* 移除最後一個連結的底線 */
+.jobcontent a:last-child {
+  border-bottom: none;
+}
+
+/* 當前選擇的連結 */
+.jobcontent a.selected {
+  background-color: #e1d5c5;
+  /* 當前選擇的底色 */
+}
+
+/* 設置 jobcontent 區域的滾動效果 */
+.jobcontent {
+  overflow-y: auto;
+  /* 垂直滾動 */
+  max-height: 400px;
+  /* 設置最大高度，視需求調整 */
 }

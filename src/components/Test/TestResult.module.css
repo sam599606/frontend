@@ -207,7 +207,7 @@
 }
 
 #icons {
-  margin-top: 30px;
+  margin-top: 80px;
   width: 80%;
   height: 100%;
   display: flex;
@@ -298,4 +298,29 @@
   width: 80px;
   height: 100%;
   font-size: 20px;
+}
+
+#icons {
+  overflow-y: auto;
+  max-height: 300px;
+  /* 根據需要調整高度 */
+}
+
+/* 滾動條的軌道（背景）樣式 */
+#icons::-webkit-scrollbar-track {
+  background: #f4eee2;
+  border-radius: 10px;
+}
+
+/* 滾動條的滑塊（拖動塊）的樣式 */
+#icons::-webkit-scrollbar-thumb {
+  background-color: #d5ad8a;
+  border-radius: 10px;
+  border: 3px solid #f4eee2;
+}
+
+/* 設置滾動條的寬度 */
+#icons::-webkit-scrollbar {
+  width: 12px;
+  /* 根據需要調整寬度 */
 }
