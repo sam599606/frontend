@@ -9,7 +9,7 @@ let token = cookies.get("token");
 
 const Dummie = () => {
   const [isOpen, setIsOpen] = useState(false); // 控制下拉選單顯示
-  const [selectedJob, setSelectedJob] = useState("選擇職業"); // 預設顯示選擇職業
+  const [selectedJob, setSelectedJob] = useState("請點此切換職業"); // 預設顯示選擇職業
   const [searchTerm, setSearchTerm] = useState(""); // 新增的搜尋關鍵字狀態
   const [jobList, setJobList] = useState([]); // 儲存職業清單
   const [filteredJobList, setFilteredJobList] = useState([]); // 儲存篩選後的職業清單
@@ -146,39 +146,38 @@ const Dummie = () => {
         <div style={{ height: "30px" }}></div>
         <div className={styles.up}>
           <h2>工作內容</h2>
-          <img
-            src={
-              selectedJob.includes("會計")
-                ? "../src/images/word_cloud/acc_1.jpg"
-                : "../src/images/word_cloud/dentisit_1.jpg"
-            }
-            className={styles.word_cloud}
-            onClick={() =>
-              handleImageClick(
-                selectedJob.includes("會計")
-                  ? "../src/images/word_cloud/acc_1.jpg"
-                  : "../src/images/word_cloud/dentisit_1.jpg"
-              )
-            }
-          />
+          {selectedJob === "請點此切換職業" ? (
+            <div className={styles.message}>請選擇職業以查看工作內容懶人包</div>
+          ) : (
+            <img
+              src={`../src/images/word_cloud/${selectedJob}_內容.png`}
+              className={styles.word_cloud}
+              onClick={() =>
+                handleImageClick(
+                  `../src/images/word_cloud/${selectedJob}_內容.png`
+                )
+              }
+              alt="該職業目前尚無相關工作內容懶人包"
+            />
+          )}
         </div>
+
         <div className={styles.down}>
           <h2>工作心得</h2>
-          <img
-            src={
-              selectedJob.includes("會計")
-                ? "../src/images/word_cloud/acc_2.jpg"
-                : "../src/images/word_cloud/dentisit_2.jpg"
-            }
-            className={styles.word_cloud}
-            onClick={() =>
-              handleImageClick(
-                selectedJob.includes("會計")
-                  ? "../src/images/word_cloud/acc_2.jpg"
-                  : "../src/images/word_cloud/dentisit_2.jpg"
-              )
-            }
-          />
+          {selectedJob === "請點此切換職業" ? (
+            <div className={styles.message}>請選擇職業以查看工作心得懶人包</div>
+          ) : (
+            <img
+              src={`../src/images/word_cloud/${selectedJob}_心得.png`}
+              className={styles.word_cloud}
+              onClick={() =>
+                handleImageClick(
+                  `../src/images/word_cloud/${selectedJob}_心得.png`
+                )
+              }
+              alt="該職業目前尚無相關工作心得懶人包"
+            />
+          )}
         </div>
       </div>
 
@@ -191,7 +190,7 @@ const Dummie = () => {
             <div className={styles.dropdownContent}>
               <input
                 type="text"
-                placeholder="搜尋職業"
+                placeholder="請點此切換職業"
                 value={searchTerm}
                 onChange={handleSearch}
                 className={styles.searchInput}
@@ -213,75 +212,79 @@ const Dummie = () => {
 
         <div className={styles.salary}>
           <div className={styles.title}>平均薪資</div>
-          <div className={styles.content}>
-            <div className={styles.salaryLeft}>
-              <div className={styles.salarycolumn}>
-                <div className={styles.seniority}>1年以下</div>
-                <div className={styles.seniority}>1 ~ 3年</div>
-                <div className={styles.seniority}>3 ~ 5年</div>
-              </div>
-              <div className={styles.salarycolumn}>
-                {selectedJob !== "選擇職業" && (
+          {selectedJob === "請點此切換職業" ? (
+            <div className={styles.message}>請選擇職業以查看薪資</div>
+          ) : (
+            <div className={styles.content}>
+              <div className={styles.salaryLeft}>
+                <div className={styles.salarycolumn}>
+                  <div className={styles.seniority}>1年以下</div>
+                  <div className={styles.seniority}>1 ~ 3年</div>
+                  <div className={styles.seniority}>3 ~ 5年</div>
+                </div>
+                <div className={styles.salarycolumn}>
                   <>
                     <div className={styles.money}>{oneDown}</div>
                     <div className={styles.money}>{oneTothree}</div>
                     <div className={styles.money}>{threeTofive}</div>
                   </>
-                )}
+                </div>
               </div>
-            </div>
 
-            <div className={styles.salaryRight}>
-              <div className={styles.salarycolumn}>
-                <div className={styles.seniority}>5 ~ 10年</div>
-                <div className={styles.seniority}>10 ~ 15年</div>
-                <div className={styles.seniority}>15年以上</div>
-              </div>
-              <div className={styles.salarycolumn}>
-                {selectedJob !== "選擇職業" && (
+              <div className={styles.salaryRight}>
+                <div className={styles.salarycolumn}>
+                  <div className={styles.seniority}>5 ~ 10年</div>
+                  <div className={styles.seniority}>10 ~ 15年</div>
+                  <div className={styles.seniority}>15年以上</div>
+                </div>
+                <div className={styles.salarycolumn}>
                   <>
                     <div className={styles.money}>{fiveToten}</div>
                     <div className={styles.money}>{tenTofifteen}</div>
                     <div className={styles.money}>{fifteenUp}</div>
                   </>
-                )}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className={styles.requirement}>
           <div className={styles.title}>技能與執照</div>
-          <div className={styles.content}>
-            <div className={styles.skill}>
-              <p>技能</p>
-              <div className={styles.links}>
-                {skills.map((skill, index) => (
-                  <button
-                    key={index}
-                    className={styles.link}
-                    onClick={() => clickjob(skill)}
-                  >
-                    {skill}
-                  </button>
-                ))}
+          {selectedJob === "請點此切換職業" ? (
+            <div className={styles.message}>請選擇職業以查看薪資</div>
+          ) : (
+            <div className={styles.content}>
+              <div className={styles.skill}>
+                <p>技能</p>
+                <div className={styles.links}>
+                  {skills.map((skill, index) => (
+                    <button
+                      key={index}
+                      className={styles.link}
+                      onClick={() => clickjob(skill)}
+                    >
+                      {skill}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className={styles.licence}>
+                <p>證照</p>
+                <div className={styles.links}>
+                  {licences.map((licence, index) => (
+                    <button
+                      key={index}
+                      className={styles.link}
+                      onClick={() => clickcerti(licence)}
+                    >
+                      {licence}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-            <div className={styles.licence}>
-              <p>證照</p>
-              <div className={styles.links}>
-                {licences.map((licence, index) => (
-                  <button
-                    key={index}
-                    className={styles.link}
-                    onClick={() => clickcerti(licence)}
-                  >
-                    {licence}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
