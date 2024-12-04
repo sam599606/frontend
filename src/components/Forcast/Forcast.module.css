@@ -6,6 +6,8 @@
   height: 85%;
   border-radius: 10px;
   position: relative;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .leftside {
@@ -88,11 +90,10 @@ canvas {
   width: calc(85% - 40px);
   height: calc(90% - 60px);
   padding: 20px;
-
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .column {
@@ -138,6 +139,21 @@ canvas {
   cursor: pointer;
 }
 
+.icon.notSelected {
+  background-color: #ebccb2;
+  /* 未選中狀態的背景顏色 */
+  opacity: 0.7;
+  /* 調低不選中狀態的透明度 */
+}
+
+.icon.notSelected:hover {
+  background-color: #ebccb2;
+  opacity: 0.9;
+  /* 滑鼠懸停時提高透明度 */
+}
+
+
+
 /* 讓每個連結獨立成一行 */
 .jobcontent a {
   display: flex;
@@ -173,19 +189,11 @@ canvas {
 
 /* 設置 jobcontent 區域的滾動效果 */
 .jobcontent {
-  overflow-y: auto;
-  /* 垂直滾動 */
-  max-height: 400px;
-  /* 設置最大高度，視需求調整 */
-}
-
-/* 設置 jobcontent 的滾動條樣式 */
-.jobcontent {
+  /* border: 1px black solid; */
   overflow-y: auto;
   scrollbar-width: thin;
-  /* 適用於 Firefox */
   scrollbar-color: #d5ad8a #f4eee2;
-  /* 適用於 Firefox */
+  height: 400px;
 }
 
 /* Webkit 瀏覽器中的滾動條樣式 */
@@ -203,4 +211,14 @@ canvas {
   border-radius: 10px;
   border: 3px solid #f4eee2;
 
+}
+
+@media (max-width: 768px) {
+  .leftside {
+    width: 100%;
+  }
+
+  .rightside {
+    width: 100%;
+  }
 }
