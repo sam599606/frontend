@@ -1,19 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Dialog.css";
 import axios from "axios";
-import Swal from "sweetalert2"; // 引入 SweetAlert2
+import Swal from "sweetalert2";
 
 const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
-  if (!isOpen) return null; // 如果未打開，則不渲染彈出視窗
+  const [isLoading, setIsLoading] = useState(false); // 新增 loading 狀態
 
-  //#region Enter觸發事件
+  if (!isOpen) return null;
+
   const keyDown = (event) => {
     if (event.key === "Enter") {
       getQuote();
     }
   };
 
-  //#region 註冊
   const getQuote = () => {
     let account = document.getElementById("account").value;
     let name = document.getElementById("name").value;
@@ -24,52 +24,19 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
     let sex = document.getElementById("sex").value;
     let birth = document.getElementById("birth").value;
 
-    // 正規表達式檢查是否為有效的 Email 地址
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const memberdata = { account, name, password, phone, address, edu, sex, birth };
 
-    const memberdata = {
-      account,
-      name,
-      password,
-      phone,
-      address,
-      edu,
-      sex,
-      birth,
-    };
-
-    // 檢查是否有缺失資料
-    if (
-      !account ||
-      !name ||
-      !password ||
-      !phone ||
-      !address ||
-      !edu ||
-      !sex ||
-      !birth
-    ) {
+    if (!account || !name || !password || !phone || !address || !edu || !sex || !birth) {
       Swal.fire({
         icon: "warning",
         title: "資料不完整",
         text: "請填寫所有欄位再進行註冊！",
         confirmButtonColor: "#d5ad8a",
       });
-      return; // 終止函數，不進行下一步操作
+      return;
     }
 
-    // // 檢查帳號欄位是否為有效的 Email 地址
-    // if (!emailPattern.test(account)) {
-    //   Swal.fire({
-    //     icon: "warning",
-    //     title: "無效的Email",
-    //     text: "請填寫有效的電子郵件地址！",
-    //     confirmButtonColor: "#d5ad8a",
-    //   });
-    //   return; // 終止函數，不進行下一步操作
-    // }
-
-    // 發送註冊請求
+    setIsLoading(true); // 開始 loading
     axios({
       method: "post",
       url: "http://localhost:5262/api/User/Register",
@@ -80,18 +47,17 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
     })
       .then((res) => {
         console.log(res);
-        onLogin();
         Swal.fire({
           icon: "success",
           title: "註冊成功",
           text: "請前往信箱收取驗證信！",
           confirmButtonColor: "#d5ad8a",
         });
-        onClose(); // 成功後關閉註冊對話框
+        setIsLoading(false); // 停止 loading
+        onClose(); // 成功後關閉對話框
       })
       .catch((err) => {
         console.log(err);
-        // 檢查是否是帳號重複的錯誤
         if (
           err.response &&
           err.response.data &&
@@ -104,7 +70,6 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
             confirmButtonColor: "#d5ad8a",
           });
         } else {
-          // 處理其他錯誤
           Swal.fire({
             icon: "error",
             title: "發生錯誤",
@@ -112,17 +77,20 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
             confirmButtonColor: "#d5ad8a",
           });
         }
+        setIsLoading(false); // 停止 loading
       });
   };
 
-  //#region return
   return (
     <>
-      {/* 模態背景層 */}
+      {isLoading && (
+        <div className="loading-overlay">
+          <img src="/src/images/loading.gif" alt="Loading..." className="loading-gif" />
+        </div>
+      )}
       <div className="modal-overlay" onClick={onClose} />
-
       <dialog id="registerpage" open>
-        <button href="#" id="close" onClick={onClose}>
+        <button id="close" onClick={onClose}>
           X
         </button>
         <div id="switch">
@@ -132,7 +100,7 @@ const RegisterDialog = ({ isOpen, onClose, onLogin }) => {
           <div>註冊</div>
         </div>
         <div id="input">
-          <div className="columns">
+        <div className="columns">
             <div className="block">
               <input
                 type="text"
